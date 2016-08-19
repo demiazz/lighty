@@ -1,0 +1,16 @@
+{
+  "extends": "eslint-config-airbnb",
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "describe": false,
+    "context": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "it": false,
+    "expect": false,
+    "sinon": false
+  },
+  "parser": "babel-eslint"
+}
