@@ -30,11 +30,9 @@ export default class Builder {
     for (let i = 0; i < properties.length; i++) {
       const property = properties[i];
 
-      if (!this.proto.hasOwnProperty(properties)) {
-        continue;
+      if ({}.hasOwnProperty.call(this.proto, property)) {
+        component[property] = this.proto[property];
       }
-
-      component[property] = this.proto[property];
     }
 
     this.transformComponent(component, node);
