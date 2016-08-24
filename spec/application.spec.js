@@ -588,11 +588,11 @@ describe('Application', () => {
       describe('document.readyState is equal to `loading`', () => {
         let backup;
 
-      if (!isReadyStateMockable()) {
-        it("can't be tested because `document.readyState` can't be mocked in this browser");
+        if (!isReadyStateMockable()) {
+          it("can't be tested because `document.readyState` can't be mocked in this browser");
 
-        return;
-      }
+          return;
+        }
 
         beforeEach(() => {
           backup = document.readyState;
@@ -692,7 +692,7 @@ describe('Application', () => {
         });
 
         it('sets isRunning flag to true', () => {
-          ['interactive', 'complete'].map(state => {
+          ['interactive', 'complete'].forEach(state => {
             Object.defineProperty(document, 'readyState', {
               value: state,
               writable: true,
@@ -709,7 +709,7 @@ describe('Application', () => {
         });
 
         it('runs vitalize', () => {
-          ['interactive', 'complete'].map(state => {
+          ['interactive', 'complete'].forEach(state => {
             Object.defineProperty(document, 'readyState', {
               value: state,
               writable: true,
