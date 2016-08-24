@@ -1,4 +1,4 @@
-const babel = require('rollup-plugin-babel');
+const buble = require('rollup-plugin-buble');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonJS = require('rollup-plugin-commonjs');
 
@@ -25,7 +25,7 @@ module.exports = {
   rollupPreprocessor: {
     format: 'iife',
     sourceMap: 'inline',
-    plugins: [commonJS(), nodeResolve(), babel()],
+    plugins: [commonJS(), nodeResolve(), buble()],
   },
 
   plugins: [
