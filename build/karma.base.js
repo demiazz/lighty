@@ -1,4 +1,6 @@
-const webpackConfig = require('./webpack.base');
+const buble = require('rollup-plugin-buble');
+const nodeResolve = require('rollup-plugin-node-resolve');
+const commonJS = require('rollup-plugin-commonjs');
 
 
 module.exports = {
@@ -17,15 +19,19 @@ module.exports = {
   ],
 
   preprocessors: {
-    '../spec/**/*.spec.js': ['webpack'],
+    '../spec/**/*.spec.js': ['rollup'],
   },
 
-  webpack: webpackConfig,
+  rollupPreprocessor: {
+    format: 'iife',
+    sourceMap: 'inline',
+    plugins: [commonJS(), nodeResolve(), buble()],
+  },
 
   plugins: [
     'karma-jasmine',
     'karma-sinon',
-    'karma-webpack',
+    'karma-rollup-plugin',
     'karma-spec-reporter',
   ],
 

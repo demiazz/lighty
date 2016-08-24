@@ -3,6 +3,13 @@
   "env": {
     "browser": true
   },
+  "rules": {
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true,
+      "optionalDependencies": false,
+      "peerDependencies": false,
+    }]
+  },
   "globals": {
     "describe": false,
     "context": false,
@@ -11,6 +18,5 @@
     "it": false,
     "expect": false,
     "sinon": false
-  },
-  "parser": "babel-eslint"
+  }
 }
