@@ -18,6 +18,5 @@
     "it": false,
     "expect": false,
     "sinon": false
-  },
-  "parser": "babel-eslint"
+  }
 }

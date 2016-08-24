@@ -14,8 +14,8 @@
   ],
   "scripts": {
     "lint": "eslint src spec",
-    "test": "cross-env BABEL_ENV=commonjs NODE_ENV=test BABEL_ENV=rollup $(npm bin)/karma start build/karma.local.js",
-    "test:ci": "cross-env BABEL_ENV=commonjs NODE_ENV=test BABEL_ENV=rollup $(npm bin)/karma start build/karma.ci.js",
+    "test": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
+    "test:ci": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
     "build:commonjs": "$(npm bin)/cross-env TARGET=commonjs $(npm bin)/rollup --config build/rollup.config.js",
     "build:es": "$(npm bin)/cross-env TARGET=es $(npm bin)/rollup --config build/rollup.config.js",
     "build:umd": "$(npm bin)/cross-env TARGET=umd $(npm bin)/rollup --config build/rollup.config.js",
