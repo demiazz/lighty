@@ -14,12 +14,12 @@
   ],
   "scripts": {
     "lint": "eslint src spec",
-    "test": "cross-env BABEL_ENV=commonjs NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
-    "test:ci": "cross-env BABEL_ENV=commonjs NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
+    "test": "cross-env BABEL_ENV=commonjs NODE_ENV=test BABEL_ENV=rollup $(npm bin)/karma start build/karma.local.js",
+    "test:ci": "cross-env BABEL_ENV=commonjs NODE_ENV=test BABEL_ENV=rollup $(npm bin)/karma start build/karma.ci.js",
     "build:commonjs": "$(npm bin)/cross-env BABEL_ENV=commonjs $(npm bin)/babel src --out-dir lib",
     "build:es": "$(npm bin)/cross-env BABEL_ENV=es $(npm bin)/babel src --out-dir es",
-    "build:umd": "$(npm bin)/cross-env BABEL_ENV=rollup NODE_ENV=development $(npm bin)/rollup --config build/rollup.release.js",
-    "build:umd:min": "$(npm bin)/cross-env BABEL_ENV=rollup NODE_ENV=production $(npm bin)/rollup --config build/rollup.release.js",
+    "build:umd": "$(npm bin)/cross-env BABEL_ENV=rollup NODE_ENV=development $(npm bin)/rollup --config build/rollup.config.js",
+    "build:umd:min": "$(npm bin)/cross-env BABEL_ENV=rollup NODE_ENV=production $(npm bin)/rollup --config build/rollup.config.js",
     "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min"
   },
   "devDependencies": {
@@ -42,6 +42,7 @@
     "karma": "^1.1.2",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
+    "karma-rollup-plugin": "^0.2.2",
     "karma-sauce-launcher": "^1.0.0",
     "karma-sinon": "^1.0.5",
     "karma-spec-reporter": "0.0.26",
@@ -49,6 +50,8 @@
     "phantomjs-prebuilt": "^2.1.12",
     "rollup": "^0.34.10",
     "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^3.3.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
     "sinon": "^1.17.5",
     "webpack": "^1.13.2"
