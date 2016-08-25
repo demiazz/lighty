@@ -6,7 +6,7 @@
          alt="build status">
   </a>
   <a href="https://www.npmjs.com/package/lighty">
-    <img src="https://img.shields.io/npm/demiazz/lighty.svg?style=flat-square&maxAge=2592000"
+    <img src="https://img.shields.io/npm/v/lighty.svg?style=flat-square&maxAge=2592000"
          alt="npm version">
   </a>
   <a href="https://github.com/demiazz/lighty/blob/master/LICENSE">
