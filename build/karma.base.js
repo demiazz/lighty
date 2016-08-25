@@ -9,12 +9,12 @@ module.exports = {
   files: [
     {
       pattern: '../src/**/*.js',
-      watched: process.env.CI === 'true',
+      watched: process.env.CI !== 'true',
       included: false,
     },
     {
       pattern: '../spec/**/*.spec.js',
-      watched: process.env.CI === 'true',
+      watched: process.env.CI !== 'true',
     },
   ],
 
