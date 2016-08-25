@@ -2,7 +2,7 @@
 
 import isDeepEqual from 'deep-equal';
 
-import { application, plugin } from '../src';
+import application, { plugin } from '../src';
 import Application from '../src/application';
 import Plugin from '../src/plugin';
 
