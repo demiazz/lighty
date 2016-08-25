@@ -10,7 +10,7 @@
          alt="npm version">
   </a>
   <a href="https://github.com/demiazz/lighty/blob/master/LICENSE">
-    <img src="https://img.shields.io/npm/l/demiazz/lighty.svg?style=flat-square&maxAge=2592000"
+    <img src="https://img.shields.io/npm/l/lighty.svg?style=flat-square&maxAge=2592000"
          alt="license">
   </a>
 </p>
