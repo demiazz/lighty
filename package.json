@@ -3,9 +3,17 @@
   "version": "0.0.1",
   "description": "Modern replacement for Evil Blocks",
   "license": "MIT",
+  "homepage": "https://github.com/demiazz/lighty",
+  "bugs": {
+    "url": "https://github.com/demiazz/lighty/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/demiazz/lighty.git"
+    "url": "https://github.com/demiazz/lighty"
+  },
+  "author": {
+    "name": "Alexey Plutalov",
+    "email": "demiazz.py@gmail.com"
   },
   "main": "lib/index.js",
   "module": "es/index.js",
