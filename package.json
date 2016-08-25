@@ -23,7 +23,8 @@
     "README.md"
   ],
   "scripts": {
-    "test": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
+    "test": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js --single-run",
+    "test:watch": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
     "lint": "$(npm bin)/eslint src spec",
     "build:commonjs": "$(npm bin)/cross-env TARGET=commonjs $(npm bin)/rollup --config build/rollup.config.js",
