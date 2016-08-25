@@ -2,7 +2,7 @@ const baseConfig = require('./karma.base');
 
 
 function getBuild() {
-  let id = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER}`;
+  let id = `LIGHTY - TRAVIS #${process.env.TRAVIS_BUILD_NUMBER}`;
 
   id += ` (Branch: ${process.env.TRAVIS_BRANCH}`;
 
