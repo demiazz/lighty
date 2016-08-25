@@ -9,20 +9,20 @@ const config = {
 };
 
 if (process.env.TARGET === 'commonjs') {
-  config.dest = 'lib/index.js';
+  config.dest = 'dist/lighty.js';
   config.format = 'cjs';
 }
 
 if (process.env.TARGET === 'es') {
-  config.dest = 'es/index.js';
+  config.dest = 'dist/lighty.es.js';
   config.format = 'es';
 }
 
 if (process.env.TARGET === 'umd') {
   config.moduleName = 'lighty';
   config.dest = process.env.NODE_ENV === 'production'
-    ? 'dist/lighty.min.js'
-    : 'dist/lighty.js';
+    ? 'dist/lighty.umd.min.js'
+    : 'dist/lighty.umd.js';
   config.format = 'umd';
 
   if (process.env.NODE_ENV === 'production') {
