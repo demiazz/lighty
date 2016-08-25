@@ -30,7 +30,8 @@
     "build:es": "$(npm bin)/cross-env TARGET=es $(npm bin)/rollup --config build/rollup.config.js",
     "build:umd": "$(npm bin)/cross-env TARGET=umd $(npm bin)/rollup --config build/rollup.config.js",
     "build:umd:min": "$(npm bin)/cross-env TARGET=umd NODE_ENV=production $(npm bin)/rollup --config build/rollup.config.js",
-    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min"
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "prepublish": "npm run lint && npm run test && npm run build"
   },
   "devDependencies": {
     "cross-env": "^2.0.0",
