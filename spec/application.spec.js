@@ -128,7 +128,7 @@ describe('Application', () => {
         expect(fooInitializer.callCount).toEqual(1);
         expect(barTransformer.callCount).toEqual(0);
 
-        for (let i = 0; i < application.plugins.length; i++) {
+        for (let i = 0; i < application.plugins.length; i += 1) {
           application.plugins[i].transform();
         }
 
@@ -159,7 +159,7 @@ describe('Application', () => {
         expect(fooInitializer.callCount).toEqual(1);
         expect(barTransformer.callCount).toEqual(0);
 
-        for (let i = 0; i < application.plugins.length; i++) {
+        for (let i = 0; i < application.plugins.length; i += 1) {
           application.plugins[i].transform();
         }
 
@@ -190,7 +190,7 @@ describe('Application', () => {
         expect(fooInitializer.callCount).toEqual(2);
         expect(barTransformer.callCount).toEqual(0);
 
-        for (let i = 0; i < application.plugins.length; i++) {
+        for (let i = 0; i < application.plugins.length; i += 1) {
           application.plugins[i].transform();
         }
 
@@ -342,7 +342,7 @@ describe('Application', () => {
 
       fooNodes = document.querySelectorAll(fooSelector);
 
-      for (let i = 0; i < fooNodes.length; i++) {
+      for (let i = 0; i < fooNodes.length; i += 1) {
         const node = fooNodes.item(i);
 
         expect(node.className.split(' ')).not.toContain(expectedFooClass);
@@ -350,7 +350,7 @@ describe('Application', () => {
 
       barNodes = document.querySelectorAll(barSelector);
 
-      for (let i = 0; i < barNodes.length; i++) {
+      for (let i = 0; i < barNodes.length; i += 1) {
         const node = barNodes.item(i);
 
         expect(node.className.split(' ')).not.toContain(expectedBarClass);
@@ -360,7 +360,7 @@ describe('Application', () => {
 
       fooNodes = document.querySelectorAll(fooSelector);
 
-      for (let i = 0; i < fooNodes.length; i++) {
+      for (let i = 0; i < fooNodes.length; i += 1) {
         const node = fooNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedFooClass);
@@ -368,7 +368,7 @@ describe('Application', () => {
 
       barNodes = document.querySelectorAll(barSelector);
 
-      for (let i = 0; i < barNodes.length; i++) {
+      for (let i = 0; i < barNodes.length; i += 1) {
         const node = barNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedBarClass);
@@ -426,7 +426,7 @@ describe('Application', () => {
 
         const fooNodes = document.querySelectorAll(fooSelector);
 
-        for (let i = 0; i < fooNodes.length; i++) {
+        for (let i = 0; i < fooNodes.length; i += 1) {
           const node = fooNodes.item(i);
 
           expect(node.className.split(' ')).not.toContain(expectedFooClass);
@@ -434,7 +434,7 @@ describe('Application', () => {
 
         const barNodes = document.querySelectorAll(barSelector);
 
-        for (let i = 0; i < barNodes.length; i++) {
+        for (let i = 0; i < barNodes.length; i += 1) {
           const node = barNodes.item(i);
 
           expect(node.className.split(' ')).not.toContain(expectedBarClass);
@@ -446,7 +446,7 @@ describe('Application', () => {
           `.${fooClass}.${outsideClass}`
         );
 
-        for (let i = 0; i < outsideFooNodes.length; i++) {
+        for (let i = 0; i < outsideFooNodes.length; i += 1) {
           const node = outsideFooNodes.item(i);
 
           expect(node.className.split(' ')).not.toContain(expectedFooClass);
@@ -456,7 +456,7 @@ describe('Application', () => {
           `.${fooClass}.${insideClass}`
         );
 
-        for (let i = 0; i < insideFooNodes.length; i++) {
+        for (let i = 0; i < insideFooNodes.length; i += 1) {
           const node = insideFooNodes.item(i);
 
           expect(node.className.split(' ')).toContain(expectedFooClass);
@@ -466,7 +466,7 @@ describe('Application', () => {
           `.${barClass}.${outsideClass}`
         );
 
-        for (let i = 0; i < outsideBarNodes.length; i++) {
+        for (let i = 0; i < outsideBarNodes.length; i += 1) {
           const node = outsideBarNodes.item(i);
 
           expect(node.className.split(' ')).not.toContain(expectedBarClass);
@@ -476,7 +476,7 @@ describe('Application', () => {
           `.${barClass}.${insideClass}`
         );
 
-        for (let i = 0; i < insideBarNodes.length; i++) {
+        for (let i = 0; i < insideBarNodes.length; i += 1) {
           const node = insideBarNodes.item(i);
 
           expect(node.className.split(' ')).toContain(expectedBarClass);
@@ -534,7 +534,7 @@ describe('Application', () => {
 
         fooNodes = document.querySelectorAll(fooSelector);
 
-        for (let i = 0; i < fooNodes.length; i++) {
+        for (let i = 0; i < fooNodes.length; i += 1) {
           const node = fooNodes.item(i);
 
           expect(node.className.split(' ')).not.toContain(expectedFooClass);
@@ -542,7 +542,7 @@ describe('Application', () => {
 
         barNodes = document.querySelectorAll(barSelector);
 
-        for (let i = 0; i < barNodes.length; i++) {
+        for (let i = 0; i < barNodes.length; i += 1) {
           const node = barNodes.item(i);
 
           expect(node.className.split(' ')).not.toContain(expectedBarClass);
@@ -552,7 +552,7 @@ describe('Application', () => {
 
         fooNodes = document.querySelectorAll(fooSelector);
 
-        for (let i = 0; i < fooNodes.length; i++) {
+        for (let i = 0; i < fooNodes.length; i += 1) {
           const node = fooNodes.item(i);
 
           expect(node.className.split(' ')).toContain(expectedFooClass);
@@ -560,7 +560,7 @@ describe('Application', () => {
 
         barNodes = document.querySelectorAll(barSelector);
 
-        for (let i = 0; i < barNodes.length; i++) {
+        for (let i = 0; i < barNodes.length; i += 1) {
           const node = barNodes.item(i);
 
           expect(node.className.split(' ')).toContain(expectedBarClass);
@@ -692,7 +692,7 @@ describe('Application', () => {
         });
 
         it('sets isRunning flag to true', () => {
-          ['interactive', 'complete'].forEach(state => {
+          ['interactive', 'complete'].forEach((state) => {
             Object.defineProperty(document, 'readyState', {
               value: state,
               writable: true,
@@ -709,7 +709,7 @@ describe('Application', () => {
         });
 
         it('runs vitalize', () => {
-          ['interactive', 'complete'].forEach(state => {
+          ['interactive', 'complete'].forEach((state) => {
             Object.defineProperty(document, 'readyState', {
               value: state,
               writable: true,

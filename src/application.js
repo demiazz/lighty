@@ -33,7 +33,7 @@ export default class Application {
   }
 
   vitalize(tree) {
-    for (let i = 0; i < this.builders.length; i++) {
+    for (let i = 0; i < this.builders.length; i += 1) {
       const initialize = this.builders[i].getInitializer(tree);
 
       initialize();
@@ -68,6 +68,7 @@ export default class Application {
     }, []);
   }
 
+  // eslint-disable-next-line
   instantiatePlugin(plugin) {
     if (plugin instanceof Function) {
       return plugin();

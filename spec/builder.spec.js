@@ -98,7 +98,7 @@ describe('Builder', () => {
 
       actualNodes = document.querySelectorAll(selector);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).not.toContain(expectedPluginClass);
@@ -109,7 +109,7 @@ describe('Builder', () => {
 
       actualNodes = document.querySelectorAll(selector);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).not.toContain(expectedPluginClass);
@@ -120,7 +120,7 @@ describe('Builder', () => {
 
       actualNodes = document.querySelectorAll(selector);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedPluginClass);
@@ -131,7 +131,7 @@ describe('Builder', () => {
 
       actualNodes = document.querySelectorAll(selector);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedPluginClass);

@@ -26,7 +26,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -34,7 +34,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${nodeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -51,7 +51,7 @@ describe('findInTree', () => {
       const tree = document.querySelector(`.${treeClass}`);
       const nodes = findInTree(tree, `.${treeClass}`);
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -59,7 +59,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${treeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -89,7 +89,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -97,7 +97,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${nodeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -118,7 +118,7 @@ describe('findInTree', () => {
       const trees = document.querySelectorAll(`.${treeClass}`);
       const nodes = findInTree(trees, `.${treeClass}`);
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -126,7 +126,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${treeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -156,7 +156,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -164,7 +164,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${nodeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -185,7 +185,7 @@ describe('findInTree', () => {
       const trees = [].slice.call(document.querySelectorAll(`.${treeClass}`));
       const nodes = findInTree(trees, `.${treeClass}`);
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -193,7 +193,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${treeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -223,7 +223,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -231,7 +231,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${nodeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -252,7 +252,7 @@ describe('findInTree', () => {
       const trees = $(`.${treeClass}`);
       const nodes = findInTree(trees, `.${treeClass}`);
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -260,7 +260,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${treeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -289,7 +289,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -297,7 +297,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${nodeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);
@@ -317,7 +317,7 @@ describe('findInTree', () => {
 
       const nodes = findInTree(`.${treeClass}`, `.${treeClass}`);
 
-      for (let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
 
         node.className = `${node.className} ${expectedClass}`;
@@ -325,7 +325,7 @@ describe('findInTree', () => {
 
       const actualNodes = document.querySelectorAll(`.${treeClass}`);
 
-      for (let i = 0; i < actualNodes.length; i++) {
+      for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
         expect(node.className.split(' ')).toContain(expectedClass);

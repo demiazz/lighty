@@ -27,7 +27,7 @@ export default class Builder {
     const component = { };
     const properties = Object.keys(this.proto);
 
-    for (let i = 0; i < properties.length; i++) {
+    for (let i = 0; i < properties.length; i += 1) {
       const property = properties[i];
 
       if ({}.hasOwnProperty.call(this.proto, property)) {
@@ -52,14 +52,15 @@ export default class Builder {
   }
 
   transformComponent(component, node) {
-    for (let i = 0; i < this.plugins.length; i++) {
+    for (let i = 0; i < this.plugins.length; i += 1) {
       this.plugins[i].transform(component, node);
     }
   }
 
+  // eslint-disable-next-line
   createInitializer(components) {
     return function initializer() {
-      for (let i = 0; i < components.length; i++) {
+      for (let i = 0; i < components.length; i += 1) {
         const component = components[i];
 
         if (component.init) {
