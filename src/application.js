@@ -2,7 +2,8 @@ import Builder from './builder';
 
 
 export default class Application {
-  constructor() {
+  constructor(name = 'default') {
+    this.name = name;
     this.plugins = [];
     this.builders = [];
     this.isReady = false;

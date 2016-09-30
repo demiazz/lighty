@@ -27,6 +27,19 @@ describe('Application', () => {
   afterEach(clear);
 
   describe('.constructor', () => {
+    it('set name as `default`', () => {
+      const application = new Application();
+
+      expect(application.name).toBe('default');
+    });
+
+    it('set given name', () => {
+      const name = 'legacy-application';
+      const application = new Application(name);
+
+      expect(application.name).toBe(name);
+    });
+
     it('creates empty plugins list', () => {
       const application = new Application();
 
