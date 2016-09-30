@@ -23,8 +23,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "cross-env NODE_ENV=test npm run lint && npm run test:single",
-    "test:single": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js --single-run",
+    "test": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js --single-run",
     "test:watch": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
     "lint": "$(npm bin)/eslint src spec",
@@ -33,7 +32,8 @@
     "build:umd": "$(npm bin)/cross-env TARGET=umd $(npm bin)/rollup --config build/rollup.config.js",
     "build:umd:min": "$(npm bin)/cross-env TARGET=umd NODE_ENV=production $(npm bin)/rollup --config build/rollup.config.js",
     "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "preversion": "npm run lint",
+    "postversion": "npm run build"
   },
   "devDependencies": {
     "cross-env": "^3.0.0",
