@@ -2,7 +2,24 @@ import Application from './application';
 import Plugin from './plugin';
 
 
-export default new Application();
+const applications = {
+  default: new Application('default'),
+};
+
+
+export default applications.default;
+
+export function create(name = 'default') {
+  let instance = applications[name];
+
+  if (!instance) {
+    instance = new Application(name);
+
+    applications[name] = instance;
+  }
+
+  return instance;
+}
 
 export function plugin(name, initializer) {
   return function factory(...args) {
