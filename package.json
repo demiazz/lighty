@@ -23,7 +23,8 @@
     "README.md"
   ],
   "scripts": {
-    "test": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js --single-run",
+    "test": "cross-env NODE_ENV=test npm run lint && npm run test:single",
+    "test:single": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js --single-run",
     "test:watch": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
     "lint": "$(npm bin)/eslint src spec",
@@ -51,6 +52,7 @@
     "karma-sauce-launcher": "^1.0.0",
     "karma-sinon": "^1.0.5",
     "karma-spec-reporter": "0.0.26",
+    "np": "^2.9.0",
     "phantomjs-prebuilt": "^2.1.12",
     "rollup": "^0.36.1",
     "rollup-plugin-buble": "^0.14.0",
