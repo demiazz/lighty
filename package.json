@@ -58,6 +58,7 @@
     "rollup-plugin-multi-entry": "^2.0.1",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "uglify-save-license": "^0.4.1"
   }
 }
