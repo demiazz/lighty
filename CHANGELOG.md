@@ -1,3 +1,7 @@
+## 0.2.2 (1 October 2016)
+
+* Add test coverage for library source code
+
 ## 0.2.1 (1 October 2016)
 
 * Add compiled files to release process
