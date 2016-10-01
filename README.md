@@ -1,19 +1,9 @@
 # lighty
 
-<p align="center">
-  <a href="https://travis-ci.org/demiazz/lighty">
-    <img src="https://img.shields.io/travis/demiazz/lighty.svg?style=flat-square&maxAge=2592000"
-         alt="build status">
-  </a>
-  <a href="https://www.npmjs.com/package/lighty">
-    <img src="https://img.shields.io/npm/v/lighty.svg?style=flat-square&maxAge=2592000"
-         alt="npm version">
-  </a>
-  <a href="https://github.com/demiazz/lighty/blob/master/LICENSE">
-    <img src="https://img.shields.io/npm/l/lighty.svg?style=flat-square&maxAge=2592000"
-         alt="license">
-  </a>
-</p>
+[![version](https://img.shields.io/npm/v/lighty.svg?style=flat-square)](https://www.npmjs.com/package/lighty)
+[![license](https://img.shields.io/npm/l/lighty.svg?style=flat-square)](https://github.com/demiazz/lighty/blob/master/LICENSE)
+[![build status](https://img.shields.io/travis/demiazz/lighty.svg?style=flat-square)](https://travis-ci.org/demiazz/lighty)
+[![coverage](https://img.shields.io/coveralls/demiazz/lighty.svg?style=flat-square)](https://coveralls.io/github/demiazz/lighty)
 
 **lighty** is modern replacement for [Evil Blocks] (tiny JS framework) by [@ai].
 
