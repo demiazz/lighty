@@ -1,3 +1,7 @@
+## 0.2.1 (1 October 2016)
+
+* Add compiled files to release process
+
 ## 0.2.0 (1 October 2016)
 
 * Add creating few named application instances
