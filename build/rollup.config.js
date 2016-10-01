@@ -7,7 +7,7 @@ import saveLicense from 'uglify-save-license';
 
 
 const pkgPath = resolve(__dirname, '../package.json');
-const pkg = JSON.parse(readFileSync(pkgPath, { encoding: 'utf8'}));
+const pkg = JSON.parse(readFileSync(pkgPath, { encoding: 'utf8' }));
 
 const config = {
   entry: 'src/index.js',
