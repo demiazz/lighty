@@ -1,5 +1,5 @@
 /*!
- * lighty v0.2.1
+ * lighty v0.2.2
  * https://github.com/demiazz/lighty
  *
  * Copyright Alexey Plutalov
