@@ -1,3 +1,6 @@
+const path = require('path');
+const istanbul = require('rollup-plugin-istanbul');
+
 const baseConfig = require('./karma.base');
 
 
@@ -24,33 +27,33 @@ module.exports = function karma(config) {
   const sauceBrowsers = {
     // Chrome (last 2 versions)
 
-    sl_chrome_51: {
+    sl_chrome_53: {
       base: 'SauceLabs',
       browserName: 'chrome',
-      version: '51.0',
+      version: '53.0',
       platform: 'Windows 10',
     },
 
-    sl_chrome_50: {
+    sl_chrome_52: {
       base: 'SauceLabs',
       browserName: 'chrome',
-      version: '50.0',
+      version: '52.0',
       platform: 'Windows 10',
     },
 
     // Firefox (last 2 versions)
 
+    sl_firefox_48: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '48.0',
+      platform: 'Windows 10',
+    },
+
     sl_firefox_47: {
       base: 'SauceLabs',
       browserName: 'firefox',
       version: '47.0',
-      platform: 'Windows 10',
-    },
-
-    sl_firefox_46: {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      version: '46.0',
       platform: 'Windows 10',
     },
 
@@ -132,14 +135,22 @@ module.exports = function karma(config) {
       tunnelIdentifier: getTunnel(),
       recordVideo: false,
       recordScreenshots: false,
-      startConnect: true,
+      startConnect: false,
     },
 
     customLaunchers: sauceBrowsers,
 
     browsers: Object.keys(sauceBrowsers),
 
-    reporters: ['dots', 'saucelabs'],
+    reporters: ['dots', 'coverage', 'coveralls', 'saucelabs'],
+
+    coverageReporter: {
+      dir: path.join(__dirname, '../', 'coverage'),
+      reporters: [
+        { type: 'text' },
+        { type: 'lcov' },
+      ],
+    },
 
     concurrency: 1,
     browserDisconnectTimeout: 10000,
@@ -150,7 +161,15 @@ module.exports = function karma(config) {
     singleRun: true,
   });
 
-  baseConfig.plugins.push('karma-sauce-launcher');
+  baseConfig.rollupPreprocessor.plugins.unshift(istanbul({
+    exclude: ['node_modules/**/*.js', 'spec/**/*.js'],
+  }));
+
+  baseConfig.plugins.push(
+    'karma-sauce-launcher',
+    'karma-coverage',
+    'karma-coveralls'
+  );
 
   config.set(baseConfig);
 };
