@@ -1,3 +1,6 @@
+import isDeepEqual from 'deep-equal';
+
+
 function toBeTrue() {
   return {
     compare(actual) {
@@ -62,6 +65,25 @@ function toBeInstanceOf() {
   };
 }
 
+function toDeepEqual() {
+  return {
+    compare(actual, expected) {
+      const result = {
+        pass: isDeepEqual(actual, expected),
+      };
+
+      const actualJSON = JSON.stringify(actual);
+      const expectedJSON = JSON.stringify(expected);
+
+      result.message = result.pass
+        ? `Expected ${actualJSON} not to be deep equal to ${expectedJSON}`
+        : `Expected ${actualJSON} to be deep equal to ${expectedJSON}`;
+
+      return result;
+    },
+  };
+}
+
 function toHaveCSSClass() {
   return {
     compare(actual, klass) {
@@ -98,5 +120,6 @@ export default {
   toBeFalse,
   toBeEmptyArray,
   toBeInstanceOf,
+  toDeepEqual,
   toHaveCSSClass,
 };

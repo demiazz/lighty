@@ -1,7 +1,5 @@
 /* eslint no-unused-expressions: 0 */
 
-import isDeepEqual from 'deep-equal';
-
 import { plugin } from '../src';
 import Builder from '../src/builder';
 
@@ -28,8 +26,8 @@ describe('Builder', () => {
 
       expect(builder.id).toEqual(id);
       expect(builder.selector).toEqual(selector);
-      expect(isDeepEqual(builder.proto, proto)).toBeTrue();
-      expect(isDeepEqual(builder.plugins, plugins)).toBeTrue();
+      expect(builder.proto).toDeepEqual(proto);
+      expect(builder.plugins).toDeepEqual(plugins);
     });
   });
 
@@ -201,7 +199,7 @@ describe('Builder', () => {
       secondBuilder.getInitializer()();
       firstBuilder.getInitializer()();
 
-      expect(isDeepEqual(calls, ['first', 'second'])).toBeTrue();
+      expect(calls).toDeepEqual(['first', 'second']);
     });
   });
 });
