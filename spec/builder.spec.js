@@ -1,4 +1,4 @@
-/* eslint no-unused-expressions: 0, no-param-reassign: 0 */
+/* eslint no-unused-expressions: 0 */
 
 import isDeepEqual from 'deep-equal';
 
