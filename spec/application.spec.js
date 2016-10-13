@@ -268,12 +268,9 @@ describe('Application', () => {
         const application = new Application(plugin);
 
         application.isRunning = false;
-
         application.component(selector, proto);
 
-        expect(
-          document.querySelector(selector)
-        ).not.toContainCSSClass(expectedClass);
+        expect(selector).not.toHaveCSSClass(expectedClass);
       });
     });
 
@@ -299,12 +296,9 @@ describe('Application', () => {
         }));
 
         application.isRunning = true;
-
         application.component(selector, proto);
 
-        expect(
-          document.querySelector(selector)
-        ).toContainCSSClass(expectedClass);
+        expect(selector).toHaveCSSClass(expectedClass);
       });
     });
   });
@@ -347,42 +341,13 @@ describe('Application', () => {
       };
       application.component(barSelector, barProto);
 
-      let fooNodes;
-      let barNodes;
-
-      fooNodes = document.querySelectorAll(fooSelector);
-
-      for (let i = 0; i < fooNodes.length; i += 1) {
-        const node = fooNodes.item(i);
-
-        expect(node).not.toContainCSSClass(expectedFooClass);
-      }
-
-      barNodes = document.querySelectorAll(barSelector);
-
-      for (let i = 0; i < barNodes.length; i += 1) {
-        const node = barNodes.item(i);
-
-        expect(node).not.toContainCSSClass(expectedBarClass);
-      }
+      expect(fooSelector).not.toHaveCSSClass(expectedFooClass);
+      expect(barSelector).not.toHaveCSSClass(expectedBarClass);
 
       application.vitalize();
 
-      fooNodes = document.querySelectorAll(fooSelector);
-
-      for (let i = 0; i < fooNodes.length; i += 1) {
-        const node = fooNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedFooClass);
-      }
-
-      barNodes = document.querySelectorAll(barSelector);
-
-      for (let i = 0; i < barNodes.length; i += 1) {
-        const node = barNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedBarClass);
-      }
+      expect(fooSelector).toHaveCSSClass(expectedFooClass);
+      expect(barSelector).toHaveCSSClass(expectedBarClass);
     });
 
     describe('given tree', () => {
@@ -434,63 +399,19 @@ describe('Application', () => {
         };
         application.component(barSelector, barProto);
 
-        const fooNodes = document.querySelectorAll(fooSelector);
-
-        for (let i = 0; i < fooNodes.length; i += 1) {
-          const node = fooNodes.item(i);
-
-          expect(node).not.toContainCSSClass(expectedFooClass);
-        }
-
-        const barNodes = document.querySelectorAll(barSelector);
-
-        for (let i = 0; i < barNodes.length; i += 1) {
-          const node = barNodes.item(i);
-
-          expect(node).not.toContainCSSClass(expectedBarClass);
-        }
+        expect(fooSelector).not.toHaveCSSClass(expectedFooClass);
+        expect(barSelector).not.toHaveCSSClass(expectedBarClass);
 
         application.vitalize(`.${treeClass}`);
 
-        const outsideFooNodes = document.querySelectorAll(
-          `.${fooClass}.${outsideClass}`
-        );
-
-        for (let i = 0; i < outsideFooNodes.length; i += 1) {
-          const node = outsideFooNodes.item(i);
-
-          expect(node).not.toContainCSSClass(expectedFooClass);
-        }
-
-        const insideFooNodes = document.querySelectorAll(
-          `.${fooClass}.${insideClass}`
-        );
-
-        for (let i = 0; i < insideFooNodes.length; i += 1) {
-          const node = insideFooNodes.item(i);
-
-          expect(node).toContainCSSClass(expectedFooClass);
-        }
-
-        const outsideBarNodes = document.querySelectorAll(
-          `.${barClass}.${outsideClass}`
-        );
-
-        for (let i = 0; i < outsideBarNodes.length; i += 1) {
-          const node = outsideBarNodes.item(i);
-
-          expect(node).not.toContainCSSClass(expectedBarClass);
-        }
-
-        const insideBarNodes = document.querySelectorAll(
-          `.${barClass}.${insideClass}`
-        );
-
-        for (let i = 0; i < insideBarNodes.length; i += 1) {
-          const node = insideBarNodes.item(i);
-
-          expect(node).toContainCSSClass(expectedBarClass);
-        }
+        expect(`.${fooClass}.${outsideClass}`)
+          .not.toHaveCSSClass(expectedFooClass);
+        expect(`.${fooClass}.${insideClass}`)
+          .toHaveCSSClass(expectedFooClass);
+        expect(`.${barClass}.${outsideClass}`)
+          .not.toHaveCSSClass(expectedBarClass);
+        expect(`.${barClass}.${insideClass}`)
+          .toHaveCSSClass(expectedBarClass);
       });
 
       it('creates components on tree rootes if matched by component selectors', () => {
@@ -539,42 +460,13 @@ describe('Application', () => {
         };
         application.component(barSelector, barProto);
 
-        let fooNodes;
-        let barNodes;
-
-        fooNodes = document.querySelectorAll(fooSelector);
-
-        for (let i = 0; i < fooNodes.length; i += 1) {
-          const node = fooNodes.item(i);
-
-          expect(node).not.toContainCSSClass(expectedFooClass);
-        }
-
-        barNodes = document.querySelectorAll(barSelector);
-
-        for (let i = 0; i < barNodes.length; i += 1) {
-          const node = barNodes.item(i);
-
-          expect(node).not.toContainCSSClass(expectedBarClass);
-        }
+        expect(fooSelector).not.toHaveCSSClass(expectedFooClass);
+        expect(barSelector).not.toHaveCSSClass(expectedBarClass);
 
         application.vitalize();
 
-        fooNodes = document.querySelectorAll(fooSelector);
-
-        for (let i = 0; i < fooNodes.length; i += 1) {
-          const node = fooNodes.item(i);
-
-          expect(node).toContainCSSClass(expectedFooClass);
-        }
-
-        barNodes = document.querySelectorAll(barSelector);
-
-        for (let i = 0; i < barNodes.length; i += 1) {
-          const node = barNodes.item(i);
-
-          expect(node).toContainCSSClass(expectedBarClass);
-        }
+        expect(fooSelector).toHaveCSSClass(expectedFooClass);
+        expect(barSelector).toHaveCSSClass(expectedBarClass);
       });
     });
 

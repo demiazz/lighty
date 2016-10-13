@@ -38,13 +38,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${nodeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select tree element if matched by selector', () => {
@@ -63,13 +57,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${treeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
     });
   });
 
@@ -101,13 +89,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${nodeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -130,13 +112,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${treeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
     });
   });
 
@@ -168,13 +144,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${nodeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -197,13 +167,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${treeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
     });
   });
 
@@ -235,13 +199,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${nodeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -264,13 +222,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${treeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
     });
   });
 
@@ -301,13 +253,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${nodeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -329,13 +275,7 @@ describe('findInTree', () => {
         node.className = `${node.className} ${expectedClass}`;
       }
 
-      const actualNodes = document.querySelectorAll(`.${treeClass}`);
-
-      for (let i = 0; i < actualNodes.length; i += 1) {
-        const node = actualNodes.item(i);
-
-        expect(node).toContainCSSClass(expectedClass);
-      }
+      expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
     });
   });
 });
