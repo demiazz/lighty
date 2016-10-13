@@ -1,7 +1,5 @@
 /* eslint no-unused-expressions: 0 */
 
-import isDeepEqual from 'deep-equal';
-
 import { plugin as createPlugin } from '../src';
 import Application from '../src/application';
 import Builder from '../src/builder';
@@ -228,7 +226,7 @@ describe('Application', () => {
       application.component('.selector', { });
 
       expect(application.builders.length).toEqual(1);
-      expect(application.builders[0] instanceof Builder).toBeTrue();
+      expect(application.builders).toBeInstanceOf(Builder);
     });
 
     it('assigns unique id to each new builder', () => {
@@ -246,7 +244,7 @@ describe('Application', () => {
       const application = new Application();
       const result = application.component('.selector', { });
 
-      expect(result instanceof Application).toBeTrue();
+      expect(result).toBeInstanceOf(Application);
     });
 
     describe('isRunning flag is setted to false', () => {

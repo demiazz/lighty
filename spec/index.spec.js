@@ -13,7 +13,7 @@ describe('application', () => {
   });
 
   it('is instance of Application', () => {
-    expect(application instanceof Application).toBeTrue();
+    expect(application).toBeInstanceOf(Application);
   });
 
   it('has name equals to `default`', () => {
@@ -80,7 +80,7 @@ describe('plugin', () => {
     const factory = plugin(name, initializer);
     const instance = factory();
 
-    expect(instance instanceof Plugin).toBeTrue();
+    expect(instance).toBeInstanceOf(Plugin);
     expect(instance.name).toEqual(name);
     expect(initializer.callCount).toEqual(1);
 

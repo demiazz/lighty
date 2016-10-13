@@ -46,9 +46,26 @@ function toBeEmptyArray() {
   };
 }
 
+function toBeInstanceOf() {
+  return {
+    compare(actual, klass) {
+      const result = {
+        pass: actual instanceof klass,
+      };
+
+      result.message = result.pass
+        ? `Expected ${JSON.stringify(actual)} not to be an instance of ${klass}`
+        : `Expected ${JSON.stringify(actual)} to be an instance of ${klass}`;
+
+      return result;
+    },
+  };
+}
+
 
 export default {
   toBeTrue,
   toBeFalse,
   toBeEmptyArray,
+  toBeInstanceOf,
 };
