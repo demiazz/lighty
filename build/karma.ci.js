@@ -43,17 +43,17 @@ module.exports = function karma(config) {
 
     // Firefox (last 2 versions)
 
+    sl_firefox_49: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '49.0',
+      platform: 'Windows 10',
+    },
+
     sl_firefox_48: {
       base: 'SauceLabs',
       browserName: 'firefox',
       version: '48.0',
-      platform: 'Windows 10',
-    },
-
-    sl_firefox_47: {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      version: '47.0',
       platform: 'Windows 10',
     },
 
