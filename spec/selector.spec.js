@@ -2,12 +2,18 @@
 
 import $ from 'jquery';
 
-import { fixture, clear } from './fixtures';
-
 import findInTree from '../src/selector';
+
+import { fixture, clear } from './fixtures';
+import matchers from './matchers';
+
 
 
 describe('findInTree', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   afterEach(clear);
 
   describe('HTMLElement instance given as a tree', () => {

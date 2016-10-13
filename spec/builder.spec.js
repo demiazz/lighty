@@ -2,13 +2,18 @@
 
 import isDeepEqual from 'deep-equal';
 
-import { fixture, clear } from './fixtures';
-
 import { plugin } from '../src';
 import Builder from '../src/builder';
 
+import { fixture, clear } from './fixtures';
+import matchers from './matchers';
+
 
 describe('Builder', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   afterEach(clear);
 
   describe('.constructor', () => {
@@ -24,8 +29,8 @@ describe('Builder', () => {
 
       expect(builder.id).toEqual(id);
       expect(builder.selector).toEqual(selector);
-      expect(isDeepEqual(builder.proto, proto)).toBe(true);
-      expect(isDeepEqual(builder.plugins, plugins)).toBe(true);
+      expect(isDeepEqual(builder.proto, proto)).toBeTrue();
+      expect(isDeepEqual(builder.plugins, plugins)).toBeTrue();
     });
   });
 
@@ -231,7 +236,7 @@ describe('Builder', () => {
       secondBuilder.getInitializer()();
       firstBuilder.getInitializer()();
 
-      expect(isDeepEqual(calls, ['first', 'second'])).toBe(true);
+      expect(isDeepEqual(calls, ['first', 'second'])).toBeTrue();
     });
   });
 });

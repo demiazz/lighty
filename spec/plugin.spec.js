@@ -2,8 +2,14 @@
 
 import Plugin from '../src/plugin';
 
+import matchers from './matchers';
+
 
 describe('Plugin', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   describe('.constructor', () => {
     it('gives name and transformer function', () => {
       const name = 'my-plugin';
@@ -28,7 +34,7 @@ describe('Plugin', () => {
       plugin.transform(...args);
 
       expect(transformer.callCount).toEqual(1);
-      expect(transformer.calledWith(...args)).toBe(true);
+      expect(transformer.calledWith(...args)).toBeTrue();
     });
   });
 });

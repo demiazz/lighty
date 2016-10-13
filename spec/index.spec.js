@@ -1,15 +1,19 @@
 /* eslint no-unused-expressions: 0 */
 
-import isDeepEqual from 'deep-equal';
-
 import application, { create, plugin } from '../src';
 import Application from '../src/application';
 import Plugin from '../src/plugin';
 
+import matchers from './matchers';
+
 
 describe('application', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   it('is instance of Application', () => {
-    expect(application instanceof Application).toBe(true);
+    expect(application instanceof Application).toBeTrue();
   });
 
   it('has name equals to `default`', () => {
@@ -17,23 +21,27 @@ describe('application', () => {
   });
 
   it('has empty plugins list', () => {
-    expect(isDeepEqual(application.plugins, [])).toBe(true);
+    expect(application.plugins).toBeEmptyArray();
   });
 
   it('has empty builders list', () => {
-    expect(isDeepEqual(application.builders, [])).toBe(true);
+    expect(application.builders).toBeEmptyArray();
   });
 
   it('has isReady flag which equals to false', () => {
-    expect(application.isReady).toBe(false);
+    expect(application.isReady).toBeFalse();
   });
 
   it('has isRunning flag which equals to false', () => {
-    expect(application.isRunning).toBe(false);
+    expect(application.isRunning).toBeFalse();
   });
 });
 
 describe('create', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   it('returns `application` by default', () => {
     const created = create();
 
@@ -45,10 +53,10 @@ describe('create', () => {
     const created = create(name);
 
     expect(created.name).toBe(name);
-    expect(isDeepEqual(created.plugins, [])).toBe(true);
-    expect(isDeepEqual(created.builders, [])).toBe(true);
-    expect(created.isReady).toBe(false);
-    expect(created.isRunning).toBe(false);
+    expect(created.plugins).toBeEmptyArray();
+    expect(created.builders).toBeEmptyArray();
+    expect(created.isReady).toBeFalse();
+    expect(created.isRunning).toBeFalse();
   });
 
   it('returns instance with given name if exists', () => {
@@ -61,6 +69,10 @@ describe('create', () => {
 });
 
 describe('plugin', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   it('returns plugin factory', () => {
     const name = 'my-plugin';
     const transform = sinon.spy();
@@ -68,7 +80,7 @@ describe('plugin', () => {
     const factory = plugin(name, initializer);
     const instance = factory();
 
-    expect(instance instanceof Plugin).toBe(true);
+    expect(instance instanceof Plugin).toBeTrue();
     expect(instance.name).toEqual(name);
     expect(initializer.callCount).toEqual(1);
 
@@ -86,6 +98,6 @@ describe('plugin', () => {
     factory(...args);
 
     expect(initializer.callCount).toEqual(1);
-    expect(initializer.calledWith(...args)).toBe(true);
+    expect(initializer.calledWith(...args)).toBeTrue();
   });
 });

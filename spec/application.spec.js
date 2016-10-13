@@ -2,11 +2,12 @@
 
 import isDeepEqual from 'deep-equal';
 
-import { fixture, clear } from './fixtures';
-
 import { plugin as createPlugin } from '../src';
 import Application from '../src/application';
 import Builder from '../src/builder';
+
+import { fixture, clear } from './fixtures';
+import matchers from './matchers';
 
 
 function isReadyStateMockable() {
@@ -24,6 +25,10 @@ function isReadyStateMockable() {
 
 
 describe('Application', () => {
+  beforeEach(() => {
+    window.jasmine.addMatchers(matchers);
+  });
+
   afterEach(clear);
 
   describe('.constructor', () => {
@@ -37,25 +42,25 @@ describe('Application', () => {
     it('creates empty plugins list', () => {
       const application = new Application();
 
-      expect(isDeepEqual(application.plugins, [])).toBe(true);
+      expect(application.plugins).toBeEmptyArray();
     });
 
     it('creates empty builders list', () => {
       const application = new Application();
 
-      expect(isDeepEqual(application.builders, [])).toBe(true);
+      expect(application.builders).toBeEmptyArray();
     });
 
     it('creates isRunning flag equals to false', () => {
       const application = new Application();
 
-      expect(application.isRunning).toBe(false);
+      expect(application.isRunning).toBeFalse();
     });
 
     it('creates isReady flag equals to false', () => {
       const application = new Application();
 
-      expect(application.isReady).toBe(false);
+      expect(application.isReady).toBeFalse();
     });
   });
 
@@ -66,7 +71,7 @@ describe('Application', () => {
 
         application.use();
 
-        expect(isDeepEqual(application.plugins, [])).toBe(true);
+        expect(application.plugins).toBeEmptyArray();
       });
     });
 
@@ -218,12 +223,12 @@ describe('Application', () => {
     it('creates builder instance', () => {
       const application = new Application();
 
-      expect(isDeepEqual(application.builders, [])).toBe(true);
+      expect(application.builders).toBeEmptyArray();
 
       application.component('.selector', { });
 
       expect(application.builders.length).toEqual(1);
-      expect(application.builders[0] instanceof Builder).toBe(true);
+      expect(application.builders[0] instanceof Builder).toBeTrue();
     });
 
     it('assigns unique id to each new builder', () => {
@@ -241,7 +246,7 @@ describe('Application', () => {
       const application = new Application();
       const result = application.component('.selector', { });
 
-      expect(result instanceof Application).toBe(true);
+      expect(result instanceof Application).toBeTrue();
     });
 
     describe('isRunning flag is setted to false', () => {
@@ -579,11 +584,11 @@ describe('Application', () => {
       it('sets isReady flag to true', () => {
         const application = new Application();
 
-        expect(application.isReady).toBe(false);
+        expect(application.isReady).toBeFalse();
 
         application.run();
 
-        expect(application.isReady).toBe(true);
+        expect(application.isReady).toBeTrue();
       });
 
       it('returns application instance as result', () => {
@@ -620,11 +625,11 @@ describe('Application', () => {
         it("doesn't set isRunning flag to true", () => {
           const application = new Application();
 
-          expect(application.isRunning).toBe(false);
+          expect(application.isRunning).toBeFalse();
 
           application.run();
 
-          expect(application.isRunning).toBe(false);
+          expect(application.isRunning).toBeFalse();
         });
 
         it("doesn't run vitalize", () => {
@@ -645,15 +650,15 @@ describe('Application', () => {
             const event = document.createEvent('Event');
             event.initEvent('DOMContentLoaded', true, true);
 
-            expect(application.isRunning).toBe(false);
+            expect(application.isRunning).toBeFalse();
 
             application.run();
 
-            expect(application.isRunning).toBe(false);
+            expect(application.isRunning).toBeFalse();
 
             window.document.dispatchEvent(event);
 
-            expect(application.isRunning).toBe(true);
+            expect(application.isRunning).toBeTrue();
           });
 
           it('run vitalize', () => {
@@ -707,11 +712,11 @@ describe('Application', () => {
 
             const application = new Application();
 
-            expect(application.isRunning).toBe(false);
+            expect(application.isRunning).toBeFalse();
 
             application.run();
 
-            expect(application.isRunning).toBe(true);
+            expect(application.isRunning).toBeTrue();
           });
         });
 
