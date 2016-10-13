@@ -4,8 +4,7 @@ import { plugin as createPlugin } from '../src';
 import Application from '../src/application';
 import Builder from '../src/builder';
 
-import { fixture, clear } from './fixtures';
-import matchers from './matchers';
+import { fixture, clear, matchers } from './helpers';
 
 
 function isReadyStateMockable() {

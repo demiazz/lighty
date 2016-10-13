@@ -5,8 +5,7 @@ import isDeepEqual from 'deep-equal';
 import { plugin } from '../src';
 import Builder from '../src/builder';
 
-import { fixture, clear } from './fixtures';
-import matchers from './matchers';
+import { fixture, clear, matchers } from './helpers';
 
 
 describe('Builder', () => {

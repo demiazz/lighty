@@ -4,9 +4,7 @@ import $ from 'jquery';
 
 import findInTree from '../src/selector';
 
-import { fixture, clear } from './fixtures';
-import matchers from './matchers';
-
+import { fixture, clear, matchers } from './helpers';
 
 
 describe('findInTree', () => {

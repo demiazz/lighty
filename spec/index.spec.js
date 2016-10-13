@@ -4,7 +4,7 @@ import application, { create, plugin } from '../src';
 import Application from '../src/application';
 import Plugin from '../src/plugin';
 
-import matchers from './matchers';
+import { matchers } from './helpers';
 
 
 describe('application', () => {

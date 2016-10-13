@@ -2,7 +2,7 @@
 
 import Plugin from '../src/plugin';
 
-import matchers from './matchers';
+import { matchers } from './helpers';
 
 
 describe('Plugin', () => {
