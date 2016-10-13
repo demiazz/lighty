@@ -272,8 +272,8 @@ describe('Application', () => {
         application.component(selector, proto);
 
         expect(
-          document.querySelector(selector).className.split(' ')
-        ).not.toContain(expectedClass);
+          document.querySelector(selector)
+        ).not.toContainCSSClass(expectedClass);
       });
     });
 
@@ -303,8 +303,8 @@ describe('Application', () => {
         application.component(selector, proto);
 
         expect(
-          document.querySelector(selector).className.split(' ')
-        ).toContain(expectedClass);
+          document.querySelector(selector)
+        ).toContainCSSClass(expectedClass);
       });
     });
   });
@@ -355,7 +355,7 @@ describe('Application', () => {
       for (let i = 0; i < fooNodes.length; i += 1) {
         const node = fooNodes.item(i);
 
-        expect(node.className.split(' ')).not.toContain(expectedFooClass);
+        expect(node).not.toContainCSSClass(expectedFooClass);
       }
 
       barNodes = document.querySelectorAll(barSelector);
@@ -363,7 +363,7 @@ describe('Application', () => {
       for (let i = 0; i < barNodes.length; i += 1) {
         const node = barNodes.item(i);
 
-        expect(node.className.split(' ')).not.toContain(expectedBarClass);
+        expect(node).not.toContainCSSClass(expectedBarClass);
       }
 
       application.vitalize();
@@ -373,7 +373,7 @@ describe('Application', () => {
       for (let i = 0; i < fooNodes.length; i += 1) {
         const node = fooNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedFooClass);
+        expect(node).toContainCSSClass(expectedFooClass);
       }
 
       barNodes = document.querySelectorAll(barSelector);
@@ -381,7 +381,7 @@ describe('Application', () => {
       for (let i = 0; i < barNodes.length; i += 1) {
         const node = barNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedBarClass);
+        expect(node).toContainCSSClass(expectedBarClass);
       }
     });
 
@@ -439,7 +439,7 @@ describe('Application', () => {
         for (let i = 0; i < fooNodes.length; i += 1) {
           const node = fooNodes.item(i);
 
-          expect(node.className.split(' ')).not.toContain(expectedFooClass);
+          expect(node).not.toContainCSSClass(expectedFooClass);
         }
 
         const barNodes = document.querySelectorAll(barSelector);
@@ -447,7 +447,7 @@ describe('Application', () => {
         for (let i = 0; i < barNodes.length; i += 1) {
           const node = barNodes.item(i);
 
-          expect(node.className.split(' ')).not.toContain(expectedBarClass);
+          expect(node).not.toContainCSSClass(expectedBarClass);
         }
 
         application.vitalize(`.${treeClass}`);
@@ -459,7 +459,7 @@ describe('Application', () => {
         for (let i = 0; i < outsideFooNodes.length; i += 1) {
           const node = outsideFooNodes.item(i);
 
-          expect(node.className.split(' ')).not.toContain(expectedFooClass);
+          expect(node).not.toContainCSSClass(expectedFooClass);
         }
 
         const insideFooNodes = document.querySelectorAll(
@@ -469,7 +469,7 @@ describe('Application', () => {
         for (let i = 0; i < insideFooNodes.length; i += 1) {
           const node = insideFooNodes.item(i);
 
-          expect(node.className.split(' ')).toContain(expectedFooClass);
+          expect(node).toContainCSSClass(expectedFooClass);
         }
 
         const outsideBarNodes = document.querySelectorAll(
@@ -479,7 +479,7 @@ describe('Application', () => {
         for (let i = 0; i < outsideBarNodes.length; i += 1) {
           const node = outsideBarNodes.item(i);
 
-          expect(node.className.split(' ')).not.toContain(expectedBarClass);
+          expect(node).not.toContainCSSClass(expectedBarClass);
         }
 
         const insideBarNodes = document.querySelectorAll(
@@ -489,7 +489,7 @@ describe('Application', () => {
         for (let i = 0; i < insideBarNodes.length; i += 1) {
           const node = insideBarNodes.item(i);
 
-          expect(node.className.split(' ')).toContain(expectedBarClass);
+          expect(node).toContainCSSClass(expectedBarClass);
         }
       });
 
@@ -547,7 +547,7 @@ describe('Application', () => {
         for (let i = 0; i < fooNodes.length; i += 1) {
           const node = fooNodes.item(i);
 
-          expect(node.className.split(' ')).not.toContain(expectedFooClass);
+          expect(node).not.toContainCSSClass(expectedFooClass);
         }
 
         barNodes = document.querySelectorAll(barSelector);
@@ -555,7 +555,7 @@ describe('Application', () => {
         for (let i = 0; i < barNodes.length; i += 1) {
           const node = barNodes.item(i);
 
-          expect(node.className.split(' ')).not.toContain(expectedBarClass);
+          expect(node).not.toContainCSSClass(expectedBarClass);
         }
 
         application.vitalize();
@@ -565,7 +565,7 @@ describe('Application', () => {
         for (let i = 0; i < fooNodes.length; i += 1) {
           const node = fooNodes.item(i);
 
-          expect(node.className.split(' ')).toContain(expectedFooClass);
+          expect(node).toContainCSSClass(expectedFooClass);
         }
 
         barNodes = document.querySelectorAll(barSelector);
@@ -573,7 +573,7 @@ describe('Application', () => {
         for (let i = 0; i < barNodes.length; i += 1) {
           const node = barNodes.item(i);
 
-          expect(node.className.split(' ')).toContain(expectedBarClass);
+          expect(node).toContainCSSClass(expectedBarClass);
         }
       });
     });

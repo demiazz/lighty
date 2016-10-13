@@ -43,7 +43,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
 
@@ -68,7 +68,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
   });
@@ -106,7 +106,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
 
@@ -135,7 +135,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
   });
@@ -173,7 +173,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
 
@@ -202,7 +202,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
   });
@@ -240,7 +240,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
 
@@ -269,7 +269,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
   });
@@ -306,7 +306,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
 
@@ -334,7 +334,7 @@ describe('findInTree', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedClass);
+        expect(node).toContainCSSClass(expectedClass);
       }
     });
   });

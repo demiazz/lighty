@@ -106,8 +106,8 @@ describe('Builder', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).not.toContain(expectedPluginClass);
-        expect(node.className.split(' ')).not.toContain(expectedComponentClass);
+        expect(node).not.toContainCSSClass(expectedPluginClass);
+        expect(node).not.toContainCSSClass(expectedComponentClass);
       }
 
       const builder = new Builder(0, selector, proto, plugins);
@@ -117,8 +117,8 @@ describe('Builder', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).not.toContain(expectedPluginClass);
-        expect(node.className.split(' ')).not.toContain(expectedComponentClass);
+        expect(node).not.toContainCSSClass(expectedPluginClass);
+        expect(node).not.toContainCSSClass(expectedComponentClass);
       }
 
       const initialize = builder.getInitializer();
@@ -128,8 +128,8 @@ describe('Builder', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedPluginClass);
-        expect(node.className.split(' ')).not.toContain(expectedComponentClass);
+        expect(node).toContainCSSClass(expectedPluginClass);
+        expect(node).not.toContainCSSClass(expectedComponentClass);
       }
 
       initialize();
@@ -139,8 +139,8 @@ describe('Builder', () => {
       for (let i = 0; i < actualNodes.length; i += 1) {
         const node = actualNodes.item(i);
 
-        expect(node.className.split(' ')).toContain(expectedPluginClass);
-        expect(node.className.split(' ')).toContain(expectedComponentClass);
+        expect(node).toContainCSSClass(expectedPluginClass);
+        expect(node).toContainCSSClass(expectedComponentClass);
       }
     });
 
@@ -173,11 +173,11 @@ describe('Builder', () => {
       initialize();
 
       expect(
-        document.getElementById('inside').className.split(' ')
-      ).toContain(expectedClass);
+        document.getElementById('inside')
+      ).toContainCSSClass(expectedClass);
       expect(
-        document.getElementById('outside').className.split(' ')
-      ).not.toContain(expectedClass);
+        document.getElementById('outside')
+      ).not.toContainCSSClass(expectedClass);
     });
 
     it('can use subtree including root for searching elements', () => {
@@ -207,11 +207,11 @@ describe('Builder', () => {
       initialize();
 
       expect(
-        document.getElementById('parent').className.split(' ')
-      ).toContain(expectedClass);
+        document.getElementById('parent')
+      ).toContainCSSClass(expectedClass);
       expect(
-        document.getElementById('children').className.split(' ')
-      ).toContain(expectedClass);
+        document.getElementById('children')
+      ).toContainCSSClass(expectedClass);
     });
 
     it('builds component only once for each node', () => {

@@ -54,8 +54,24 @@ function toBeInstanceOf() {
       };
 
       result.message = result.pass
-        ? `Expected ${JSON.stringify(actual)} not to be an instance of ${klass}`
-        : `Expected ${JSON.stringify(actual)} to be an instance of ${klass}`;
+        ? `Expected ${JSON.stringify(actual)} not to be an instance of ${klass.name}`
+        : `Expected ${JSON.stringify(actual)} to be an instance of ${klass.name}`;
+
+      return result;
+    },
+  };
+}
+
+function toContainCSSClass() {
+  return {
+    compare(actual, klass) {
+      const result = {
+        pass: actual.className.split(' ').indexOf(klass) !== -1,
+      };
+
+      result.message = result.pass
+        ? `Expected \`${actual.className}\` not to contain \`${klass}\``
+        : `Expected \`${actual.classNane}\` to contain \`${klass}\``;
 
       return result;
     },
@@ -68,4 +84,5 @@ export default {
   toBeFalse,
   toBeEmptyArray,
   toBeInstanceOf,
+  toContainCSSClass,
 };
