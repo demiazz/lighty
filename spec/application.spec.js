@@ -138,9 +138,9 @@ describe('Application', () => {
         expect(fooInitializer.callCount).toEqual(1);
         expect(barTransformer.callCount).toEqual(0);
 
-        for (let i = 0; i < application.plugins.length; i += 1) {
-          application.plugins[i].transform();
-        }
+        application.plugins.forEach((plugin) => {
+          plugin.transform();
+        });
 
         expect(fooTransformer.callCount).toEqual(1);
         expect(fooInitializer.callCount).toEqual(1);
@@ -169,9 +169,9 @@ describe('Application', () => {
         expect(fooInitializer.callCount).toEqual(1);
         expect(barTransformer.callCount).toEqual(0);
 
-        for (let i = 0; i < application.plugins.length; i += 1) {
-          application.plugins[i].transform();
-        }
+        application.plugins.forEach((plugin) => {
+          plugin.transform();
+        });
 
         expect(fooTransformer.callCount).toEqual(1);
         expect(fooInitializer.callCount).toEqual(1);
@@ -200,9 +200,9 @@ describe('Application', () => {
         expect(fooInitializer.callCount).toEqual(2);
         expect(barTransformer.callCount).toEqual(0);
 
-        for (let i = 0; i < application.plugins.length; i += 1) {
-          application.plugins[i].transform();
-        }
+        application.plugins.forEach((plugin) => {
+          plugin.transform();
+        });
 
         expect(fooTransformer.callCount).toEqual(2);
         expect(fooInitializer.callCount).toEqual(2);
