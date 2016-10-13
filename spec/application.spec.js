@@ -226,7 +226,7 @@ describe('Application', () => {
       application.component('.selector', { });
 
       expect(application.builders.length).toEqual(1);
-      expect(application.builders).toBeInstanceOf(Builder);
+      expect(application.builders[0]).toBeInstanceOf(Builder);
     });
 
     it('assigns unique id to each new builder', () => {
