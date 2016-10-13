@@ -20,18 +20,23 @@ export default class Builder {
       return cs;
     }, []);
 
-    return this.createInitializer(components);
+    return function initializer() {
+      components.forEach((component) => {
+        if (!component.init) {
+          return;
+        }
+
+        component.init();
+      });
+    };
   }
 
   createComponent(node) {
-    const component = { };
-    const properties = Object.keys(this.proto);
+    const component = Object.keys(this.proto).reduce((instance, property) => {
+      instance[property] = this.proto[property];
 
-    for (let i = 0; i < properties.length; i += 1) {
-      const property = properties[i];
-
-      component[property] = this.proto[property];
-    }
+      return instance;
+    }, { });
 
     this.transformComponent(component, node);
 
@@ -43,28 +48,14 @@ export default class Builder {
       return false;
     }
 
-    // eslint-disable-next-line
     node.ids = node.ids ? node.ids.concat(this.id) : [this.id];
 
     return true;
   }
 
   transformComponent(component, node) {
-    for (let i = 0; i < this.plugins.length; i += 1) {
-      this.plugins[i].transform(component, node);
-    }
-  }
-
-  // eslint-disable-next-line
-  createInitializer(components) {
-    return function initializer() {
-      for (let i = 0; i < components.length; i += 1) {
-        const component = components[i];
-
-        if (component.init) {
-          component.init();
-        }
-      }
-    };
+    this.plugins.forEach((plugin) => {
+      plugin.transform(component, node);
+    });
   }
 }

@@ -34,11 +34,11 @@ export default class Application {
   }
 
   vitalize(tree) {
-    for (let i = 0; i < this.builders.length; i += 1) {
-      const initialize = this.builders[i].getInitializer(tree);
+    this.builders.forEach((builder) => {
+      const initialize = builder.getInitializer(tree);
 
       initialize();
-    }
+    });
   }
 
   run() {
