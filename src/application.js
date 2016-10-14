@@ -12,7 +12,7 @@ export default class Application {
 
   use(...plugins) {
     if (this.isReady) {
-      throw new Error('`use` must be used before `run`');
+      throw new Error(`[${this.name}]: \`use\` must be used before \`run\``);
     }
 
     this.plugins = this.plugins.concat(

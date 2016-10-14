@@ -121,14 +121,17 @@ describe('Application', () => {
 
       describe('when called after `run` call', () => {
         it('throw error', () => {
-          const application = new Application();
+          const applicationName = 'my-application';
+          const application = new Application(applicationName);
           const factory = createPlugin('my-plugin', () => () => { });
           const plugin = factory();
 
           application.run();
 
           expect(() => application.use(plugin))
-            .toThrowError(Error, '`use` must be used before `run`');
+            .toThrowError(
+              Error, `[${applicationName}]: \`use\` must be used before \`run\``
+            );
         });
       });
     });
