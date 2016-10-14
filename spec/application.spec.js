@@ -76,42 +76,46 @@ describe('Application', () => {
       describe('argument is a plugin factory', () => {
         it('creates plugin instance and add to plugins list', () => {
           const application = new Application();
-          const transformer = sinon.spy();
-          const initializer = sinon.spy(() => transformer);
+          const transformer = jasmine.createSpy('transformer');
+          const initializer = (
+            jasmine.createSpy('initializer').and.callFake(() => transformer)
+          );
           const factory = createPlugin('my-plugin', initializer);
 
-          expect(transformer.callCount).toEqual(0);
-          expect(initializer.callCount).toEqual(0);
+          expect(transformer).not.toHaveBeenCalled();
+          expect(initializer).not.toHaveBeenCalled();
 
           application.use(factory);
 
-          expect(transformer.callCount).toEqual(0);
-          expect(initializer.callCount).toEqual(1);
+          expect(transformer).not.toHaveBeenCalled();
+          expect(initializer).toHaveBeenCalledTimes(1);
 
           application.plugins[0].transform();
 
-          expect(transformer.callCount).toEqual(1);
-          expect(initializer.callCount).toEqual(1);
+          expect(transformer).toHaveBeenCalledTimes(1);
+          expect(initializer).toHaveBeenCalledTimes(1);
         });
       });
 
       describe('argument is a Plugin instance', () => {
         it('adds plugin to plugins list', () => {
           const application = new Application();
-          const transformer = sinon.spy();
-          const initializer = sinon.spy(() => transformer);
+          const transformer = jasmine.createSpy('transformer');
+          const initializer = (
+            jasmine.createSpy('initializer').and.callFake(() => transformer)
+          );
           const factory = createPlugin('my-plugin', initializer);
           const plugin = factory();
 
-          expect(transformer.callCount).toEqual(0);
+          expect(transformer).not.toHaveBeenCalled();
 
           application.use(plugin);
 
-          expect(transformer.callCount).toEqual(0);
+          expect(transformer).not.toHaveBeenCalled();
 
           application.plugins[0].transform();
 
-          expect(transformer.callCount).toEqual(1);
+          expect(transformer).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -119,93 +123,105 @@ describe('Application', () => {
     describe('given multiple plugins', () => {
       it('adds plugin instances and results of plugin factories', () => {
         const application = new Application();
-        const fooTransformer = sinon.spy();
-        const fooInitializer = sinon.spy(() => fooTransformer);
+        const fooTransformer = jasmine.createSpy('fooTransformer');
+        const fooInitializer = (
+          jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer)
+        );
         const fooFactory = createPlugin('foo', fooInitializer);
-        const barTransformer = sinon.spy();
-        const barInitializer = sinon.spy(() => barTransformer);
+        const barTransformer = jasmine.createSpy('barTransformer');
+        const barInitializer = (
+          jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
+        );
         const barFactory = createPlugin('bar', barInitializer);
         const barPlugin = barFactory();
 
-        expect(fooTransformer.callCount).toEqual(0);
-        expect(fooInitializer.callCount).toEqual(0);
-        expect(barTransformer.callCount).toEqual(0);
+        expect(fooTransformer).not.toHaveBeenCalled();
+        expect(fooInitializer).not.toHaveBeenCalled();
+        expect(barTransformer).not.toHaveBeenCalled();
 
         application.use(fooFactory, barPlugin);
 
-        expect(fooTransformer.callCount).toEqual(0);
-        expect(fooInitializer.callCount).toEqual(1);
-        expect(barTransformer.callCount).toEqual(0);
+        expect(fooTransformer).not.toHaveBeenCalled();
+        expect(fooInitializer).toHaveBeenCalledTimes(1);
+        expect(barTransformer).not.toHaveBeenCalled();
 
         application.plugins.forEach((plugin) => {
           plugin.transform();
         });
 
-        expect(fooTransformer.callCount).toEqual(1);
-        expect(fooInitializer.callCount).toEqual(1);
-        expect(barTransformer.callCount).toEqual(1);
+        expect(fooTransformer).toHaveBeenCalledTimes(1);
+        expect(fooInitializer).toHaveBeenCalledTimes(1);
+        expect(barTransformer).toHaveBeenCalledTimes(1);
       });
     });
 
     describe('given array of plugins', () => {
       it('adds plugin instances and results of plugin factories from array', () => {
         const application = new Application();
-        const fooTransformer = sinon.spy();
-        const fooInitializer = sinon.spy(() => fooTransformer);
+        const fooTransformer = jasmine.createSpy('fooTransformer');
+        const fooInitializer = (
+          jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer)
+        );
         const fooFactory = createPlugin('foo', fooInitializer);
-        const barTransformer = sinon.spy();
-        const barInitializer = sinon.spy(() => barTransformer);
+        const barTransformer = jasmine.createSpy('barTransformer');
+        const barInitializer = (
+          jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
+        );
         const barFactory = createPlugin('bar', barInitializer);
         const barPlugin = barFactory();
 
-        expect(fooTransformer.callCount).toEqual(0);
-        expect(fooInitializer.callCount).toEqual(0);
-        expect(barTransformer.callCount).toEqual(0);
+        expect(fooTransformer).not.toHaveBeenCalled();
+        expect(fooInitializer).not.toHaveBeenCalled();
+        expect(barTransformer).not.toHaveBeenCalled();
 
         application.use([fooFactory, barPlugin]);
 
-        expect(fooTransformer.callCount).toEqual(0);
-        expect(fooInitializer.callCount).toEqual(1);
-        expect(barTransformer.callCount).toEqual(0);
+        expect(fooTransformer).not.toHaveBeenCalled();
+        expect(fooInitializer).toHaveBeenCalledTimes(1);
+        expect(barTransformer).not.toHaveBeenCalled();
 
         application.plugins.forEach((plugin) => {
           plugin.transform();
         });
 
-        expect(fooTransformer.callCount).toEqual(1);
-        expect(fooInitializer.callCount).toEqual(1);
-        expect(barTransformer.callCount).toEqual(1);
+        expect(fooTransformer).toHaveBeenCalledTimes(1);
+        expect(fooInitializer).toHaveBeenCalledTimes(1);
+        expect(barTransformer).toHaveBeenCalledTimes(1);
       });
     });
 
     describe('given mixed arrays and plugins', () => {
       it('adds plugin instances and results of plugins factories', () => {
         const application = new Application();
-        const fooTransformer = sinon.spy();
-        const fooInitializer = sinon.spy(() => fooTransformer);
+        const fooTransformer = jasmine.createSpy('fooTransformer');
+        const fooInitializer = (
+          jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer)
+        );
         const fooFactory = createPlugin('foo', fooInitializer);
-        const barTransformer = sinon.spy();
-        const barInitializer = sinon.spy(() => barTransformer);
+        const barTransformer = jasmine.createSpy('barTransformer');
+        const barInitializer = (
+          jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
+        );
         const barFactory = createPlugin('bar', barInitializer);
         const barPlugin = barFactory();
 
-        expect(fooTransformer.callCount).toEqual(0);
-        expect(fooInitializer.callCount).toEqual(0);
-        expect(barTransformer.callCount).toEqual(0);
+        expect(fooTransformer).not.toHaveBeenCalled();
+        expect(fooInitializer).not.toHaveBeenCalled();
+        expect(barTransformer).not.toHaveBeenCalled();
 
         application.use(fooFactory, barPlugin, [fooFactory, barPlugin]);
 
-        expect(fooTransformer.callCount).toEqual(0);
-        expect(fooInitializer.callCount).toEqual(2);
-        expect(barTransformer.callCount).toEqual(0);
+        expect(fooTransformer).not.toHaveBeenCalled();
+        expect(fooInitializer).toHaveBeenCalledTimes(2);
+        expect(barTransformer).not.toHaveBeenCalled();
 
         application.plugins.forEach((plugin) => {
           plugin.transform();
         });
 
-        expect(fooTransformer.callCount).toEqual(2);
-        expect(fooInitializer.callCount).toEqual(2);
-        expect(barTransformer.callCount).toEqual(2);
+        expect(fooTransformer).toHaveBeenCalledTimes(2);
+        expect(fooInitializer).toHaveBeenCalledTimes(2);
+        expect(barTransformer).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -523,13 +539,11 @@ describe('Application', () => {
 
         it("doesn't run vitalize", () => {
           const application = new Application();
-          const spy = sinon.spy();
-
-          sinon.stub(application, 'vitalize', spy);
+          const spy = spyOn(application, 'vitalize').and.stub();
 
           application.run();
 
-          expect(spy.callCount).toEqual(0);
+          expect(spy).not.toHaveBeenCalled();
         });
 
         describe('on DOMContentLoaded', () => {
@@ -552,22 +566,20 @@ describe('Application', () => {
 
           it('run vitalize', () => {
             const application = new Application();
-            const spy = sinon.spy();
-
-            sinon.stub(application, 'vitalize', spy);
+            const spy = spyOn(application, 'vitalize').and.stub();
 
             const event = document.createEvent('Event');
             event.initEvent('DOMContentLoaded', true, true);
 
-            expect(spy.callCount).toEqual(0);
+            expect(spy).not.toHaveBeenCalled();
 
             application.run();
 
-            expect(spy.callCount).toEqual(0);
+            expect(spy).not.toHaveBeenCalled();
 
             window.document.dispatchEvent(event);
 
-            expect(spy.callCount).toEqual(1);
+            expect(spy).toHaveBeenCalledTimes(1);
           });
         });
       });
@@ -617,13 +629,11 @@ describe('Application', () => {
             });
 
             const application = new Application();
-            const spy = sinon.spy();
-
-            sinon.stub(application, 'vitalize', spy);
+            const spy = spyOn(application, 'vitalize').and.stub();
 
             application.run();
 
-            expect(spy.callCount).toEqual(1);
+            expect(spy).toHaveBeenCalledTimes(1);
           });
         });
       });

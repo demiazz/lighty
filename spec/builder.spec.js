@@ -41,7 +41,7 @@ describe('Builder', () => {
       `);
 
       const selector = `.${nodeClass}`;
-      const spy = sinon.spy();
+      const spy = jasmine.createSpy('init');
       const proto = {
         init() {
           spy();
@@ -50,15 +50,15 @@ describe('Builder', () => {
 
       const builder = new Builder(0, selector, proto, []);
 
-      expect(spy.callCount).toEqual(0);
+      expect(spy).not.toHaveBeenCalled();
 
       const initialize = builder.getInitializer();
 
-      expect(spy.callCount).toEqual(0);
+      expect(spy).not.toHaveBeenCalled();
 
       initialize();
 
-      expect(spy.callCount).toEqual(2);
+      expect(spy).toHaveBeenCalledTimes(2);
     });
 
     it("returns initializer which doesn't call `init` if it doesn't exists", () => {

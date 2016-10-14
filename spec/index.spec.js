@@ -75,29 +75,31 @@ describe('plugin', () => {
 
   it('returns plugin factory', () => {
     const name = 'my-plugin';
-    const transform = sinon.spy();
-    const initializer = sinon.spy(() => transform);
+    const transform = jasmine.createSpy('transform');
+    const initializer = (
+      jasmine.createSpy('initializer').and.callFake(() => transform)
+    );
     const factory = plugin(name, initializer);
     const instance = factory();
 
     expect(instance).toBeInstanceOf(Plugin);
     expect(instance.name).toEqual(name);
-    expect(initializer.callCount).toEqual(1);
+    expect(initializer).toHaveBeenCalledTimes(1);
 
     instance.transform();
 
-    expect(transform.callCount).toEqual(1);
+    expect(transform).toHaveBeenCalledTimes(1);
   });
 
   it('call plugin initializer with given arguments', () => {
-    const initializer = sinon.spy(() => () => { });
+    const initializer = jasmine.createSpy('initializer').and.callFake(() => { });
     const name = 'my-plugin';
     const factory = plugin(name, initializer);
 
     const args = [1, {}, []];
     factory(...args);
 
-    expect(initializer.callCount).toEqual(1);
-    expect(initializer.calledWith(...args)).toBeTrue();
+    expect(initializer).toHaveBeenCalledTimes(1);
+    expect(initializer).toHaveBeenCalledWith(...args);
   });
 });

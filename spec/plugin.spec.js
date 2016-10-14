@@ -24,17 +24,17 @@ describe('Plugin', () => {
   describe('.transform', () => {
     it('calles transformer function with given arguments', () => {
       const name = 'my-plugin';
-      const transformer = sinon.spy();
+      const transformer = jasmine.createSpy('transformer');
       const plugin = new Plugin(name, transformer);
 
-      expect(transformer.callCount).toEqual(0);
+      expect(transformer).not.toHaveBeenCalled();
 
       const args = ['.selector', { init() { } }];
 
       plugin.transform(...args);
 
-      expect(transformer.callCount).toEqual(1);
-      expect(transformer.calledWith(...args)).toBeTrue();
+      expect(transformer).toHaveBeenCalledTimes(1);
+      expect(transformer).toHaveBeenCalledWith(...args);
     });
   });
 });

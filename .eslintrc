@@ -12,12 +12,14 @@
     "no-param-reassign": 0
   },
   "globals": {
+    "jasmine": false,
     "describe": false,
     "context": false,
     "beforeEach": false,
     "afterEach": false,
     "it": false,
     "expect": false,
+    "spyOn": false,
     "sinon": false
   }
 }

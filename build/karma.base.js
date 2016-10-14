@@ -4,7 +4,7 @@ const commonJS = require('rollup-plugin-commonjs');
 
 
 module.exports = {
-  frameworks: ['jasmine', 'sinon'],
+  frameworks: ['jasmine'],
 
   files: [
     {
@@ -30,7 +30,6 @@ module.exports = {
 
   plugins: [
     'karma-jasmine',
-    'karma-sinon',
     'karma-rollup-plugin',
     'karma-spec-reporter',
   ],
