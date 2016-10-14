@@ -1,3 +1,9 @@
+## 0.3.0 (14 October 2016)
+
+* Throw error when `use` method called after `run`
+* Add Microsoft Edge 14 to CI
+* Fix specs
+
 ## 0.2.3 (14 October 2016)
 
 * Remove `for` loops, use `forEach`/`map` instead
