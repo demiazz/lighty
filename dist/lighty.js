@@ -70,22 +70,25 @@ Builder.prototype.getInitializer = function getInitializer (tree) {
     return cs;
   }, []);
 
-  return this.createInitializer(components);
+  return function initializer() {
+    components.forEach(function (component) {
+      if (!component.init) {
+        return;
+      }
+
+      component.init();
+    });
+  };
 };
 
 Builder.prototype.createComponent = function createComponent (node) {
     var this$1 = this;
 
-  var component = { };
-  var properties = Object.keys(this.proto);
+  var component = Object.keys(this.proto).reduce(function (instance, property) {
+    instance[property] = this$1.proto[property];
 
-  for (var i = 0; i < properties.length; i += 1) {
-    var property = properties[i];
-
-    if ({}.hasOwnProperty.call(this$1.proto, property)) {
-      component[property] = this$1.proto[property];
-    }
-  }
+    return instance;
+  }, { });
 
   this.transformComponent(component, node);
 
@@ -97,31 +100,15 @@ Builder.prototype.checkAndUpdateCache = function checkAndUpdateCache (node) {
     return false;
   }
 
-  // eslint-disable-next-line
   node.ids = node.ids ? node.ids.concat(this.id) : [this.id];
 
   return true;
 };
 
 Builder.prototype.transformComponent = function transformComponent (component, node) {
-    var this$1 = this;
-
-  for (var i = 0; i < this.plugins.length; i += 1) {
-    this$1.plugins[i].transform(component, node);
-  }
-};
-
-// eslint-disable-next-line
-Builder.prototype.createInitializer = function createInitializer (components) {
-  return function initializer() {
-    for (var i = 0; i < components.length; i += 1) {
-      var component = components[i];
-
-      if (component.init) {
-        component.init();
-      }
-    }
-  };
+  this.plugins.forEach(function (plugin) {
+    plugin.transform(component, node);
+  });
 };
 
 var Application = function Application(name) {
@@ -159,13 +146,11 @@ Application.prototype.component = function component (selector, proto) {
 };
 
 Application.prototype.vitalize = function vitalize (tree) {
-    var this$1 = this;
-
-  for (var i = 0; i < this.builders.length; i += 1) {
-    var initialize = this$1.builders[i].getInitializer(tree);
+  this.builders.forEach(function (builder) {
+    var initialize = builder.getInitializer(tree);
 
     initialize();
-  }
+  });
 };
 
 Application.prototype.run = function run () {
