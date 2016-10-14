@@ -123,6 +123,10 @@ Application.prototype.use = function use () {
     var plugins = [], len = arguments.length;
     while ( len-- ) plugins[ len ] = arguments[ len ];
 
+  if (this.isReady) {
+    throw new Error(("[" + (this.name) + "]: `use` must be used before `run`"));
+  }
+
   this.plugins = this.plugins.concat(
     this.normalize(plugins)
   );
@@ -139,7 +143,7 @@ Application.prototype.component = function component (selector, proto) {
   if (this.isRunning) {
     var initializer = builder.getInitializer();
 
-    initializer();
+      initializer();
   }
 
   return this;
