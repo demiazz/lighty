@@ -57,8 +57,8 @@ function toBeInstanceOf() {
       };
 
       result.message = result.pass
-        ? `Expected ${JSON.stringify(actual)} not to be an instance of ${klass.name}`
-        : `Expected ${JSON.stringify(actual)} to be an instance of ${klass.name}`;
+        ? `Expected object not to be an instance of ${klass.name}`
+        : `Expected object to be an instance of ${klass.name}`;
 
       return result;
     },
