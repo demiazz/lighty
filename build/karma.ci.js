@@ -59,7 +59,14 @@ module.exports = function karma(config) {
 
     // Edge
 
-    sl_edge: {
+    sl_edge_14: {
+      base: 'SauceLabs',
+      browserName: 'MicrosoftEdge',
+      version: '14.14393',
+      platform: 'Windows 10',
+    },
+
+    sl_edge_13: {
       base: 'SauceLabs',
       browserName: 'MicrosoftEdge',
       version: '13.10586',
