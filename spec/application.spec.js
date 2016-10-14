@@ -118,6 +118,19 @@ describe('Application', () => {
           expect(transformer).toHaveBeenCalledTimes(1);
         });
       });
+
+      describe('when called after `run` call', () => {
+        it('throw error', () => {
+          const application = new Application();
+          const factory = createPlugin('my-plugin', () => () => { });
+          const plugin = factory();
+
+          application.run();
+
+          expect(() => application.use(plugin))
+            .toThrowError(Error, '`use` must be used before `run`');
+        });
+      });
     });
 
     describe('given multiple plugins', () => {

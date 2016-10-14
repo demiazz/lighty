@@ -11,6 +11,10 @@ export default class Application {
   }
 
   use(...plugins) {
+    if (this.isReady) {
+      throw new Error('`use` must be used before `run`');
+    }
+
     this.plugins = this.plugins.concat(
       this.normalize(plugins)
     );
