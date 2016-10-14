@@ -1,3 +1,10 @@
+## 0.2.3 (14 October 2016)
+
+* Remove `for` loops, use `forEach`/`map` instead
+* Remove `np` from development dependencies
+* Remove `sinon` from development dependencies
+* Refactor specs
+
 ## 0.2.2 (1 October 2016)
 
 * Add test coverage for library source code
