@@ -2,12 +2,8 @@ import Application from './application';
 import Plugin from './plugin';
 
 
-const applications = {
-  default: new Application('default'),
-};
+const applications = { };
 
-
-export default applications.default;
 
 export function create(name = 'default') {
   let instance = applications[name];

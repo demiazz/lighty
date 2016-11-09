@@ -1,51 +1,14 @@
 /* eslint no-unused-expressions: 0 */
 
-import application, { create, plugin } from '../src';
-import Application from '../src/application';
+import { create, plugin } from '../src';
 import Plugin from '../src/plugin';
 
 import { matchers } from './helpers';
 
 
-describe('application', () => {
-  beforeEach(() => {
-    window.jasmine.addMatchers(matchers);
-  });
-
-  it('is instance of Application', () => {
-    expect(application).toBeInstanceOf(Application);
-  });
-
-  it('has name equals to `default`', () => {
-    expect(application.name).toBe('default');
-  });
-
-  it('has empty plugins list', () => {
-    expect(application.plugins).toBeEmptyArray();
-  });
-
-  it('has empty builders list', () => {
-    expect(application.builders).toBeEmptyArray();
-  });
-
-  it('has isReady flag which equals to false', () => {
-    expect(application.isReady).toBeFalse();
-  });
-
-  it('has isRunning flag which equals to false', () => {
-    expect(application.isRunning).toBeFalse();
-  });
-});
-
 describe('create', () => {
   beforeEach(() => {
     window.jasmine.addMatchers(matchers);
-  });
-
-  it('returns `application` by default', () => {
-    const created = create();
-
-    expect(application).toBe(created);
   });
 
   it('returns new application with given name', () => {
