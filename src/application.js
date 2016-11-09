@@ -5,24 +5,27 @@ import querySelector from './query-selector';
 export default class Application {
   constructor(name, options = { }) {
     this.name = name;
-    this.plugins = [];
     this.builders = [];
     this.isReady = false;
     this.isRunning = false;
 
+    // Query selector
+
     this.querySelector = options.querySelector || querySelector;
-  }
 
-  use(...plugins) {
-    if (this.isReady) {
-      throw new Error(`[${this.name}]: \`use\` must be used before \`run\``);
+    // Plugins
+
+    this.plugins = [];
+
+    if (options.plugins) {
+      this.plugins = options.plugins.map((plugin) => {
+        if (plugin instanceof Function) {
+          return plugin();
+        }
+
+        return plugin;
+      });
     }
-
-    this.plugins = this.plugins.concat(
-      this.normalize(plugins)
-    );
-
-    return this;
   }
 
   component(selector, proto) {
@@ -66,24 +69,5 @@ export default class Application {
     this.isRunning = true;
 
     this.vitalize();
-  }
-
-  normalize(plugins) {
-    return plugins.reduce((ps, p) => {
-      const instances = Array.isArray(p)
-        ? p.map(plugin => this.instantiatePlugin(plugin))
-        : this.instantiatePlugin(p);
-
-      return ps.concat(instances);
-    }, []);
-  }
-
-  // eslint-disable-next-line
-  instantiatePlugin(plugin) {
-    if (plugin instanceof Function) {
-      return plugin();
-    }
-
-    return plugin;
   }
 }

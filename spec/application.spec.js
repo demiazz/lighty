@@ -67,6 +67,12 @@ describe('Application', () => {
 
         expect(application.querySelector).toEqual(querySelector);
       });
+
+      it('set plugins list to empty array', () => {
+        const application = new Application();
+
+        expect(application.plugins).toEqual([]);
+      });
     });
 
     describe('when options is given', () => {
@@ -77,193 +83,40 @@ describe('Application', () => {
 
         expect(application.querySelector).toEqual(customQuerySelector);
       });
-    });
-  });
 
-  describe('.use', () => {
-    describe('given nothing', () => {
-      it('adds nothing to plugins list', () => {
-        const application = new Application();
-
-        application.use();
-
-        expect(application.plugins).toBeEmptyArray();
-      });
-    });
-
-    describe('given single plugin', () => {
-      describe('argument is a plugin factory', () => {
-        it('creates plugin instance and add to plugins list', () => {
-          const application = new Application();
-          const transformer = jasmine.createSpy('transformer');
-          const initializer = (
-            jasmine.createSpy('initializer').and.callFake(() => transformer)
+      describe('when plugins in options object', () => {
+        it('adds plugins to plugins list', () => {
+          const fooTransformer = jasmine.createSpy('fooTransformer');
+          const fooInitializer =
+            jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer);
+          const fooFactory = createPlugin('foo', fooInitializer);
+          const barTransformer = jasmine.createSpy('barTransformer');
+          const barInitializer = (
+            jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
           );
-          const factory = createPlugin('my-plugin', initializer);
+          const barFactory = createPlugin('bar', barInitializer);
+          const barPlugin = barFactory();
+          const options = { plugins: [fooFactory, barPlugin] };
 
-          expect(transformer).not.toHaveBeenCalled();
-          expect(initializer).not.toHaveBeenCalled();
+          expect(fooTransformer).not.toHaveBeenCalled();
+          expect(fooInitializer).not.toHaveBeenCalled();
+          expect(barTransformer).not.toHaveBeenCalled();
 
-          application.use(factory);
+          const application = new Application('plugins', options);
 
-          expect(transformer).not.toHaveBeenCalled();
-          expect(initializer).toHaveBeenCalledTimes(1);
+          expect(fooTransformer).not.toHaveBeenCalled();
+          expect(fooInitializer).toHaveBeenCalledTimes(1);
+          expect(barTransformer).not.toHaveBeenCalled();
 
-          application.plugins[0].transform();
+          application.plugins.forEach((plugin) => {
+            plugin.transform();
+          });
 
-          expect(transformer).toHaveBeenCalledTimes(1);
-          expect(initializer).toHaveBeenCalledTimes(1);
+          expect(fooTransformer).toHaveBeenCalledTimes(1);
+          expect(fooInitializer).toHaveBeenCalledTimes(1);
+          expect(barTransformer).toHaveBeenCalledTimes(1);
         });
       });
-
-      describe('argument is a Plugin instance', () => {
-        it('adds plugin to plugins list', () => {
-          const application = new Application();
-          const transformer = jasmine.createSpy('transformer');
-          const initializer = (
-            jasmine.createSpy('initializer').and.callFake(() => transformer)
-          );
-          const factory = createPlugin('my-plugin', initializer);
-          const plugin = factory();
-
-          expect(transformer).not.toHaveBeenCalled();
-
-          application.use(plugin);
-
-          expect(transformer).not.toHaveBeenCalled();
-
-          application.plugins[0].transform();
-
-          expect(transformer).toHaveBeenCalledTimes(1);
-        });
-      });
-
-      describe('when called after `run` call', () => {
-        it('throw error', () => {
-          const applicationName = 'my-application';
-          const application = new Application(applicationName);
-          const factory = createPlugin('my-plugin', () => () => { });
-          const plugin = factory();
-
-          application.run();
-
-          expect(() => application.use(plugin))
-            .toThrowError(
-              Error, `[${applicationName}]: \`use\` must be used before \`run\``
-            );
-        });
-      });
-    });
-
-    describe('given multiple plugins', () => {
-      it('adds plugin instances and results of plugin factories', () => {
-        const application = new Application();
-        const fooTransformer = jasmine.createSpy('fooTransformer');
-        const fooInitializer = (
-          jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer)
-        );
-        const fooFactory = createPlugin('foo', fooInitializer);
-        const barTransformer = jasmine.createSpy('barTransformer');
-        const barInitializer = (
-          jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
-        );
-        const barFactory = createPlugin('bar', barInitializer);
-        const barPlugin = barFactory();
-
-        expect(fooTransformer).not.toHaveBeenCalled();
-        expect(fooInitializer).not.toHaveBeenCalled();
-        expect(barTransformer).not.toHaveBeenCalled();
-
-        application.use(fooFactory, barPlugin);
-
-        expect(fooTransformer).not.toHaveBeenCalled();
-        expect(fooInitializer).toHaveBeenCalledTimes(1);
-        expect(barTransformer).not.toHaveBeenCalled();
-
-        application.plugins.forEach((plugin) => {
-          plugin.transform();
-        });
-
-        expect(fooTransformer).toHaveBeenCalledTimes(1);
-        expect(fooInitializer).toHaveBeenCalledTimes(1);
-        expect(barTransformer).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('given array of plugins', () => {
-      it('adds plugin instances and results of plugin factories from array', () => {
-        const application = new Application();
-        const fooTransformer = jasmine.createSpy('fooTransformer');
-        const fooInitializer = (
-          jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer)
-        );
-        const fooFactory = createPlugin('foo', fooInitializer);
-        const barTransformer = jasmine.createSpy('barTransformer');
-        const barInitializer = (
-          jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
-        );
-        const barFactory = createPlugin('bar', barInitializer);
-        const barPlugin = barFactory();
-
-        expect(fooTransformer).not.toHaveBeenCalled();
-        expect(fooInitializer).not.toHaveBeenCalled();
-        expect(barTransformer).not.toHaveBeenCalled();
-
-        application.use([fooFactory, barPlugin]);
-
-        expect(fooTransformer).not.toHaveBeenCalled();
-        expect(fooInitializer).toHaveBeenCalledTimes(1);
-        expect(barTransformer).not.toHaveBeenCalled();
-
-        application.plugins.forEach((plugin) => {
-          plugin.transform();
-        });
-
-        expect(fooTransformer).toHaveBeenCalledTimes(1);
-        expect(fooInitializer).toHaveBeenCalledTimes(1);
-        expect(barTransformer).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('given mixed arrays and plugins', () => {
-      it('adds plugin instances and results of plugins factories', () => {
-        const application = new Application();
-        const fooTransformer = jasmine.createSpy('fooTransformer');
-        const fooInitializer = (
-          jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer)
-        );
-        const fooFactory = createPlugin('foo', fooInitializer);
-        const barTransformer = jasmine.createSpy('barTransformer');
-        const barInitializer = (
-          jasmine.createSpy('barInitializer').and.callFake(() => barTransformer)
-        );
-        const barFactory = createPlugin('bar', barInitializer);
-        const barPlugin = barFactory();
-
-        expect(fooTransformer).not.toHaveBeenCalled();
-        expect(fooInitializer).not.toHaveBeenCalled();
-        expect(barTransformer).not.toHaveBeenCalled();
-
-        application.use(fooFactory, barPlugin, [fooFactory, barPlugin]);
-
-        expect(fooTransformer).not.toHaveBeenCalled();
-        expect(fooInitializer).toHaveBeenCalledTimes(2);
-        expect(barTransformer).not.toHaveBeenCalled();
-
-        application.plugins.forEach((plugin) => {
-          plugin.transform();
-        });
-
-        expect(fooTransformer).toHaveBeenCalledTimes(2);
-        expect(fooInitializer).toHaveBeenCalledTimes(2);
-        expect(barTransformer).toHaveBeenCalledTimes(2);
-      });
-    });
-
-    it('returns application instance as result', () => {
-      const application = new Application();
-
-      expect(application.use()).toEqual(application);
     });
   });
 
@@ -339,11 +192,10 @@ describe('Application', () => {
             this.node.className = `${this.node.className} ${expectedClass}`;
           },
         };
-        const application = new Application();
-
-        application.use(createPlugin('node-binding', () => (component, node) => {
+        const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
-        }));
+        });
+        const application = new Application('is-running', { plugins: [plugin] });
 
         application.isRunning = true;
         application.component(selector, proto);
@@ -378,11 +230,10 @@ describe('Application', () => {
         </div>
       `);
 
-      const application = new Application();
-
-      application.use(createPlugin('node-binding', () => (component, node) => {
+      const plugin = createPlugin('node-binding', () => (component, node) => {
         component.node = node;
-      }));
+      });
+      const application = new Application('vitalize', { plugins: [plugin] });
 
       const expectedFooClass = 'is-foo-component';
       const fooSelector = `.${fooClass}`;
@@ -436,11 +287,10 @@ describe('Application', () => {
           </div>
         `);
 
-        const application = new Application();
-
-        application.use(createPlugin('node-binding', () => (component, node) => {
+        const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
-        }));
+        });
+        const application = new Application('vitalize', { plugins: [plugin] });
 
         const expectedFooClass = 'is-foo-component';
         const fooSelector = `.${fooClass}`;
@@ -497,11 +347,10 @@ describe('Application', () => {
           </div>
         `);
 
-        const application = new Application();
-
-        application.use(createPlugin('node-binding', () => (component, node) => {
+        const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
-        }));
+        });
+        const application = new Application('vitalize', { plugins: [plugin] });
 
         const expectedFooClass = 'is-foo-component';
         const fooSelector = `.${fooClass}`;
