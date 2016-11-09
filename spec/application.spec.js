@@ -278,7 +278,8 @@ describe('Application', () => {
     });
 
     it('create builder with querySelector used by application', () => {
-      const customQuerySelector = () => { };
+      const customQuerySelector =
+        (tree, selector) => querySelector(tree, selector);
       const options = { querySelector: customQuerySelector };
       const application = new Application(options);
 
