@@ -27,17 +27,17 @@ module.exports = function karma(config) {
   const sauceBrowsers = {
     // Chrome (last 2 versions)
 
+    sl_chrome_54: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '54.0',
+      platform: 'Windows 10',
+    },
+
     sl_chrome_53: {
       base: 'SauceLabs',
       browserName: 'chrome',
       version: '53.0',
-      platform: 'Windows 10',
-    },
-
-    sl_chrome_52: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      version: '52.0',
       platform: 'Windows 10',
     },
 
