@@ -133,28 +133,6 @@ module.exports = function karma(config) {
       platformVersion: '8.4',
       platformName: 'iOS',
     },
-
-    // Android (last 2 available versions)
-
-    sl_android_6_0: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      appiumVersion: '1.5.3',
-      deviceName: 'Samsung Galaxy S6 Device',
-      deviceOrientation: 'portrait',
-      platformVersion: '6.0',
-      platformName: 'Android',
-    },
-
-    sl_android_5_1: {
-      base: 'SauceLabs',
-      browserName: 'Browser',
-      appiumVersion: '1.6.0',
-      deviceName: 'Android Emulator',
-      deviceOrientation: 'portrait',
-      platformVersion: '5.1',
-      platformName: 'Android',
-    },
   };
 
   Object.assign(baseConfig, {
