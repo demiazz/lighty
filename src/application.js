@@ -24,6 +24,18 @@ export default class Application {
         return plugin;
       });
     }
+
+    // Running
+
+    if (document.readyState !== 'loading') {
+      this.isRunning = true;
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.isRunning = true;
+
+        this.vitalize();
+      });
+    }
   }
 
   component(selector, proto) {
@@ -49,21 +61,5 @@ export default class Application {
 
       initialize();
     });
-  }
-
-  run() {
-    if (document.readyState !== 'loading') {
-      this.start();
-    } else {
-      document.addEventListener('DOMContentLoaded', () => this.start());
-    }
-
-    return this;
-  }
-
-  start() {
-    this.isRunning = true;
-
-    this.vitalize();
   }
 }

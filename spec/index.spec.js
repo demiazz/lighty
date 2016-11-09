@@ -1,8 +1,8 @@
 /* eslint no-unused-expressions: 0 */
 
 import { create, plugin } from '../src';
+import Application from '../src/application';
 import Plugin from '../src/plugin';
-import querySelector from '../src/query-selector';
 
 import { matchers } from './helpers';
 
@@ -15,10 +15,7 @@ describe('create', () => {
   it('returns new application', () => {
     const application = create();
 
-    expect(application.plugins).toBeEmptyArray();
-    expect(application.builders).toBeEmptyArray();
-    expect(application.isRunning).toBeFalse();
-    expect(application.querySelector).toEqual(querySelector);
+    expect(application).toBeInstanceOf(Application);
   });
 
   it('returns new application with custom query selector', () => {

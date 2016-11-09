@@ -21,7 +21,6 @@ function isReadyStateMockable() {
   }
 }
 
-
 describe('Application', () => {
   beforeEach(() => {
     window.jasmine.addMatchers(matchers);
@@ -30,49 +29,21 @@ describe('Application', () => {
   afterEach(clear);
 
   describe('.constructor', () => {
-    it('creates empty plugins list', () => {
-      const application = new Application();
-
-      expect(application.plugins).toBeEmptyArray();
-    });
-
-    it('creates empty builders list', () => {
+    it('creates application without any builders', () => {
       const application = new Application();
 
       expect(application.builders).toBeEmptyArray();
     });
 
-    it('creates isRunning flag equals to false', () => {
-      const application = new Application();
+    describe('options', () => {
+      describe('plugins', () => {
+        it('set `plugins` to empty array if not given', () => {
+          const application = new Application();
 
-      expect(application.isRunning).toBeFalse();
-    });
+          expect(application.plugins).toEqual([]);
+        });
 
-    describe('when options is not given', () => {
-      it('set query selector to default query selector', () => {
-        const application = new Application();
-
-        expect(application.querySelector).toEqual(querySelector);
-      });
-
-      it('set plugins list to empty array', () => {
-        const application = new Application();
-
-        expect(application.plugins).toEqual([]);
-      });
-    });
-
-    describe('when options is given', () => {
-      it('set query selector to custom selector from options', () => {
-        const customQuerySelector = () => { };
-        const options = { querySelector: customQuerySelector };
-        const application = new Application(options);
-
-        expect(application.querySelector).toEqual(customQuerySelector);
-      });
-
-      describe('when plugins in options object', () => {
-        it('adds plugins to plugins list', () => {
+        it('set `plugins` from options if given', () => {
           const fooTransformer = jasmine.createSpy('fooTransformer');
           const fooInitializer =
             jasmine.createSpy('fooInitializer').and.callFake(() => fooTransformer);
@@ -102,6 +73,175 @@ describe('Application', () => {
           expect(fooTransformer).toHaveBeenCalledTimes(1);
           expect(fooInitializer).toHaveBeenCalledTimes(1);
           expect(barTransformer).toHaveBeenCalledTimes(1);
+        });
+      });
+
+      describe('querySelector', () => {
+        it('set `querySelector` to default `querySelector` if not given', () => {
+          const application = new Application();
+
+          expect(application.querySelector).toEqual(querySelector);
+        });
+
+        it('set `querySelector` from options if given', () => {
+          const customQuerySelector = () => { };
+          const options = { querySelector: customQuerySelector };
+          const application = new Application(options);
+
+          expect(application.querySelector).toEqual(customQuerySelector);
+        });
+      });
+    });
+
+    describe('running', () => {
+      describe('when `document.readyState` is equal to `loading`', () => {
+        let backup;
+
+        if (!isReadyStateMockable()) {
+          it("can't be tested because `document.readyState` can't be mocked in this browser");
+
+          return;
+        }
+
+        beforeEach(() => {
+          backup = document.readyState;
+
+          Object.defineProperty(document, 'readyState', {
+            value: 'loading',
+            writable: true,
+          });
+        });
+
+        afterEach(() => {
+          Object.defineProperty(document, 'readyState', {
+            value: backup,
+            writable: true,
+          });
+        });
+
+        it("don't vitalize components immediately'", () => {
+          fixture('<div class="loading"></div>');
+
+          expect(document.querySelector('.loading'))
+            .not.toHaveCSSClass('is-ready');
+
+          const plugin = createPlugin('bind', () => (component, node) => {
+            component.node = node;
+          });
+          const application = new Application({ plugins: [plugin] });
+
+          application.component('.loading', {
+            init() {
+              this.node.className = 'loading is-ready';
+            },
+          });
+
+          expect(document.querySelector('.loading'))
+            .not.toHaveCSSClass('is-ready');
+        });
+
+        describe('when `onDOMContentLoaded` raised', () => {
+          it('vitalize components immediately after event', () => {
+            fixture('<div class="loading"></div>');
+
+            expect(document.querySelector('.loading'))
+              .not.toHaveCSSClass('is-ready');
+
+            const plugin = createPlugin('bind', () => (component, node) => {
+              component.node = node;
+            });
+            const application = new Application({ plugins: [plugin] });
+
+            application.component('.loading', {
+              init() {
+                this.node.className = 'loading is-ready';
+              },
+            });
+
+            expect(document.querySelector('.loading'))
+              .not.toHaveCSSClass('is-ready');
+
+            const event = document.createEvent('Event');
+            event.initEvent('DOMContentLoaded', true, true);
+            window.document.dispatchEvent(event);
+
+            expect(document.querySelector('.loading'))
+              .toHaveCSSClass('is-ready');
+          });
+
+          it('vitalize new components immediately after event', () => {
+            fixture('<div class="loading"></div>');
+
+            expect(document.querySelector('.loading'))
+              .not.toHaveCSSClass('is-ready');
+
+            const plugin = createPlugin('bind', () => (component, node) => {
+              component.node = node;
+            });
+            const application = new Application({ plugins: [plugin] });
+
+            const event = document.createEvent('Event');
+            event.initEvent('DOMContentLoaded', true, true);
+            window.document.dispatchEvent(event);
+
+            application.component('.loading', {
+              init() {
+                this.node.className = 'loading is-ready';
+              },
+            });
+
+            expect(document.querySelector('.loading'))
+              .toHaveCSSClass('is-ready');
+          });
+        });
+      });
+
+      describe('when `document.readyState` is not equal to `loading`', () => {
+        let backup;
+
+        if (!isReadyStateMockable()) {
+          it("can't be tested because `document.readyState` can't be mocked in this browser");
+
+          return;
+        }
+
+        beforeEach(() => {
+          backup = document.readyState;
+        });
+
+        afterEach(() => {
+          Object.defineProperty(document, 'readyState', {
+            value: backup,
+            writable: true,
+          });
+        });
+
+        it('vitalize components immediately', () => {
+          ['interactive', 'complete'].forEach((state) => {
+            Object.defineProperty(document, 'readyState', {
+              value: state,
+              writable: true,
+            });
+
+            fixture(`<div class="${state}"></div>`);
+
+            expect(document.querySelector(`.${state}`))
+              .not.toHaveCSSClass('is-ready');
+
+            const plugin = createPlugin('bind', () => (component, node) => {
+              component.node = node;
+            });
+            const application = new Application({ plugins: [plugin] });
+
+            application.component(`.${state}`, {
+              init() {
+                this.node.className = `${state} is-ready`;
+              },
+            });
+
+            expect(document.querySelector(`.${state}`))
+              .toHaveCSSClass('is-ready');
+          });
         });
       });
     });
@@ -137,7 +277,42 @@ describe('Application', () => {
       expect(result).toBeInstanceOf(Application);
     });
 
-    describe('isRunning flag is setted to false', () => {
+    it('create builder with querySelector used by application', () => {
+      const customQuerySelector = () => { };
+      const options = { querySelector: customQuerySelector };
+      const application = new Application(options);
+
+      application.component('.my-component', { });
+
+      expect(application.builders[0].querySelector)
+        .toEqual(customQuerySelector);
+    });
+
+    describe('when `document.readyState` is equal to `loading`', () => {
+      let backup;
+
+      if (!isReadyStateMockable()) {
+        it("can't be tested because `document.readyState` can't be mocked in this browser");
+
+        return;
+      }
+
+      beforeEach(() => {
+        backup = document.readyState;
+
+        Object.defineProperty(document, 'readyState', {
+          value: 'loading',
+          writable: true,
+        });
+      });
+
+      afterEach(() => {
+        Object.defineProperty(document, 'readyState', {
+          value: backup,
+          writable: true,
+        });
+      });
+
       it("doesn't initialize component on nodes matched by selector", () => {
         const nodeClass = 'node';
 
@@ -164,42 +339,57 @@ describe('Application', () => {
       });
     });
 
-    describe('isRunning flag is setted to true', () => {
-      it('initialize component on nodes matched by selector', () => {
-        const nodeClass = 'node';
+    describe('when `document.readyState` is not equal to `loading`', () => {
+      let backup;
 
-        fixture(`
-          <div class="${nodeClass}"></div>
-        `);
+      if (!isReadyStateMockable()) {
+        it("can't be tested because `document.readyState` can't be mocked in this browser");
 
-        const expectedClass = 'is-component';
-        const selector = `.${nodeClass}`;
-        const proto = {
-          init() {
-            this.node.className = `${this.node.className} ${expectedClass}`;
-          },
-        };
-        const plugin = createPlugin('node-binding', () => (component, node) => {
-          component.node = node;
-        });
-        const application = new Application({ plugins: [plugin] });
+        return;
+      }
 
-        application.isRunning = true;
-        application.component(selector, proto);
-
-        expect(selector).toHaveCSSClass(expectedClass);
+      beforeEach(() => {
+        backup = document.readyState;
       });
-    });
 
-    it('create builder with querySelector used by application', () => {
-      const customQuerySelector = () => { };
-      const options = { querySelector: customQuerySelector };
-      const application = new Application(options);
+      afterEach(() => {
+        Object.defineProperty(document, 'readyState', {
+          value: backup,
+          writable: true,
+        });
+      });
 
-      application.component('.my-component', { });
+      it('initialize component on nodes matched by selector', () => {
+        ['interactive', 'complete'].forEach((state) => {
+          Object.defineProperty(document, 'readyState', {
+            value: state,
+            writable: true,
+          });
 
-      expect(application.builders[0].querySelector)
-        .toEqual(customQuerySelector);
+          const nodeClass = 'node';
+
+          fixture(`
+            <div class="${nodeClass}"></div>
+          `);
+
+          const expectedClass = 'is-component';
+          const selector = `.${nodeClass}`;
+          const proto = {
+            init() {
+              this.node.className = `${this.node.className} ${expectedClass}`;
+            },
+          };
+          const plugin = createPlugin('node-binding', () => (component, node) => {
+            component.node = node;
+          });
+          const application = new Application({ plugins: [plugin] });
+
+          application.isRunning = true;
+          application.component(selector, proto);
+
+          expect(selector).toHaveCSSClass(expectedClass);
+        });
+      });
     });
   });
 
@@ -364,150 +554,6 @@ describe('Application', () => {
 
         expect(fooSelector).toHaveCSSClass(expectedFooClass);
         expect(barSelector).toHaveCSSClass(expectedBarClass);
-      });
-    });
-
-    describe('.run', () => {
-      it('returns application instance as result', () => {
-        const application = new Application();
-
-        expect(application.run()).toEqual(application);
-      });
-
-      describe('document.readyState is equal to `loading`', () => {
-        let backup;
-
-        if (!isReadyStateMockable()) {
-          it("can't be tested because `document.readyState` can't be mocked in this browser");
-
-          return;
-        }
-
-        beforeEach(() => {
-          backup = document.readyState;
-
-          Object.defineProperty(document, 'readyState', {
-            value: 'loading',
-            writable: true,
-          });
-        });
-
-        afterEach(() => {
-          Object.defineProperty(document, 'readyState', {
-            value: backup,
-            writable: true,
-          });
-        });
-
-        it("doesn't set isRunning flag to true", () => {
-          const application = new Application();
-
-          expect(application.isRunning).toBeFalse();
-
-          application.run();
-
-          expect(application.isRunning).toBeFalse();
-        });
-
-        it("doesn't run vitalize", () => {
-          const application = new Application();
-          const spy = spyOn(application, 'vitalize').and.stub();
-
-          application.run();
-
-          expect(spy).not.toHaveBeenCalled();
-        });
-
-        describe('on DOMContentLoaded', () => {
-          it('sets isRunning flag to true', () => {
-            const application = new Application();
-
-            const event = document.createEvent('Event');
-            event.initEvent('DOMContentLoaded', true, true);
-
-            expect(application.isRunning).toBeFalse();
-
-            application.run();
-
-            expect(application.isRunning).toBeFalse();
-
-            window.document.dispatchEvent(event);
-
-            expect(application.isRunning).toBeTrue();
-          });
-
-          it('run vitalize', () => {
-            const application = new Application();
-            const spy = spyOn(application, 'vitalize').and.stub();
-
-            const event = document.createEvent('Event');
-            event.initEvent('DOMContentLoaded', true, true);
-
-            expect(spy).not.toHaveBeenCalled();
-
-            application.run();
-
-            expect(spy).not.toHaveBeenCalled();
-
-            window.document.dispatchEvent(event);
-
-            expect(spy).toHaveBeenCalledTimes(1);
-          });
-        });
-      });
-
-      describe('document.readyState is not equal to `loading`', () => {
-        let backup;
-
-        if (!isReadyStateMockable()) {
-          it("can't be tested because `document.readyState` can't be mocked in this browser");
-
-          return;
-        }
-
-        beforeEach(() => {
-          backup = document.readyState;
-        });
-
-        afterEach(() => {
-          Object.defineProperty(document, 'readyState', {
-            value: backup,
-            writable: true,
-          });
-        });
-
-        it('sets isRunning flag to true', () => {
-          ['interactive', 'complete'].forEach((state) => {
-            Object.defineProperty(document, 'readyState', {
-              value: state,
-              writable: true,
-            });
-
-            const application = new Application();
-
-            expect(application.isRunning).toBeFalse();
-
-            application.run();
-
-            expect(application.isRunning).toBeTrue();
-          });
-        });
-
-        it('runs vitalize', () => {
-          ['interactive', 'complete'].forEach((state) => {
-            Object.defineProperty(document, 'readyState', {
-              value: state,
-              writable: true,
-            });
-
-            const application = new Application();
-            const spy = spyOn(application, 'vitalize').and.stub();
-
-            application.run();
-
-            expect(spy).toHaveBeenCalledTimes(1);
-          });
-        });
       });
     });
   });
