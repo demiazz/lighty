@@ -30,13 +30,6 @@ describe('Application', () => {
   afterEach(clear);
 
   describe('.constructor', () => {
-    it('set given name', () => {
-      const name = 'legacy-application';
-      const application = new Application(name);
-
-      expect(application.name).toBe(name);
-    });
-
     it('creates empty plugins list', () => {
       const application = new Application();
 
@@ -79,7 +72,7 @@ describe('Application', () => {
       it('set query selector to custom selector from options', () => {
         const customQuerySelector = () => { };
         const options = { querySelector: customQuerySelector };
-        const application = new Application('with-options', options);
+        const application = new Application(options);
 
         expect(application.querySelector).toEqual(customQuerySelector);
       });
@@ -102,7 +95,7 @@ describe('Application', () => {
           expect(fooInitializer).not.toHaveBeenCalled();
           expect(barTransformer).not.toHaveBeenCalled();
 
-          const application = new Application('plugins', options);
+          const application = new Application(options);
 
           expect(fooTransformer).not.toHaveBeenCalled();
           expect(fooInitializer).toHaveBeenCalledTimes(1);
@@ -195,7 +188,7 @@ describe('Application', () => {
         const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
         });
-        const application = new Application('is-running', { plugins: [plugin] });
+        const application = new Application({ plugins: [plugin] });
 
         application.isRunning = true;
         application.component(selector, proto);
@@ -207,7 +200,7 @@ describe('Application', () => {
     it('create builder with querySelector used by application', () => {
       const customQuerySelector = () => { };
       const options = { querySelector: customQuerySelector };
-      const application = new Application('builder-selector', options);
+      const application = new Application(options);
 
       application.component('.my-component', { });
 
@@ -233,7 +226,7 @@ describe('Application', () => {
       const plugin = createPlugin('node-binding', () => (component, node) => {
         component.node = node;
       });
-      const application = new Application('vitalize', { plugins: [plugin] });
+      const application = new Application({ plugins: [plugin] });
 
       const expectedFooClass = 'is-foo-component';
       const fooSelector = `.${fooClass}`;
@@ -290,7 +283,7 @@ describe('Application', () => {
         const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
         });
-        const application = new Application('vitalize', { plugins: [plugin] });
+        const application = new Application({ plugins: [plugin] });
 
         const expectedFooClass = 'is-foo-component';
         const fooSelector = `.${fooClass}`;
@@ -350,7 +343,7 @@ describe('Application', () => {
         const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
         });
-        const application = new Application('vitalize', { plugins: [plugin] });
+        const application = new Application({ plugins: [plugin] });
 
         const expectedFooClass = 'is-foo-component';
         const fooSelector = `.${fooClass}`;

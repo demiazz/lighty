@@ -3,8 +3,7 @@ import querySelector from './query-selector';
 
 
 export default class Application {
-  constructor(name, options = { }) {
-    this.name = name;
+  constructor(options = { }) {
     this.builders = [];
     this.isReady = false;
     this.isRunning = false;
