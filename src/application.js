@@ -5,7 +5,6 @@ import querySelector from './query-selector';
 export default class Application {
   constructor(options = { }) {
     this.builders = [];
-    this.isReady = false;
     this.isRunning = false;
 
     // Query selector
@@ -53,8 +52,6 @@ export default class Application {
   }
 
   run() {
-    this.isReady = true;
-
     if (document.readyState !== 'loading') {
       this.start();
     } else {

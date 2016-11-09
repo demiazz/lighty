@@ -17,7 +17,6 @@ describe('create', () => {
 
     expect(application.plugins).toBeEmptyArray();
     expect(application.builders).toBeEmptyArray();
-    expect(application.isReady).toBeFalse();
     expect(application.isRunning).toBeFalse();
     expect(application.querySelector).toEqual(querySelector);
   });

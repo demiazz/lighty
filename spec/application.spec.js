@@ -48,12 +48,6 @@ describe('Application', () => {
       expect(application.isRunning).toBeFalse();
     });
 
-    it('creates isReady flag equals to false', () => {
-      const application = new Application();
-
-      expect(application.isReady).toBeFalse();
-    });
-
     describe('when options is not given', () => {
       it('set query selector to default query selector', () => {
         const application = new Application();
@@ -374,16 +368,6 @@ describe('Application', () => {
     });
 
     describe('.run', () => {
-      it('sets isReady flag to true', () => {
-        const application = new Application();
-
-        expect(application.isReady).toBeFalse();
-
-        application.run();
-
-        expect(application.isReady).toBeTrue();
-      });
-
       it('returns application instance as result', () => {
         const application = new Application();
 
