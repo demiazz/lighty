@@ -2,6 +2,7 @@
 
 import { create, plugin } from '../src';
 import Plugin from '../src/plugin';
+import querySelector from '../src/query-selector';
 
 import { matchers } from './helpers';
 
@@ -11,23 +12,36 @@ describe('create', () => {
     window.jasmine.addMatchers(matchers);
   });
 
-  it('returns new application with given name', () => {
-    const name = 'new-application';
-    const created = create(name);
+  it('returns new application', () => {
+    const application = create();
 
-    expect(created.name).toBe(name);
-    expect(created.plugins).toBeEmptyArray();
-    expect(created.builders).toBeEmptyArray();
-    expect(created.isReady).toBeFalse();
-    expect(created.isRunning).toBeFalse();
+    expect(application.plugins).toBeEmptyArray();
+    expect(application.builders).toBeEmptyArray();
+    expect(application.isReady).toBeFalse();
+    expect(application.isRunning).toBeFalse();
+    expect(application.querySelector).toEqual(querySelector);
   });
 
-  it('returns instance with given name if exists', () => {
-    const name = 'existing-application';
-    const created = create(name);
-    const cached = create(name);
+  it('returns new application with custom query selector', () => {
+    const customQuerySelector = () => { };
+    const options = {
+      querySelector: customQuerySelector,
+    };
+    const application = create(options);
 
-    expect(cached).toBe(created);
+    expect(application.querySelector).toEqual(customQuerySelector);
+  });
+
+  it('returns new application with custom plugins list', () => {
+    const transformer = () => { };
+    const initializer = () => transformer;
+    const factory = plugin('my-plugin', initializer);
+    const pluginInstance = factory();
+    const options = { plugins: [pluginInstance] };
+    const application = create(options);
+
+    expect(application.plugins.length).toEqual(1);
+    expect(application.plugins[0]).toEqual(pluginInstance);
   });
 });
 
