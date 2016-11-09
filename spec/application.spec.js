@@ -399,15 +399,6 @@ describe('Application', () => {
       const fooClass = 'foo';
       const barClass = 'bar';
 
-      fixture(`
-        <div class="${fooClass}"></div>
-        <div class="${barClass}"></div>
-        <div>
-          <div class="${fooClass}"></div>
-          <div class="${barClass}"></div>
-        </div>
-      `);
-
       const plugin = createPlugin('node-binding', () => (component, node) => {
         component.node = node;
       });
@@ -431,6 +422,15 @@ describe('Application', () => {
       };
       application.component(barSelector, barProto);
 
+      fixture(`
+        <div class="${fooClass}"></div>
+        <div class="${barClass}"></div>
+        <div>
+          <div class="${fooClass}"></div>
+          <div class="${barClass}"></div>
+        </div>
+      `);
+
       expect(fooSelector).not.toHaveCSSClass(expectedFooClass);
       expect(barSelector).not.toHaveCSSClass(expectedBarClass);
 
@@ -447,23 +447,6 @@ describe('Application', () => {
         const barClass = 'bar';
         const outsideClass = 'outside';
         const insideClass = 'inside';
-
-        fixture(`
-          <div class="${fooClass} ${outsideClass}"></div>
-          <div class="${barClass} ${outsideClass}"></div>
-          <div>
-            <div class="${fooClass} ${outsideClass}"></div>
-            <div class="${barClass} ${outsideClass}"></div>
-          </div>
-          <div class="${treeClass}">
-            <div class="${fooClass} ${insideClass}"></div>
-            <div class="${barClass} ${insideClass}"></div>
-            <div>
-              <div class="${fooClass} ${insideClass}"></div>
-              <div class="${barClass} ${insideClass}"></div>
-            </div>
-          </div>
-        `);
 
         const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
@@ -487,6 +470,23 @@ describe('Application', () => {
           },
         };
         application.component(barSelector, barProto);
+
+        fixture(`
+          <div class="${fooClass} ${outsideClass}"></div>
+          <div class="${barClass} ${outsideClass}"></div>
+          <div>
+            <div class="${fooClass} ${outsideClass}"></div>
+            <div class="${barClass} ${outsideClass}"></div>
+          </div>
+          <div class="${treeClass}">
+            <div class="${fooClass} ${insideClass}"></div>
+            <div class="${barClass} ${insideClass}"></div>
+            <div>
+              <div class="${fooClass} ${insideClass}"></div>
+              <div class="${barClass} ${insideClass}"></div>
+            </div>
+          </div>
+        `);
 
         expect(fooSelector).not.toHaveCSSClass(expectedFooClass);
         expect(barSelector).not.toHaveCSSClass(expectedBarClass);
@@ -507,24 +507,6 @@ describe('Application', () => {
         const fooClass = 'foo';
         const barClass = 'bar';
 
-        fixture(`
-          <div class="${fooClass}"></div>
-          <div class="${fooClass}">
-            <div class="${fooClass}"></div>
-          </div>
-          <div class="${fooClass}">
-            <div class="${barClass}"></div>
-          </div>
-
-          <div class="${barClass}"></div>
-          <div class="${barClass}">
-            <div class="${barClass}"></div>
-          </div>
-          <div class="${barClass}">
-            <div class="${fooClass}"></div>
-          </div>
-        `);
-
         const plugin = createPlugin('node-binding', () => (component, node) => {
           component.node = node;
         });
@@ -547,6 +529,24 @@ describe('Application', () => {
           },
         };
         application.component(barSelector, barProto);
+
+        fixture(`
+          <div class="${fooClass}"></div>
+          <div class="${fooClass}">
+            <div class="${fooClass}"></div>
+          </div>
+          <div class="${fooClass}">
+            <div class="${barClass}"></div>
+          </div>
+
+          <div class="${barClass}"></div>
+          <div class="${barClass}">
+            <div class="${barClass}"></div>
+          </div>
+          <div class="${barClass}">
+            <div class="${fooClass}"></div>
+          </div>
+        `);
 
         expect(fooSelector).not.toHaveCSSClass(expectedFooClass);
         expect(barSelector).not.toHaveCSSClass(expectedBarClass);
