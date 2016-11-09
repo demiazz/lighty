@@ -1,62 +1,16 @@
-function getMatchesFn() {
-  var e = document.documentElement;
-
-  return (
-    e.matches ||
-    e.matchesSelector ||
-    e.msMatchesSelector ||
-    e.mozMatchesSelector ||
-    e.webkitMatchesSelector ||
-    e.oMatchesSelector
-  );
-}
-
-var matchesFn = getMatchesFn();
-
-function matches(element, selector) {
-  return matchesFn.call(element, selector);
-}
-
-function findInTree(tree, selector) {
-  if (tree.jquery) {
-    return tree.filter(selector).add(tree.find(selector)).toArray();
-  }
-
-  var roots;
-
-  if (tree instanceof HTMLElement) {
-    roots = [tree];
-  } else if (tree instanceof NodeList) {
-    roots = [].slice.call(tree);
-  } else if (Array.isArray(tree)) {
-    roots = tree;
-  } else if (typeof tree === 'string') {
-    roots = [].slice.call(document.querySelectorAll(tree));
-  }
-
-  return roots.reduce(function (nodes, root) {
-    if (matches(root, selector)) {
-      nodes.push(root);
-    }
-
-    return nodes.concat(
-      [].slice.call(root.querySelectorAll(selector))
-    );
-  }, []);
-}
-
-var Builder = function Builder(id, selector, proto, plugins) {
+var Builder = function Builder(id, selector, proto, plugins, querySelector) {
   this.id = id;
   this.selector = selector;
   this.proto = proto;
   this.plugins = plugins;
+  this.querySelector = querySelector;
 };
 
 Builder.prototype.getInitializer = function getInitializer (tree) {
     var this$1 = this;
     if ( tree === void 0 ) tree = document.body;
 
-  var nodes = findInTree(tree, this.selector);
+  var nodes = this.querySelector(tree, this.selector);
 
   var components = nodes.reduce(function (cs, node) {
     if (this$1.checkAndUpdateCache(node)) {
@@ -107,39 +61,103 @@ Builder.prototype.transformComponent = function transformComponent (component, n
   });
 };
 
-var Application = function Application(name) {
-  this.name = name;
-  this.plugins = [];
-  this.builders = [];
-  this.isReady = false;
-  this.isRunning = false;
-};
+function getMatchesFn() {
+  var e = document.documentElement;
 
-Application.prototype.use = function use () {
-    var plugins = [], len = arguments.length;
-    while ( len-- ) plugins[ len ] = arguments[ len ];
+  return (
+    e.matches ||
+    e.matchesSelector ||
+    e.msMatchesSelector ||
+    e.mozMatchesSelector ||
+    e.webkitMatchesSelector ||
+    e.oMatchesSelector
+  );
+}
 
-  if (this.isReady) {
-    throw new Error(("[" + (this.name) + "]: `use` must be used before `run`"));
+var matchesFn = getMatchesFn();
+
+function matches(element, selector) {
+  return matchesFn.call(element, selector);
+}
+
+function querySelector(tree, selector) {
+  if (tree.jquery) {
+    return tree.filter(selector).add(tree.find(selector)).toArray();
   }
 
-  this.plugins = this.plugins.concat(
-    this.normalize(plugins)
-  );
+  var roots;
 
-  return this;
+  if (tree instanceof HTMLElement) {
+    roots = [tree];
+  } else if (tree instanceof NodeList) {
+    roots = [].slice.call(tree);
+  } else if (Array.isArray(tree)) {
+    roots = tree;
+  } else if (typeof tree === 'string') {
+    roots = [].slice.call(document.querySelectorAll(tree));
+  }
+
+  return roots.reduce(function (nodes, root) {
+    if (matches(root, selector)) {
+      nodes.push(root);
+    }
+
+    return nodes.concat(
+      [].slice.call(root.querySelectorAll(selector))
+    );
+  }, []);
+}
+
+var Application = function Application(options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = { };
+
+  this.builders = [];
+  this.isRunning = false;
+
+  // Query selector
+
+  this.querySelector = options.querySelector || querySelector;
+
+  // Plugins
+
+  this.plugins = [];
+
+  if (options.plugins) {
+    this.plugins = options.plugins.map(function (plugin) {
+      if (plugin instanceof Function) {
+        return plugin();
+      }
+
+      return plugin;
+    });
+  }
+
+  // Running
+
+  if (document.readyState !== 'loading') {
+    this.isRunning = true;
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      this$1.isRunning = true;
+
+      this$1.vitalize();
+    });
+  }
 };
 
 Application.prototype.component = function component (selector, proto) {
   var id = this.builders.length;
-  var builder = new Builder(id, selector, proto, this.plugins);
+  var builder = new Builder(
+    id, selector, proto, this.plugins, this.querySelector
+  );
 
   this.builders.push(builder);
 
   if (this.isRunning) {
     var initializer = builder.getInitializer();
 
-      initializer();
+    initializer();
   }
 
   return this;
@@ -153,47 +171,6 @@ Application.prototype.vitalize = function vitalize (tree) {
   });
 };
 
-Application.prototype.run = function run () {
-    var this$1 = this;
-
-  this.isReady = true;
-
-  if (document.readyState !== 'loading') {
-    this.start();
-  } else {
-    document.addEventListener('DOMContentLoaded', function () { return this$1.start(); });
-  }
-
-  return this;
-};
-
-Application.prototype.start = function start () {
-  this.isRunning = true;
-
-  this.vitalize();
-};
-
-Application.prototype.normalize = function normalize (plugins) {
-    var this$1 = this;
-
-  return plugins.reduce(function (ps, p) {
-    var instances = Array.isArray(p)
-      ? p.map(function (plugin) { return this$1.instantiatePlugin(plugin); })
-      : this$1.instantiatePlugin(p);
-
-    return ps.concat(instances);
-  }, []);
-};
-
-// eslint-disable-next-line
-Application.prototype.instantiatePlugin = function instantiatePlugin (plugin) {
-  if (plugin instanceof Function) {
-    return plugin();
-  }
-
-  return plugin;
-};
-
 var Plugin = function Plugin(name, transformer) {
   this.name = name;
   this.transformer = transformer;
@@ -203,25 +180,8 @@ Plugin.prototype.transform = function transform (component, node) {
   this.transformer(component, node);
 };
 
-var applications = {
-  default: new Application('default'),
-};
-
-
-var index = applications.default;
-
-function create(name) {
-  if ( name === void 0 ) name = 'default';
-
-  var instance = applications[name];
-
-  if (!instance) {
-    instance = new Application(name);
-
-    applications[name] = instance;
-  }
-
-  return instance;
+function create(options) {
+  return new Application(options);
 }
 
 function plugin(name, initializer) {
@@ -233,5 +193,5 @@ function plugin(name, initializer) {
   };
 }
 
-export { create, plugin };export default index;
+export { create, plugin };
 //# sourceMappingURL=lighty.es.js.map
