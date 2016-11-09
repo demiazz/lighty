@@ -3,6 +3,7 @@
 import { plugin as createPlugin } from '../src';
 import Application from '../src/application';
 import Builder from '../src/builder';
+import querySelector from '../src/query-selector';
 
 import { fixture, clear, matchers } from './helpers';
 
@@ -58,6 +59,24 @@ describe('Application', () => {
       const application = new Application();
 
       expect(application.isReady).toBeFalse();
+    });
+
+    describe('when options is not given', () => {
+      it('set query selector to default query selector', () => {
+        const application = new Application();
+
+        expect(application.querySelector).toEqual(querySelector);
+      });
+    });
+
+    describe('when options is given', () => {
+      it('set query selector to custom selector from options', () => {
+        const customQuerySelector = () => { };
+        const options = { querySelector: customQuerySelector };
+        const application = new Application('with-options', options);
+
+        expect(application.querySelector).toEqual(customQuerySelector);
+      });
     });
   });
 

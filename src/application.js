@@ -1,13 +1,16 @@
 import Builder from './builder';
+import querySelector from './query-selector';
 
 
 export default class Application {
-  constructor(name) {
+  constructor(name, options = { }) {
     this.name = name;
     this.plugins = [];
     this.builders = [];
     this.isReady = false;
     this.isRunning = false;
+
+    this.querySelector = options.querySelector || querySelector;
   }
 
   use(...plugins) {
