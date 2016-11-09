@@ -17,6 +17,8 @@
     "context": false,
     "beforeEach": false,
     "afterEach": false,
+    "beforeAll": false,
+    "afterAll": false,
     "it": false,
     "expect": false,
     "spyOn": false

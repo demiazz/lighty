@@ -351,6 +351,17 @@ describe('Application', () => {
         expect(selector).toHaveCSSClass(expectedClass);
       });
     });
+
+    it('create builder with querySelector used by application', () => {
+      const customQuerySelector = () => { };
+      const options = { querySelector: customQuerySelector };
+      const application = new Application('builder-selector', options);
+
+      application.component('.my-component', { });
+
+      expect(application.builders[0].querySelector)
+        .toEqual(customQuerySelector);
+    });
   });
 
   describe('.vitalize', () => {

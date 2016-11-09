@@ -2,6 +2,7 @@
 
 import { plugin } from '../src';
 import Builder from '../src/builder';
+import querySelector from '../src/query-selector';
 
 import { fixture, clear, matchers } from './helpers';
 
@@ -14,7 +15,7 @@ describe('Builder', () => {
   afterEach(clear);
 
   describe('.constructor', () => {
-    it('gives id, selector, proto and plugins list', () => {
+    it('gives id, selector, proto, plugins and querySelector list', () => {
       const id = 0;
       const selector = '.component';
       const proto = { init() { } };
@@ -22,12 +23,13 @@ describe('Builder', () => {
         plugin('my-plugin', () => () => { })(),
       ];
 
-      const builder = new Builder(id, selector, proto, plugins);
+      const builder = new Builder(id, selector, proto, plugins, querySelector);
 
       expect(builder.id).toEqual(id);
       expect(builder.selector).toEqual(selector);
       expect(builder.proto).toDeepEqual(proto);
       expect(builder.plugins).toDeepEqual(plugins);
+      expect(builder.querySelector).toEqual(querySelector);
     });
   });
 
@@ -48,7 +50,7 @@ describe('Builder', () => {
         },
       };
 
-      const builder = new Builder(0, selector, proto, []);
+      const builder = new Builder(0, selector, proto, [], querySelector);
 
       expect(spy).not.toHaveBeenCalled();
 
@@ -68,7 +70,7 @@ describe('Builder', () => {
 
       const selector = `.${nodeClass}`;
       const proto = { };
-      const builder = new Builder(0, selector, proto, []);
+      const builder = new Builder(0, selector, proto, [], querySelector);
       const initialize = builder.getInitializer();
 
       expect(initialize).not.toThrow();
@@ -99,7 +101,7 @@ describe('Builder', () => {
       expect(selector).not.toHaveCSSClass(expectedPluginClass);
       expect(selector).not.toHaveCSSClass(expectedComponentClass);
 
-      const builder = new Builder(0, selector, proto, plugins);
+      const builder = new Builder(0, selector, proto, plugins, querySelector);
 
       expect(selector).not.toHaveCSSClass(expectedPluginClass);
       expect(selector).not.toHaveCSSClass(expectedComponentClass);
@@ -138,7 +140,7 @@ describe('Builder', () => {
           component.node = node;
         })(),
       ];
-      const builder = new Builder(0, selector, proto, plugins);
+      const builder = new Builder(0, selector, proto, plugins, querySelector);
       const initialize = builder.getInitializer(`.${treeClass}`);
 
       initialize();
@@ -168,7 +170,7 @@ describe('Builder', () => {
           component.node = node;
         })(),
       ];
-      const builder = new Builder(0, selector, proto, plugins);
+      const builder = new Builder(0, selector, proto, plugins, querySelector);
       const initialize = builder.getInitializer();
 
       initialize();
@@ -188,18 +190,36 @@ describe('Builder', () => {
         init() {
           calls.push('first');
         },
-      }, []);
+      }, [], querySelector);
       const secondBuilder = new Builder(1, selector, {
         init() {
           calls.push('second');
         },
-      }, []);
+      }, [], querySelector);
 
       firstBuilder.getInitializer()();
       secondBuilder.getInitializer()();
       firstBuilder.getInitializer()();
 
       expect(calls).toDeepEqual(['first', 'second']);
+    });
+
+    it("use builder's query selector for searching elements", () => {
+      const customQuerySelector =
+        jasmine.createSpy('querySelector').and.callFake(querySelector);
+      const selector = '.my-selector';
+      const builder = new Builder(1, selector, { }, [], customQuerySelector);
+
+      expect(customQuerySelector).not.toHaveBeenCalled();
+
+      builder.getInitializer()();
+
+      expect(customQuerySelector).toHaveBeenCalledTimes(1);
+
+      const [tree, selectorString] = customQuerySelector.calls.argsFor(0);
+
+      expect(tree).toEqual(document.body);
+      expect(selectorString).toEqual(selector);
     });
   });
 });

@@ -27,7 +27,9 @@ export default class Application {
 
   component(selector, proto) {
     const id = this.builders.length;
-    const builder = new Builder(id, selector, proto, this.plugins);
+    const builder = new Builder(
+      id, selector, proto, this.plugins, this.querySelector
+    );
 
     this.builders.push(builder);
 

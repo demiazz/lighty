@@ -1,16 +1,14 @@
-import querySelector from './query-selector';
-
-
 export default class Builder {
-  constructor(id, selector, proto, plugins) {
+  constructor(id, selector, proto, plugins, querySelector) {
     this.id = id;
     this.selector = selector;
     this.proto = proto;
     this.plugins = plugins;
+    this.querySelector = querySelector;
   }
 
   getInitializer(tree = document.body) {
-    const nodes = querySelector(tree, this.selector);
+    const nodes = this.querySelector(tree, this.selector);
 
     const components = nodes.reduce((cs, node) => {
       if (this.checkAndUpdateCache(node)) {
