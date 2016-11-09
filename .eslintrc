@@ -9,7 +9,14 @@
       "optionalDependencies": false,
       "peerDependencies": false,
     }],
-    "no-param-reassign": 0
+    "no-param-reassign": 0,
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never",
+    }]
   },
   "globals": {
     "jasmine": false,
