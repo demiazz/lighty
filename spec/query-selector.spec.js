@@ -2,12 +2,12 @@
 
 import $ from 'jquery';
 
-import findInTree from '../src/selector';
+import querySelector from '../src/query-selector';
 
 import { fixture, clear, matchers } from './helpers';
 
 
-describe('findInTree', () => {
+describe('querySelector', () => {
   beforeEach(() => {
     window.jasmine.addMatchers(matchers);
   });
@@ -29,7 +29,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      findInTree(tree, `.${nodeClass}`).forEach((node) => {
+      querySelector(tree, `.${nodeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -45,7 +45,7 @@ describe('findInTree', () => {
 
       const tree = document.querySelector(`.${treeClass}`);
 
-      findInTree(tree, `.${treeClass}`).forEach((node) => {
+      querySelector(tree, `.${treeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -74,7 +74,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      findInTree(trees, `.${nodeClass}`).forEach((node) => {
+      querySelector(trees, `.${nodeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -94,7 +94,7 @@ describe('findInTree', () => {
 
       const trees = document.querySelectorAll(`.${treeClass}`);
 
-      findInTree(trees, `.${treeClass}`).forEach((node) => {
+      querySelector(trees, `.${treeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -123,7 +123,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      findInTree(trees, `.${nodeClass}`).forEach((node) => {
+      querySelector(trees, `.${nodeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -143,7 +143,7 @@ describe('findInTree', () => {
 
       const trees = [].slice.call(document.querySelectorAll(`.${treeClass}`));
 
-      findInTree(trees, `.${treeClass}`).forEach((node) => {
+      querySelector(trees, `.${treeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -172,7 +172,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      findInTree(trees, `.${nodeClass}`).forEach((node) => {
+      querySelector(trees, `.${nodeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -192,7 +192,7 @@ describe('findInTree', () => {
 
       const trees = $(`.${treeClass}`);
 
-      findInTree(trees, `.${treeClass}`).forEach((node) => {
+      querySelector(trees, `.${treeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -219,7 +219,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      findInTree(`.${treeClass}`, `.${nodeClass}`).forEach((node) => {
+      querySelector(`.${treeClass}`, `.${nodeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 
@@ -237,7 +237,7 @@ describe('findInTree', () => {
 
       const expectedClass = 'is-matched';
 
-      findInTree(`.${treeClass}`, `.${treeClass}`).forEach((node) => {
+      querySelector(`.${treeClass}`, `.${treeClass}`).forEach((node) => {
         node.className = `${node.className} ${expectedClass}`;
       });
 

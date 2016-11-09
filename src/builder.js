@@ -1,4 +1,4 @@
-import findInTree from './selector';
+import querySelector from './query-selector';
 
 
 export default class Builder {
@@ -10,7 +10,7 @@ export default class Builder {
   }
 
   getInitializer(tree = document.body) {
-    const nodes = findInTree(tree, this.selector);
+    const nodes = querySelector(tree, this.selector);
 
     const components = nodes.reduce((cs, node) => {
       if (this.checkAndUpdateCache(node)) {

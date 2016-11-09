@@ -17,7 +17,7 @@ function matches(element, selector) {
   return matchesFn.call(element, selector);
 }
 
-export default function findInTree(tree, selector) {
+export default function querySelector(tree, selector) {
   if (tree.jquery) {
     return tree.filter(selector).add(tree.find(selector)).toArray();
   }
