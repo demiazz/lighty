@@ -1,3 +1,14 @@
+## 0.4.0 (10 November 2016)
+
+* Remove default application
+* Remove application names
+* Remove application instances cache
+* Remove `Application.use`
+* Remove `Application.run`
+* Add options for application creating
+* Add custom querySelector option
+* Application autometically started after creating
+
 ## 0.3.0 (14 October 2016)
 
 * Throw error when `use` method called after `run`
