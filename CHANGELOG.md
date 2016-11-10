@@ -11,7 +11,7 @@
 * Remove `Application.run`
 * Add options for application creating
 * Add custom querySelector option
-* Application autometically started after creating
+* Application automatically started after creating
 
 ## 0.3.0 (14 October 2016)
 
