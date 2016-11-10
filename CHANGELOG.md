@@ -1,3 +1,7 @@
+## 0.4.1 (10 November 2016)
+
+* Export `querySelector`
+
 ## 0.4.0 (10 November 2016)
 
 * Remove default application

@@ -1,11 +1,18 @@
 /* eslint no-unused-expressions: 0 */
 
-import { create, plugin } from '../src';
+import { querySelector, create, plugin } from '../src';
 import Application from '../src/application';
 import Plugin from '../src/plugin';
+import internalQuerySelector from '../src/query-selector';
 
 import { matchers } from './helpers';
 
+
+describe('querySelector', () => {
+  it('export internal implementration of `querySelector` function', () => {
+    expect(querySelector).toEqual(internalQuerySelector);
+  });
+});
 
 describe('create', () => {
   beforeEach(() => {
