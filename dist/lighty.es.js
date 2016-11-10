@@ -193,5 +193,5 @@ function plugin(name, initializer) {
   };
 }
 
-export { create, plugin };
+export { querySelector, create, plugin };
 //# sourceMappingURL=lighty.es.js.map

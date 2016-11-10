@@ -1,5 +1,5 @@
 /*!
- * lighty v0.4.0
+ * lighty v0.4.1
  * https://github.com/demiazz/lighty
  *
  * Copyright Alexey Plutalov
@@ -206,6 +206,7 @@ function plugin(name, initializer) {
   };
 }
 
+exports.querySelector = querySelector;
 exports.create = create;
 exports.plugin = plugin;
 

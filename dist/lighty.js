@@ -197,6 +197,7 @@ function plugin(name, initializer) {
   };
 }
 
+exports.querySelector = querySelector;
 exports.create = create;
 exports.plugin = plugin;
 //# sourceMappingURL=lighty.js.map
