@@ -196,28 +196,28 @@ describe('Application', () => {
         });
       });
 
-      describe('when `document.readyState` is not equal to `loading`', () => {
-        let backup;
+      ['interactive', 'complete'].forEach((state) => {
+        describe(`when \`document.readyState\` is equal to \`${state}\``, () => {
+          let backup;
 
-        if (!isReadyStateMockable()) {
-          it("can't be tested because `document.readyState` can't be mocked in this browser");
+          if (!isReadyStateMockable()) {
+            it("can't be tested because `document.readyState` can't be mocked in this browser");
 
-          return;
-        }
+            return;
+          }
 
-        beforeEach(() => {
-          backup = document.readyState;
-        });
-
-        afterEach(() => {
-          Object.defineProperty(document, 'readyState', {
-            value: backup,
-            writable: true,
+          beforeEach(() => {
+            backup = document.readyState;
           });
-        });
 
-        it('vitalize components immediately', () => {
-          ['interactive', 'complete'].forEach((state) => {
+          afterEach(() => {
+            Object.defineProperty(document, 'readyState', {
+              value: backup,
+              writable: true,
+            });
+          });
+
+          it('vitalize components immediately, but asyncronously', (done) => {
             Object.defineProperty(document, 'readyState', {
               value: state,
               writable: true,
@@ -239,8 +239,12 @@ describe('Application', () => {
               },
             });
 
-            expect(document.querySelector(`.${state}`))
-              .toHaveCSSClass('is-ready');
+            setTimeout(() => {
+              expect(document.querySelector(`.${state}`))
+                .toHaveCSSClass('is-ready');
+
+              done();
+            }, 1);
           });
         });
       });
