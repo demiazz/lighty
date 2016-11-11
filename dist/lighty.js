@@ -113,7 +113,6 @@ function querySelector(tree, selector) {
 }
 
 var Application = function Application(options) {
-  var this$1 = this;
   if ( options === void 0 ) options = { };
 
   this.builders = [];
@@ -140,13 +139,10 @@ var Application = function Application(options) {
   // Running
 
   if (document.readyState !== 'loading') {
-    this.isRunning = true;
+    // See https://connect.microsoft.com/IE/feedback/details/792880/document-readystat
+    setTimeout(this.start.bind(this), 1);
   } else {
-    document.addEventListener('DOMContentLoaded', function () {
-      this$1.isRunning = true;
-
-      this$1.vitalize();
-    });
+    document.addEventListener('DOMContentLoaded', this.start.bind(this));
   }
 };
 
@@ -173,6 +169,12 @@ Application.prototype.vitalize = function vitalize (tree) {
 
     initialize();
   });
+};
+
+Application.prototype.start = function start () {
+  this.isRunning = true;
+
+  this.vitalize();
 };
 
 var Plugin = function Plugin(name, transformer) {
