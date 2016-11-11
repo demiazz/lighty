@@ -1,3 +1,7 @@
+## 0.4.2 (11 November 2016)
+
+* Add workaround for `document.readyState` bug in IE
+
 ## 0.4.1 (10 November 2016)
 
 * Export `querySelector`

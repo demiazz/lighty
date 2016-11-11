@@ -28,13 +28,10 @@ export default class Application {
     // Running
 
     if (document.readyState !== 'loading') {
-      this.isRunning = true;
+      // See https://connect.microsoft.com/IE/feedback/details/792880/document-readystat
+      setTimeout(this.start.bind(this), 1);
     } else {
-      document.addEventListener('DOMContentLoaded', () => {
-        this.isRunning = true;
-
-        this.vitalize();
-      });
+      document.addEventListener('DOMContentLoaded', this.start.bind(this));
     }
   }
 
@@ -61,5 +58,11 @@ export default class Application {
 
       initialize();
     });
+  }
+
+  start() {
+    this.isRunning = true;
+
+    this.vitalize();
   }
 }
