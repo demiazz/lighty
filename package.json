@@ -28,11 +28,7 @@
     "test": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js --single-run",
     "test:watch": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
-    "build:commonjs": "$(npm bin)/cross-env TARGET=commonjs $(npm bin)/rollup --config build/rollup.config.js",
-    "build:es": "$(npm bin)/cross-env TARGET=es $(npm bin)/rollup --config build/rollup.config.js",
-    "build:umd": "$(npm bin)/cross-env TARGET=umd $(npm bin)/rollup --config build/rollup.config.js",
-    "build:umd:min": "$(npm bin)/cross-env TARGET=umd NODE_ENV=production $(npm bin)/rollup --config build/rollup.config.js",
-    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build": "node build/rollup.js",
     "version": "npm run build && git add -A dist"
   },
   "devDependencies": {

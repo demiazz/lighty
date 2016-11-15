@@ -7,7 +7,7 @@
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  typeof define === 'function' && define.amd ? define('lighty', ['exports'], factory) :
   (factory((global.lighty = global.lighty || {})));
 }(this, (function (exports) { 'use strict';
 
