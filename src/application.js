@@ -71,7 +71,7 @@ class Application {
    * @param {Selector} selector - specified CSS selector.
    * @param {ComponentPrototype} proto - specified prototype.
    *
-   * @return {module:application~Application} self.
+   * @return {Void} nothing.
    *
    * @public
    * @since 0.2.0
@@ -89,8 +89,6 @@ class Application {
 
       initializer();
     }
-
-    return this;
   }
 
   /**

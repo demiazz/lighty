@@ -274,13 +274,6 @@ describe('Application', () => {
       expect(first.id).not.toEqual(second.id);
     });
 
-    it('returns application instance', () => {
-      const application = new Application();
-      const result = application.component('.selector', { });
-
-      expect(result).toBeInstanceOf(Application);
-    });
-
     it('create builder with querySelector used by application', () => {
       const customQuerySelector =
         (tree, selector) => querySelector(tree, selector);
