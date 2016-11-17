@@ -158,12 +158,12 @@ function querySelector(tree, selector) {
     roots = [].slice.call(document.querySelectorAll(tree));
   }
 
-  return roots.reduce((nodes, root) => {
+  return roots.reduce((elements, root) => {
     if (matches(root, selector)) {
-      nodes.push(root);
+      elements.push(root);
     }
 
-    return nodes.concat(
+    return elements.concat(
       [].slice.call(root.querySelectorAll(selector))
     );
   }, []);

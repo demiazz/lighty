@@ -37,15 +37,15 @@ class Plugin {
    * HTML element.
    *
    * @param {Component} component - component which will be transformed.
-   * @param {external:Element} node - element which associated
+   * @param {external:Element} element - element which associated
    * with the component.
    *
    * @return {void} nothing.
    *
    * @since 0.2.0
    */
-  transform(component, node) {
-    this.transformer(component, node);
+  transform(component, element) {
+    this.transformer(component, element);
   }
 }
 

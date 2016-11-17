@@ -35,14 +35,14 @@ describe('Builder', () => {
 
   describe('.getInitializer', () => {
     it('returns initializer which call init for each component', () => {
-      const nodeClass = 'build';
+      const elementClass = 'build';
 
       fixture(`
-        <div class="${nodeClass}"></div>
-        <div class="${nodeClass}"></div>
+        <div class="${elementClass}"></div>
+        <div class="${elementClass}"></div>
       `);
 
-      const selector = `.${nodeClass}`;
+      const selector = `.${elementClass}`;
       const spy = jasmine.createSpy('init');
       const proto = {
         init() {
@@ -64,11 +64,11 @@ describe('Builder', () => {
     });
 
     it("returns initializer which doesn't call `init` if it doesn't exists", () => {
-      const nodeClass = 'build';
+      const elementClass = 'build';
 
-      fixture(`<div class="${nodeClass}"></div>`);
+      fixture(`<div class="${elementClass}"></div>`);
 
-      const selector = `.${nodeClass}`;
+      const selector = `.${elementClass}`;
       const proto = { };
       const builder = new Builder(0, selector, proto, [], querySelector);
       const initialize = builder.getInitializer();
@@ -77,24 +77,24 @@ describe('Builder', () => {
     });
 
     it('transforms component with plugins before creating initializer', () => {
-      const nodeClass = 'build';
+      const elementClass = 'build';
 
-      fixture(`<div class="${nodeClass}"></div>`);
+      fixture(`<div class="${elementClass}"></div>`);
 
       const expectedPluginClass = 'from-plugin';
       const expectedComponentClass = 'from-component';
-      const selector = `.${nodeClass}`;
+      const selector = `.${elementClass}`;
       const proto = {
         init() {
-          this.node.className =
-            `${this.node.className} ${expectedComponentClass}`;
+          this.element.className =
+            `${this.element.className} ${expectedComponentClass}`;
         },
       };
       const plugins = [
-        plugin('node-binding', () => (component, node) => {
-          node.className = `${node.className} ${expectedPluginClass}`;
+        plugin('element-binding', () => (component, element) => {
+          element.className = `${element.className} ${expectedPluginClass}`;
 
-          component.node = node;
+          component.element = element;
         })(),
       ];
 
@@ -119,25 +119,25 @@ describe('Builder', () => {
 
     it('can use subtree for searching elements', () => {
       const treeClass = 'tree';
-      const nodeClass = 'build';
+      const elementClass = 'build';
 
       fixture(`
-        <div id="outside" class="${nodeClass}"></div>
+        <div id="outside" class="${elementClass}"></div>
         <div class="${treeClass}">
-          <div id="inside" class="${nodeClass}"></div>
+          <div id="inside" class="${elementClass}"></div>
         </div>
       `);
 
       const expectedClass = 'is-ready';
-      const selector = `.${nodeClass}`;
+      const selector = `.${elementClass}`;
       const proto = {
         init() {
-          this.node.className = `${this.node.className} ${expectedClass}`;
+          this.element.className = `${this.element.className} ${expectedClass}`;
         },
       };
       const plugins = [
-        plugin('node-binding', () => (component, node) => {
-          component.node = node;
+        plugin('element-binding', () => (component, element) => {
+          component.element = element;
         })(),
       ];
       const builder = new Builder(0, selector, proto, plugins, querySelector);
@@ -150,24 +150,24 @@ describe('Builder', () => {
     });
 
     it('can use subtree including root for searching elements', () => {
-      const nodeClass = 'node';
+      const elementClass = 'element';
 
       fixture(`
-        <div id="parent" class="${nodeClass}">
-          <div id="children" class="${nodeClass}"></div>
+        <div id="parent" class="${elementClass}">
+          <div id="children" class="${elementClass}"></div>
         </div>
       `);
 
       const expectedClass = 'is-ready';
-      const selector = `.${nodeClass}`;
+      const selector = `.${elementClass}`;
       const proto = {
         init() {
-          this.node.className = `${this.node.className} ${expectedClass}`;
+          this.element.className = `${this.element.className} ${expectedClass}`;
         },
       };
       const plugins = [
-        plugin('node-binding', () => (component, node) => {
-          component.node = node;
+        plugin('element-binding', () => (component, element) => {
+          component.element = element;
         })(),
       ];
       const builder = new Builder(0, selector, proto, plugins, querySelector);
@@ -179,13 +179,13 @@ describe('Builder', () => {
       expect('#children').toHaveCSSClass(expectedClass);
     });
 
-    it('builds component only once for each node', () => {
-      const nodeClass = 'build';
+    it('builds component only once for each element', () => {
+      const elementClass = 'build';
 
-      fixture(`<div class="${nodeClass}"></div>`);
+      fixture(`<div class="${elementClass}"></div>`);
 
       const calls = [];
-      const selector = `.${nodeClass}`;
+      const selector = `.${elementClass}`;
       const firstBuilder = new Builder(0, selector, {
         init() {
           calls.push('first');

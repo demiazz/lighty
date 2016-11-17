@@ -52,11 +52,11 @@ class Builder {
    * @since 0.2.0
    */
   getInitializer(tree = document.body) {
-    const nodes = this.querySelector(tree, this.selector);
+    const elements = this.querySelector(tree, this.selector);
 
-    const components = nodes.reduce((cs, node) => {
-      if (this.checkAndUpdateCache(node)) {
-        cs.push(this.createComponent(node));
+    const components = elements.reduce((cs, element) => {
+      if (this.checkAndUpdateCache(element)) {
+        cs.push(this.createComponent(element));
       }
 
       return cs;
@@ -76,21 +76,21 @@ class Builder {
   /**
    * Creates {@link Component}'s instance and applies plugins to them.
    *
-   * @param {external:Element} node - specified element.
+   * @param {external:Element} element - specified element.
    *
    * @return {Component} created {@link Component}'s instance.
    *
    * @private
    * @since 0.2.0
    */
-  createComponent(node) {
+  createComponent(element) {
     const component = Object.keys(this.proto).reduce((instance, property) => {
       instance[property] = this.proto[property];
 
       return instance;
     }, { });
 
-    this.transformComponent(component, node);
+    this.transformComponent(component, element);
 
     return component;
   }
@@ -99,7 +99,7 @@ class Builder {
    * Checks have been created a component for specified element. Update meta
    * information about linked components if not.
    *
-   * @param {external:Element} node - specified element.
+   * @param {external:Element} element - specified element.
    *
    * @return {Boolean} `true` if component isn't has been created; otherwise
    * returns `false`.
@@ -107,12 +107,12 @@ class Builder {
    * @private
    * @since 0.2.0
    */
-  checkAndUpdateCache(node) {
-    if (node.ids && node.ids.indexOf(this.id) !== -1) {
+  checkAndUpdateCache(element) {
+    if (element.ids && element.ids.indexOf(this.id) !== -1) {
       return false;
     }
 
-    node.ids = node.ids ? node.ids.concat(this.id) : [this.id];
+    element.ids = element.ids ? element.ids.concat(this.id) : [this.id];
 
     return true;
   }
@@ -121,7 +121,7 @@ class Builder {
    * Applies plugins to specified component and element one by one.
    *
    * @param {Component} component - component which will be transformed.
-   * @param {external:Element} node - element which associated
+   * @param {external:Element} element - element which associated
    * with the component.
    *
    * @return {void} nothing.
@@ -129,9 +129,9 @@ class Builder {
    * @private
    * @since 0.2.0
    */
-  transformComponent(component, node) {
+  transformComponent(component, element) {
     this.plugins.forEach((plugin) => {
-      plugin.transform(component, node);
+      plugin.transform(component, element);
     });
   }
 }

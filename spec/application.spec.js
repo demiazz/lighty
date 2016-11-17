@@ -125,14 +125,14 @@ describe('Application', () => {
           expect(document.querySelector('.loading'))
             .not.toHaveCSSClass('is-ready');
 
-          const plugin = createPlugin('bind', () => (component, node) => {
-            component.node = node;
+          const plugin = createPlugin('bind', () => (component, element) => {
+            component.element = element;
           });
           const application = new Application({ plugins: [plugin] });
 
           application.component('.loading', {
             init() {
-              this.node.className = 'loading is-ready';
+              this.element.className = 'loading is-ready';
             },
           });
 
@@ -147,14 +147,14 @@ describe('Application', () => {
             expect(document.querySelector('.loading'))
               .not.toHaveCSSClass('is-ready');
 
-            const plugin = createPlugin('bind', () => (component, node) => {
-              component.node = node;
+            const plugin = createPlugin('bind', () => (component, element) => {
+              component.element = element;
             });
             const application = new Application({ plugins: [plugin] });
 
             application.component('.loading', {
               init() {
-                this.node.className = 'loading is-ready';
+                this.element.className = 'loading is-ready';
               },
             });
 
@@ -175,8 +175,8 @@ describe('Application', () => {
             expect(document.querySelector('.loading'))
               .not.toHaveCSSClass('is-ready');
 
-            const plugin = createPlugin('bind', () => (component, node) => {
-              component.node = node;
+            const plugin = createPlugin('bind', () => (component, element) => {
+              component.element = element;
             });
             const application = new Application({ plugins: [plugin] });
 
@@ -186,7 +186,7 @@ describe('Application', () => {
 
             application.component('.loading', {
               init() {
-                this.node.className = 'loading is-ready';
+                this.element.className = 'loading is-ready';
               },
             });
 
@@ -228,14 +228,14 @@ describe('Application', () => {
             expect(document.querySelector(`.${state}`))
               .not.toHaveCSSClass('is-ready');
 
-            const plugin = createPlugin('bind', () => (component, node) => {
-              component.node = node;
+            const plugin = createPlugin('bind', () => (component, element) => {
+              component.element = element;
             });
             const application = new Application({ plugins: [plugin] });
 
             application.component(`.${state}`, {
               init() {
-                this.node.className = `${state} is-ready`;
+                this.element.className = `${state} is-ready`;
               },
             });
 
@@ -318,22 +318,22 @@ describe('Application', () => {
         });
       });
 
-      it("doesn't initialize component on nodes matched by selector", () => {
-        const nodeClass = 'node';
+      it("doesn't initialize component on elements matched by selector", () => {
+        const elementClass = 'element';
 
         fixture(`
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         `);
 
         const expectedClass = 'is-component';
-        const selector = `.${nodeClass}`;
+        const selector = `.${elementClass}`;
         const proto = {
           init() {
-            this.node.className = `${this.node.className} ${expectedClass}`;
+            this.element.className = `${this.element.className} ${expectedClass}`;
           },
         };
-        const plugin = createPlugin('node-binding', () => (component, node) => {
-          component.node = node;
+        const plugin = createPlugin('element-binding', () => (component, element) => {
+          component.element = element;
         });
         const application = new Application(plugin);
 
@@ -364,28 +364,28 @@ describe('Application', () => {
         });
       });
 
-      it('initialize component on nodes matched by selector', () => {
+      it('initialize component on elements matched by selector', () => {
         ['interactive', 'complete'].forEach((state) => {
           Object.defineProperty(document, 'readyState', {
             value: state,
             writable: true,
           });
 
-          const nodeClass = 'node';
+          const elementClass = 'element';
 
           fixture(`
-            <div class="${nodeClass}"></div>
+            <div class="${elementClass}"></div>
           `);
 
           const expectedClass = 'is-component';
-          const selector = `.${nodeClass}`;
+          const selector = `.${elementClass}`;
           const proto = {
             init() {
-              this.node.className = `${this.node.className} ${expectedClass}`;
+              this.element.className = `${this.element.className} ${expectedClass}`;
             },
           };
-          const plugin = createPlugin('node-binding', () => (component, node) => {
-            component.node = node;
+          const plugin = createPlugin('element-binding', () => (component, element) => {
+            component.element = element;
           });
           const application = new Application({ plugins: [plugin] });
 
@@ -399,12 +399,12 @@ describe('Application', () => {
   });
 
   describe('.vitalize', () => {
-    it('creates components on all matched nodes in document', () => {
+    it('creates components on all matched elements in document', () => {
       const fooClass = 'foo';
       const barClass = 'bar';
 
-      const plugin = createPlugin('node-binding', () => (component, node) => {
-        component.node = node;
+      const plugin = createPlugin('element-binding', () => (component, element) => {
+        component.element = element;
       });
       const application = new Application({ plugins: [plugin] });
 
@@ -412,7 +412,7 @@ describe('Application', () => {
       const fooSelector = `.${fooClass}`;
       const fooProto = {
         init() {
-          this.node.className = `${this.node.className} ${expectedFooClass}`;
+          this.element.className = `${this.element.className} ${expectedFooClass}`;
         },
       };
       application.component(fooSelector, fooProto);
@@ -421,7 +421,7 @@ describe('Application', () => {
       const barSelector = `.${barClass}`;
       const barProto = {
         init() {
-          this.node.className = `${this.node.className} ${expectedBarClass}`;
+          this.element.className = `${this.element.className} ${expectedBarClass}`;
         },
       };
       application.component(barSelector, barProto);
@@ -445,15 +445,15 @@ describe('Application', () => {
     });
 
     describe('given tree', () => {
-      it('creates components on all matched nodes', () => {
+      it('creates components on all matched elements', () => {
         const treeClass = 'tree';
         const fooClass = 'foo';
         const barClass = 'bar';
         const outsideClass = 'outside';
         const insideClass = 'inside';
 
-        const plugin = createPlugin('node-binding', () => (component, node) => {
-          component.node = node;
+        const plugin = createPlugin('element-binding', () => (component, element) => {
+          component.element = element;
         });
         const application = new Application({ plugins: [plugin] });
 
@@ -461,7 +461,7 @@ describe('Application', () => {
         const fooSelector = `.${fooClass}`;
         const fooProto = {
           init() {
-            this.node.className = `${this.node.className} ${expectedFooClass}`;
+            this.element.className = `${this.element.className} ${expectedFooClass}`;
           },
         };
         application.component(fooSelector, fooProto);
@@ -470,7 +470,7 @@ describe('Application', () => {
         const barSelector = `.${barClass}`;
         const barProto = {
           init() {
-            this.node.className = `${this.node.className} ${expectedBarClass}`;
+            this.element.className = `${this.element.className} ${expectedBarClass}`;
           },
         };
         application.component(barSelector, barProto);
@@ -511,8 +511,8 @@ describe('Application', () => {
         const fooClass = 'foo';
         const barClass = 'bar';
 
-        const plugin = createPlugin('node-binding', () => (component, node) => {
-          component.node = node;
+        const plugin = createPlugin('element-binding', () => (component, element) => {
+          component.element = element;
         });
         const application = new Application({ plugins: [plugin] });
 
@@ -520,7 +520,7 @@ describe('Application', () => {
         const fooSelector = `.${fooClass}`;
         const fooProto = {
           init() {
-            this.node.className = `${this.node.className} ${expectedFooClass}`;
+            this.element.className = `${this.element.className} ${expectedFooClass}`;
           },
         };
         application.component(fooSelector, fooProto);
@@ -529,7 +529,7 @@ describe('Application', () => {
         const barSelector = `.${barClass}`;
         const barProto = {
           init() {
-            this.node.className = `${this.node.className} ${expectedBarClass}`;
+            this.element.className = `${this.element.className} ${expectedBarClass}`;
           },
         };
         application.component(barSelector, barProto);

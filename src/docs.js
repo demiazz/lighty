@@ -16,7 +16,7 @@
  * @callback TransformerFn
  *
  * @param {Component} component - component which will be transformed.
- * @param {external:Element} node - element which associated with the component.
+ * @param {external:Element} element - element which associated with the component.
  *
  * @return {Void}
  *

@@ -17,11 +17,11 @@ describe('querySelector', () => {
   describe('HTMLElement instance given as a tree', () => {
     it('select all children elements which matched by selector', () => {
       const treeClass = 'tree';
-      const nodeClass = 'node';
+      const elementClass = 'element';
 
       fixture(`
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
       `);
 
@@ -29,11 +29,11 @@ describe('querySelector', () => {
 
       const expectedClass = 'is-matched';
 
-      querySelector(tree, `.${nodeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(tree, `.${elementClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
-      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
+      expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select tree element if matched by selector', () => {
@@ -45,8 +45,8 @@ describe('querySelector', () => {
 
       const tree = document.querySelector(`.${treeClass}`);
 
-      querySelector(tree, `.${treeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(tree, `.${treeClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
       expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
@@ -56,17 +56,17 @@ describe('querySelector', () => {
   describe('NodeList instance given as a tree', () => {
     it('select all children elements which matched by selector', () => {
       const treeClass = 'tree';
-      const nodeClass = 'node';
+      const elementClass = 'element';
 
       fixture(`
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
       `);
 
@@ -74,11 +74,11 @@ describe('querySelector', () => {
 
       const expectedClass = 'is-matched';
 
-      querySelector(trees, `.${nodeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(trees, `.${elementClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
-      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
+      expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -94,8 +94,8 @@ describe('querySelector', () => {
 
       const trees = document.querySelectorAll(`.${treeClass}`);
 
-      querySelector(trees, `.${treeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(trees, `.${treeClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
       expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
@@ -105,17 +105,17 @@ describe('querySelector', () => {
   describe('array of HTMLElement instances given as a tree', () => {
     it('select all children elements which matched by selector', () => {
       const treeClass = 'tree';
-      const nodeClass = 'node';
+      const elementClass = 'element';
 
       fixture(`
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
       `);
 
@@ -123,11 +123,11 @@ describe('querySelector', () => {
 
       const expectedClass = 'is-matched';
 
-      querySelector(trees, `.${nodeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(trees, `.${elementClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
-      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
+      expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -143,8 +143,8 @@ describe('querySelector', () => {
 
       const trees = [].slice.call(document.querySelectorAll(`.${treeClass}`));
 
-      querySelector(trees, `.${treeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(trees, `.${treeClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
       expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
@@ -154,17 +154,17 @@ describe('querySelector', () => {
   describe('jQuery object given as a tree', () => {
     it('select all children elements which matched by selector', () => {
       const treeClass = 'tree';
-      const nodeClass = 'node';
+      const elementClass = 'element';
 
       fixture(`
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
       `);
 
@@ -172,11 +172,11 @@ describe('querySelector', () => {
 
       const expectedClass = 'is-matched';
 
-      querySelector(trees, `.${nodeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(trees, `.${elementClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
-      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
+      expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -192,8 +192,8 @@ describe('querySelector', () => {
 
       const trees = $(`.${treeClass}`);
 
-      querySelector(trees, `.${treeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(trees, `.${treeClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
       expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
@@ -203,27 +203,27 @@ describe('querySelector', () => {
   describe('selector given as a tree', () => {
     it('select all children elements which matched by selector', () => {
       const treeClass = 'tree';
-      const nodeClass = 'node';
+      const elementClass = 'element';
 
       fixture(`
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
         <div class="${treeClass}">
-          <div class="${nodeClass}"></div>
+          <div class="${elementClass}"></div>
         </div>
       `);
 
       const expectedClass = 'is-matched';
 
-      querySelector(`.${treeClass}`, `.${nodeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(`.${treeClass}`, `.${elementClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
-      expect(`.${nodeClass}`).toHaveCSSClass(expectedClass);
+      expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
     });
 
     it('select each tree element if matched by selector', () => {
@@ -237,8 +237,8 @@ describe('querySelector', () => {
 
       const expectedClass = 'is-matched';
 
-      querySelector(`.${treeClass}`, `.${treeClass}`).forEach((node) => {
-        node.className = `${node.className} ${expectedClass}`;
+      querySelector(`.${treeClass}`, `.${treeClass}`).forEach((element) => {
+        element.className = `${element.className} ${expectedClass}`;
       });
 
       expect(`.${treeClass}`).toHaveCSSClass(expectedClass);

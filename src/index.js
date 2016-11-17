@@ -63,7 +63,7 @@ export function create(options) {
  * @example
  *
  * const factory = plugin('awesome-plugin', function initializer() {
- *   return function transform(component, node) {
+ *   return function transform(component, element) {
  *     // transform component here
  *   }
  * });
@@ -73,7 +73,7 @@ export function create(options) {
  * @example
  *
  * const factory = plugin('awesome-plugin', function initializer(...args) {
- *   return function transform(component, node) {
+ *   return function transform(component, element) {
  *     // `args` available here
  *   };
  * });
