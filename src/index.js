@@ -48,7 +48,7 @@ export { querySelector };
  * @return {module:application~Application} created application instance.
  *
  * @public
- * @since 0.2.0
+ * @since 0.5.0
  */
 export function createApplication(options) {
   return new Application(options);
@@ -82,7 +82,7 @@ export function createApplication(options) {
  *   // your awesome arguments here
  * );
  *
- * const application = create({ plugins: [plugin] });
+ * const application = createApplication({ plugins: [plugin] });
  *
  * @param {String} name - plugin's name.
  * @param {PluginInitializationFn} initializer - add description.
@@ -90,7 +90,7 @@ export function createApplication(options) {
  * @return {PluginFactoryFn} plugin's factory.
  *
  * @public
- * @since 0.2.0
+ * @since 0.5.0
  */
 export function createPlugin(name, initializer) {
   return function factory(...args) {
