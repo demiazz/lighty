@@ -92,6 +92,21 @@ function matches(element, selector) {
 }
 
 /**
+ * Creates new array with all items that is a {@link external:`Element`}'s
+ * instances.
+ *
+ * @param {Array.<*>} nodes - items.
+ *
+ * @return {Array.<external:Element>} filtered array.
+ *
+ * @private
+ * @since 0.5.0
+ */
+function filterElements(elements) {
+  return elements.filter(element => element instanceof Element);
+}
+
+/**
  * Selects all elements by selector inside given tree (includes tree self too).
  *
  * @example
@@ -151,9 +166,9 @@ function querySelector(tree, selector) {
   if (tree instanceof Element) {
     roots = [tree];
   } else if (tree instanceof NodeList) {
-    roots = [].slice.call(tree);
+    roots = filterElements([].slice.call(tree));
   } else if (Array.isArray(tree)) {
-    roots = tree;
+    roots = filterElements(tree);
   } else if (typeof tree === 'string') {
     roots = [].slice.call(document.querySelectorAll(tree));
   }
