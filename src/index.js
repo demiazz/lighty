@@ -37,7 +37,7 @@ export { querySelector };
  *
  * @example
  *
- * const application = create();
+ * const application = createApplication();
  *
  * application.component('.example', {
  *   // ...
@@ -50,7 +50,7 @@ export { querySelector };
  * @public
  * @since 0.2.0
  */
-export function create(options) {
+export function createApplication(options) {
   return new Application(options);
 }
 
@@ -62,27 +62,27 @@ export function create(options) {
  *
  * @example
  *
- * const factory = plugin('awesome-plugin', function initializer() {
+ * const plugin = createPlugin('awesome-plugin', function initializer() {
  *   return function transform(component, element) {
  *     // transform component here
  *   }
  * });
  *
- * const application = create({ plugins: [factory] });
+ * const application = create({ plugins: [plugin] });
  *
  * @example
  *
- * const factory = plugin('awesome-plugin', function initializer(...args) {
+ * const factory = createPlugin('awesome-plugin', function initializer(...args) {
  *   return function transform(component, element) {
  *     // `args` available here
  *   };
  * });
  *
- * const pluginInstance = factory(
+ * const plugin = factory(
  *   // your awesome arguments here
  * );
  *
- * const application = create({ plugins: [pluginInstance] });
+ * const application = create({ plugins: [plugin] });
  *
  * @param {String} name - plugin's name.
  * @param {PluginInitializationFn} initializer - add description.
@@ -92,7 +92,7 @@ export function create(options) {
  * @public
  * @since 0.2.0
  */
-export function plugin(name, initializer) {
+export function createPlugin(name, initializer) {
   return function factory(...args) {
     return new Plugin(name, initializer(...args));
   };

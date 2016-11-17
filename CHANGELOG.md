@@ -8,6 +8,8 @@
 * `querySelector` returns empty array when type of `tree` is incorrect
 * `querySelector` filter `tree` for `Element` instances if `tree` is `NodeList`
   or `Array`
+* rename `create` to `createApplication`
+* rename `plugin` to `createPlugin`
 
 ## 0.4.2 (11 November 2016)
 

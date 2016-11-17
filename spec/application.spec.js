@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 
-import { plugin as createPlugin } from '../src';
+import { createPlugin } from '../src';
 import Application from '../src/application';
 import Builder from '../src/builder';
 import querySelector from '../src/query-selector';

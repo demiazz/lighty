@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 
-import { plugin } from '../src';
+import { createPlugin } from '../src';
 import Builder from '../src/builder';
 import querySelector from '../src/query-selector';
 
@@ -20,7 +20,7 @@ describe('Builder', () => {
       const selector = '.component';
       const proto = { init() { } };
       const plugins = [
-        plugin('my-plugin', () => () => { })(),
+        createPlugin('my-plugin', () => () => { })(),
       ];
 
       const builder = new Builder(id, selector, proto, plugins, querySelector);
@@ -91,7 +91,7 @@ describe('Builder', () => {
         },
       };
       const plugins = [
-        plugin('element-binding', () => (component, element) => {
+        createPlugin('element-binding', () => (component, element) => {
           element.className = `${element.className} ${expectedPluginClass}`;
 
           component.element = element;
@@ -136,7 +136,7 @@ describe('Builder', () => {
         },
       };
       const plugins = [
-        plugin('element-binding', () => (component, element) => {
+        createPlugin('element-binding', () => (component, element) => {
           component.element = element;
         })(),
       ];
@@ -166,7 +166,7 @@ describe('Builder', () => {
         },
       };
       const plugins = [
-        plugin('element-binding', () => (component, element) => {
+        createPlugin('element-binding', () => (component, element) => {
           component.element = element;
         })(),
       ];

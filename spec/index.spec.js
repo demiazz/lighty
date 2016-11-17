@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 
-import { querySelector, create, plugin } from '../src';
+import { querySelector, createApplication, createPlugin } from '../src';
 import Application from '../src/application';
 import Plugin from '../src/plugin';
 import internalQuerySelector from '../src/query-selector';
@@ -20,7 +20,7 @@ describe('create', () => {
   });
 
   it('returns new application', () => {
-    const application = create();
+    const application = createApplication();
 
     expect(application).toBeInstanceOf(Application);
   });
@@ -30,7 +30,7 @@ describe('create', () => {
     const options = {
       querySelector: customQuerySelector,
     };
-    const application = create(options);
+    const application = createApplication(options);
 
     expect(application.querySelector).toEqual(customQuerySelector);
   });
@@ -38,13 +38,13 @@ describe('create', () => {
   it('returns new application with custom plugins list', () => {
     const transformer = () => { };
     const initializer = () => transformer;
-    const factory = plugin('my-plugin', initializer);
-    const pluginInstance = factory();
-    const options = { plugins: [pluginInstance] };
-    const application = create(options);
+    const factory = createPlugin('my-plugin', initializer);
+    const plugin = factory();
+    const options = { plugins: [plugin] };
+    const application = createApplication(options);
 
     expect(application.plugins.length).toEqual(1);
-    expect(application.plugins[0]).toEqual(pluginInstance);
+    expect(application.plugins[0]).toEqual(plugin);
   });
 });
 
@@ -59,14 +59,14 @@ describe('plugin', () => {
     const initializer = (
       jasmine.createSpy('initializer').and.callFake(() => transform)
     );
-    const factory = plugin(name, initializer);
-    const instance = factory();
+    const factory = createPlugin(name, initializer);
+    const plugin = factory();
 
-    expect(instance).toBeInstanceOf(Plugin);
-    expect(instance.name).toEqual(name);
+    expect(plugin).toBeInstanceOf(Plugin);
+    expect(plugin.name).toEqual(name);
     expect(initializer).toHaveBeenCalledTimes(1);
 
-    instance.transform();
+    plugin.transform();
 
     expect(transform).toHaveBeenCalledTimes(1);
   });
@@ -74,10 +74,10 @@ describe('plugin', () => {
   it('call plugin initializer with given arguments', () => {
     const initializer = jasmine.createSpy('initializer').and.callFake(() => { });
     const name = 'my-plugin';
-    const factory = plugin(name, initializer);
+    const plugin = createPlugin(name, initializer);
 
     const args = [1, {}, []];
-    factory(...args);
+    plugin(...args);
 
     expect(initializer).toHaveBeenCalledTimes(1);
     expect(initializer).toHaveBeenCalledWith(...args);
