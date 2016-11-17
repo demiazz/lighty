@@ -146,7 +146,7 @@ function querySelector(tree, selector) {
     return tree.filter(selector).add(tree.find(selector)).toArray();
   }
 
-  let roots;
+  let roots = [];
 
   if (tree instanceof Element) {
     roots = [tree];
