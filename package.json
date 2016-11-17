@@ -29,11 +29,13 @@
     "test:watch": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(npm bin)/karma start build/karma.ci.js",
     "build": "node build/rollup.js",
-    "version": "npm run build && git add -A dist"
+    "docs": "rm -rf docs && $(npm bin)/jsdoc -c .jsdocrc src/*.js",
+    "version": "npm run build && npm run docs && git add -A dist && git add -A docs"
   },
   "devDependencies": {
     "cross-env": "^3.1.3",
     "deep-equal": "^1.0.1",
+    "docdash": "^0.4.0",
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -41,6 +43,7 @@
     "eslint-plugin-react": "^6.6.0",
     "jasmine-core": "^2.5.2",
     "jquery": ">= 2.1.0",
+    "jsdoc": "^3.4.3",
     "karma": "^1.3.0",
     "karma-coverage": "^1.1.1",
     "karma-coveralls": "^1.1.2",
