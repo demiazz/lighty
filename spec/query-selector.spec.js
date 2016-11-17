@@ -61,7 +61,7 @@ describe('querySelector', () => {
       fixture(`
         <svg>
           <g class="${treeClass}">
-            <path class="${elementClass}"></path>
+            <g class="${elementClass}"></g>
           </g>
         </svg>
       `);
@@ -71,7 +71,7 @@ describe('querySelector', () => {
       const expectedClass = 'is-matched';
 
       querySelector(tree, `.${elementClass}`).forEach((element) => {
-        element.className = `${element.className} ${expectedClass}`;
+        element.setAttribute('class', `${element.className} ${expectedClass}`);
       });
 
       expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
@@ -91,52 +91,7 @@ describe('querySelector', () => {
       const tree = document.querySelector(`.${treeClass}`);
 
       querySelector(tree, `.${treeClass}`).forEach((element) => {
-        element.className = `${element.className} ${expectedClass}`;
-      });
-
-      expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
-    });
-  });
-
-  describe('SVGAElement instance given as a tree', () => {
-    it('select all children elements which matched by selector', () => {
-      const treeClass = 'tree';
-      const elementClass = 'element';
-
-      fixture(`
-        <svg>
-          <a class="${treeClass}">
-            <g class="${elementClass}"></g>
-          </a>
-        </svg>
-      `);
-
-      const tree = document.querySelector(`.${treeClass}`);
-
-      const expectedClass = 'is-matched';
-
-      querySelector(tree, `.${elementClass}`).forEach((element) => {
-        element.className = `${element.className} ${expectedClass}`;
-      });
-
-      expect(`.${elementClass}`).toHaveCSSClass(expectedClass);
-    });
-
-    it('select tree element if matched by selector', () => {
-      const treeClass = 'tree';
-
-      fixture(`
-        <svg>
-          <a class="${treeClass}"></a>
-        </svg
-      `);
-
-      const expectedClass = 'is-matched';
-
-      const tree = document.querySelector(`.${treeClass}`);
-
-      querySelector(tree, `.${treeClass}`).forEach((element) => {
-        element.className = `${element.className} ${expectedClass}`;
+        element.setAttribute('class', `${element.className} ${expectedClass}`);
       });
 
       expect(`.${treeClass}`).toHaveCSSClass(expectedClass);
