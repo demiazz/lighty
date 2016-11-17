@@ -92,7 +92,7 @@ function matches(element, selector) {
 }
 
 /**
- * Creates new array with all items that is a {@link external:`Element`}'s
+ * Creates new array with all items that is a {@link external:Element}'s
  * instances.
  *
  * @param {Array.<*>} nodes - items.
