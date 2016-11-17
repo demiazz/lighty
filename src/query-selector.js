@@ -148,7 +148,7 @@ function querySelector(tree, selector) {
 
   let roots;
 
-  if (tree instanceof HTMLElement) {
+  if (tree instanceof Element) {
     roots = [tree];
   } else if (tree instanceof NodeList) {
     roots = [].slice.call(tree);
