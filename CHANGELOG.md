@@ -1,3 +1,14 @@
+## 0.5.0 (17 November 2016)
+
+* Rewrite build script. Use named modules in UMD build
+* Add API documentation based on JSDoc
+* Use `element` instead `node` for naming inside library
+* `Application.component` not return `this` anymore
+* `querySelector` uses `Element` instead `HTMLElement` as base class for checks
+* `querySelector` returns empty array when type of `tree` is incorrect
+* `querySelector` filter `tree` for `Element` instances if `tree` is `NodeList`
+  or `Array`
+
 ## 0.4.2 (11 November 2016)
 
 * Add workaround for `document.readyState` bug in IE
