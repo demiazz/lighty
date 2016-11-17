@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>builder.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-application-Application.html">Application</a><ul class='methods'><li data-type='method'><a href="module-application-Application.html#component">component</a></li><li data-type='method'><a href="module-application-Application.html#start">start</a></li><li data-type='method'><a href="module-application-Application.html#vitalize">vitalize</a></li></ul></li><li><a href="module-builder-Builder.html">Builder</a><ul class='methods'><li data-type='method'><a href="module-builder-Builder.html#checkAndUpdateCache">checkAndUpdateCache</a></li><li data-type='method'><a href="module-builder-Builder.html#createComponent">createComponent</a></li><li data-type='method'><a href="module-builder-Builder.html#getInitializer">getInitializer</a></li><li data-type='method'><a href="module-builder-Builder.html#transformComponent">transformComponent</a></li></ul></li><li><a href="module-plugin-Plugin.html">Plugin</a><ul class='methods'><li data-type='method'><a href="module-plugin-Plugin.html#transform">transform</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-application.html">application</a></li><li><a href="module-builder.html">builder</a></li><li><a href="module-index.html">index</a><ul class='methods'><li data-type='method'><a href="module-index.html#.createApplication">createApplication</a></li><li data-type='method'><a href="module-index.html#.createPlugin">createPlugin</a></li></ul></li><li><a href="module-plugin.html">plugin</a></li><li><a href="module-query-selector.html">query-selector</a><ul class='methods'><li data-type='method'><a href="module-query-selector.html#~filterElements">filterElements</a></li><li data-type='method'><a href="module-query-selector.html#~getMatchesFn">getMatchesFn</a></li><li data-type='method'><a href="module-query-selector.html#~matches">matches</a></li><li data-type='method'><a href="module-query-selector.html#~querySelector">querySelector</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Element.html">Element</a></li><li><a href="external-jQuery.html">jQuery</a></li><li><a href="external-MatchesFn.html">MatchesFn</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">builder.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Provides Builder class.
+ *
+ * @module builder
+ *
+ * @protected
+ * @since 0.2.0
+ */
+
+
+/**
+ * Creates {@link ComponentPrototype}'s instances for elements in specified tree.
+ *
+ * @property {Number} id - unique identificator.
+ * @property {Selector} selector - CSS selector for searching elements.
+ * @property {ComponentPrototype} proto - components' prototype.
+ * @property {Array.&lt;module:plugin~Plugin>} plugins - list of plugins.
+ * @property {QuerySelector} querySelector - function for search elements in a tree.
+ *
+ * @protected
+ * @since 0.2.0
+ */
+class Builder {
+  /**
+   * Creates a builder instance.
+   *
+   * @param {Number} id - unique identificator.
+   * @param {Selector} selector - CSS selector for searching elements.
+   * @param {ComponentPrototype} proto - components' prototype.
+   * @param {Array.&lt;module:plugin~Plugin>} plugins - list of plugins.
+   * @param {QuerySelector} querySelector - function for search elements in a tree.
+   */
+  constructor(id, selector, proto, plugins, querySelector) {
+    this.id = id;
+    this.selector = selector;
+    this.proto = proto;
+    this.plugins = plugins;
+    this.querySelector = querySelector;
+  }
+
+  /**
+   * Search elements in specified tree. Creates {@link Component}'s instance
+   * for each element (if not has been set up early). And generate
+   * initialization function, which calls {@link ComponentInitFn} for each
+   * created component, if a component has a {@link ComponentInitFn}.
+   *
+   * @param {Tree} [tree = document.body] - specified tree.
+   *
+   * @return {InitializerFn} initialization function.
+   *
+   * @protected
+   * @since 0.2.0
+   */
+  getInitializer(tree = document.body) {
+    const elements = this.querySelector(tree, this.selector);
+
+    const components = elements.reduce((cs, element) => {
+      if (this.checkAndUpdateCache(element)) {
+        cs.push(this.createComponent(element));
+      }
+
+      return cs;
+    }, []);
+
+    return function initializer() {
+      components.forEach((component) => {
+        if (!component.init) {
+          return;
+        }
+
+        component.init();
+      });
+    };
+  }
+
+  /**
+   * Creates {@link Component}'s instance and applies plugins to them.
+   *
+   * @param {external:Element} element - specified element.
+   *
+   * @return {Component} created {@link Component}'s instance.
+   *
+   * @private
+   * @since 0.2.0
+   */
+  createComponent(element) {
+    const component = Object.keys(this.proto).reduce((instance, property) => {
+      instance[property] = this.proto[property];
+
+      return instance;
+    }, { });
+
+    this.transformComponent(component, element);
+
+    return component;
+  }
+
+  /**
+   * Checks have been created a component for specified element. Update meta
+   * information about linked components if not.
+   *
+   * @param {external:Element} element - specified element.
+   *
+   * @return {Boolean} `true` if component isn't has been created; otherwise
+   * returns `false`.
+   *
+   * @private
+   * @since 0.2.0
+   */
+  checkAndUpdateCache(element) {
+    if (element.ids &amp;&amp; element.ids.indexOf(this.id) !== -1) {
+      return false;
+    }
+
+    element.ids = element.ids ? element.ids.concat(this.id) : [this.id];
+
+    return true;
+  }
+
+  /**
+   * Applies plugins to specified component and element one by one.
+   *
+   * @param {Component} component - component which will be transformed.
+   * @param {external:Element} element - element which associated
+   * with the component.
+   *
+   * @return {void} nothing.
+   *
+   * @private
+   * @since 0.2.0
+   */
+  transformComponent(component, element) {
+    this.plugins.forEach((plugin) => {
+      plugin.transform(component, element);
+    });
+  }
+}
+
+
+export default Builder;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>query-selector.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-application-Application.html">Application</a><ul class='methods'><li data-type='method'><a href="module-application-Application.html#component">component</a></li><li data-type='method'><a href="module-application-Application.html#start">start</a></li><li data-type='method'><a href="module-application-Application.html#vitalize">vitalize</a></li></ul></li><li><a href="module-builder-Builder.html">Builder</a><ul class='methods'><li data-type='method'><a href="module-builder-Builder.html#checkAndUpdateCache">checkAndUpdateCache</a></li><li data-type='method'><a href="module-builder-Builder.html#createComponent">createComponent</a></li><li data-type='method'><a href="module-builder-Builder.html#getInitializer">getInitializer</a></li><li data-type='method'><a href="module-builder-Builder.html#transformComponent">transformComponent</a></li></ul></li><li><a href="module-plugin-Plugin.html">Plugin</a><ul class='methods'><li data-type='method'><a href="module-plugin-Plugin.html#transform">transform</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-application.html">application</a></li><li><a href="module-builder.html">builder</a></li><li><a href="module-index.html">index</a><ul class='methods'><li data-type='method'><a href="module-index.html#.createApplication">createApplication</a></li><li data-type='method'><a href="module-index.html#.createPlugin">createPlugin</a></li></ul></li><li><a href="module-plugin.html">plugin</a></li><li><a href="module-query-selector.html">query-selector</a><ul class='methods'><li data-type='method'><a href="module-query-selector.html#~filterElements">filterElements</a></li><li data-type='method'><a href="module-query-selector.html#~getMatchesFn">getMatchesFn</a></li><li data-type='method'><a href="module-query-selector.html#~matches">matches</a></li><li data-type='method'><a href="module-query-selector.html#~querySelector">querySelector</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-Element.html">Element</a></li><li><a href="external-jQuery.html">jQuery</a></li><li><a href="external-MatchesFn.html">MatchesFn</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">query-selector.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Provides utilities to work with the search for `DOM` tree.
+ *
+ * @module query-selector
+ *
+ * @protected
+ * @since 0.4.0
+ */
+
+
+/**
+ * Extracts {@link external:MatchesFn} method from `DOM API`.
+ *
+ * Uses workaround for vendor prefixed methods in old browsers.
+ *
+ * @example
+ *
+ * &lt;div class="element">&lt;div>
+ *
+ * @example
+ *
+ * const element = document.querySelector('.element');
+ * const matchesFn = getMatchesFn();
+ *
+ * matchesFn.call(element, '.element'); // => true
+ * matchesFn.call(element, '.not-element'); // => false
+ *
+ * @return {external:MatchesFn} extracted {@link external:MatchesFn} method.
+ *
+ * @private
+ * @since 0.4.0
+ */
+function getMatchesFn() {
+  const e = document.documentElement;
+
+  return (
+    e.matches ||
+    e.matchesSelector ||
+    e.msMatchesSelector ||
+    e.mozMatchesSelector ||
+    e.webkitMatchesSelector ||
+    e.oMatchesSelector
+  );
+}
+
+/**
+ * {@link external:MatchesFn} extracted from `DOM API`.
+ *
+ * @example
+ *
+ * &lt;div class="element">&lt;div>
+ *
+ * @example
+ *
+ * const element = document.querySelector('.element');
+ *
+ * matchesFn.call(element, '.element'); // => true
+ * matchesFn.call(element, '.not-element'); // => false
+ *
+ * @type external:MatchesFn
+ *
+ * @private
+ * @since 0.4.0
+ */
+const matchesFn = getMatchesFn();
+
+/**
+ * Wrapper around {@link matchesFn}.
+ *
+ * @example
+ *
+ * &lt;div class="element">&lt;div>
+ *
+ * @example
+ *
+ * const element = document.querySelector('.element');
+ *
+ * matches(element, '.element'); // => true
+ * matches(element, '.not-element'); // => false
+ *
+ * @param {external:Element} element - element to test.
+ * @param {Selector} selector - CSS selector to test.
+ *
+ * @return {Boolean} `true` if the specified selector would select the element;
+ * otherwise, returns `false`.
+ *
+ * @private
+ * @since 0.4.0
+ */
+function matches(element, selector) {
+  return matchesFn.call(element, selector);
+}
+
+/**
+ * Creates new array with all items that is a {@link external:Element}'s
+ * instances.
+ *
+ * @param {Array.&lt;*>} nodes - items.
+ *
+ * @return {Array.&lt;external:Element>} filtered array.
+ *
+ * @private
+ * @since 0.5.0
+ */
+function filterElements(elements) {
+  return elements.filter(element => element instanceof Element);
+}
+
+/**
+ * Selects all elements by selector inside given tree (includes tree self too).
+ *
+ * @example
+ *
+ * &lt;div class="tree">
+ *   &lt;div class="leaf">
+ *   &lt;div class="leaf">
+ * &lt;/div>
+ *
+ * @example
+ *
+ * querySelector('.tree', '.leaf'); // => [&lt;.leaf>, &lt;.leaf>]
+ *
+ * @example
+ *
+ * querySelector('.tree', '.tree, .leaf'); // => [&lt;.tree>, &lt;.leaf>, &lt;.leaf>]
+ *
+ * @example
+ *
+ * const tree = document.querySelector('.tree');
+ *
+ * querySelector(tree, '.leaf') // => [&lt;.leaf>, &lt;.leaf>]
+ *
+ * @example
+ *
+ * const tree = document.querySelectorAll('.tree');
+ *
+ * querySelector(tree, '.leaf') // => [&lt;.leaf>, &lt;.leaf>]
+ *
+ * @example
+ *
+ * const tree = [document.querySelector('.tree')];
+ *
+ * querySelector(tree, '.leaf') // => [&lt;.leaf>, &lt;.leaf>]
+ *
+ * @example
+ *
+ * const tree = $('.tree');
+ *
+ * querySelector(tree, '.leaf') // => [&lt;.leaf>, &lt;.leaf>]
+ *
+ * @param {Tree} tree - tree inside of which will be searched for elements.
+ * @param {Selector} selector - valid CSS selector.
+ *
+ * @return {external:Element[]} elements selected by specified selector.
+ *
+ * @protected
+ * @since 0.4.0
+ */
+function querySelector(tree, selector) {
+  if (tree.jquery) {
+    return tree.filter(selector).add(tree.find(selector)).toArray();
+  }
+
+  let roots = [];
+
+  if (tree instanceof Element) {
+    roots = [tree];
+  } else if (tree instanceof NodeList) {
+    roots = filterElements([].slice.call(tree));
+  } else if (Array.isArray(tree)) {
+    roots = filterElements(tree);
+  } else if (typeof tree === 'string') {
+    roots = [].slice.call(document.querySelectorAll(tree));
+  }
+
+  return roots.reduce((elements, root) => {
+    if (matches(root, selector)) {
+      elements.push(root);
+    }
+
+    return elements.concat(
+      [].slice.call(root.querySelectorAll(selector))
+    );
+  }, []);
+}
+
+
+export default querySelector;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
