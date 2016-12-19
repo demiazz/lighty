@@ -1,3 +1,8 @@
+## 0.6.0 (19 December 2016)
+
+* Fully incompatible version
+* Change library concept from framework to framework engine
+
 ## 0.5.0 (17 November 2016)
 
 * Rewrite build script. Use named modules in UMD build
@@ -8,8 +13,8 @@
 * `querySelector` returns empty array when type of `tree` is incorrect
 * `querySelector` filter `tree` for `Element` instances if `tree` is `NodeList`
   or `Array`
-* rename `create` to `createApplication`
-* rename `plugin` to `createPlugin`
+* Rename `create` to `createApplication`
+* Rename `plugin` to `createPlugin`
 
 ## 0.4.2 (11 November 2016)
 
