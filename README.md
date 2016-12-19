@@ -161,6 +161,146 @@ See also [Builder](#Builder).
 # API
 
 <!-- API: BEGIN -->
+## Classes
+
+<dl>
+<dt><a href="#Engine">Engine</a></dt>
+<dd><p>Application&#39;s engine. Controls application&#39;s lifecycle, register
+and vitalize components.</p>
+</dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#create">create(builder, [onStart])</a> ⇒ <code><a href="#Engine">Engine</a></code></dt>
+<dd><p>Creates engine&#39;s instance with given <code>builder</code>.</p>
+</dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#CSSSelector">CSSSelector</a> : <code>String</code></dt>
+<dd><p>A valid CSS selector.</p>
+</dd>
+<dt><a href="#Trees">Trees</a> : <code>Element</code> | <code>NodeList</code> | <code>Array.&lt;Element&gt;</code> | <code><a href="#CSSSelector">CSSSelector</a></code></dt>
+<dd><p>One or many DOM elements for search.</p>
+</dd>
+<dt><a href="#Builder">Builder</a> ⇒ <code>undefined</code></dt>
+<dd><p>Creates component&#39;s instance with linked arguments for given <code>element</code>.</p>
+</dd>
+<dt><a href="#OnStart">OnStart</a> ⇒ <code>undefined</code></dt>
+<dd><p>Callback which will be called on engine start.</p>
+</dd>
+</dl>
+
+<a name="Engine"></a>
+
+## Engine
+Application's engine. Controls application's lifecycle, register
+and vitalize components.
+
+**Kind**: global class  
+
+* [Engine](#Engine)
+    * [.component(selector, ...args)](#Engine.component) ⇒ <code>undefined</code>
+    * [.vitalize([trees])](#Engine.vitalize) ⇒ <code>undefined</code>
+
+<a name="Engine.component"></a>
+
+### Engine.component(selector, ...args) ⇒ <code>undefined</code>
+Register component with given `selector` and builder's `args` list.
+
+Vitalize component if an application is already running.
+
+**Kind**: static method of <code>[Engine](#Engine)</code>  
+**Returns**: <code>undefined</code> - nothing.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| selector | <code>[CSSSelector](#CSSSelector)</code> | linked selector. |
+| ...args | <code>\*</code> | linked builder's arguments list. |
+
+<a name="Engine.vitalize"></a>
+
+### Engine.vitalize([trees]) ⇒ <code>undefined</code>
+Vitalize all registered components inside given `trees`.
+
+Recommended use this method inside components. Components always created
+after application launch, so `vitalize` don't be called before start.
+
+If you update HTML inside some element, then use them as tree root for
+performance purposes.
+
+**Kind**: static method of <code>[Engine](#Engine)</code>  
+**Returns**: <code>undefined</code> - nothing.  
+**Throws**:
+
+- <code>Error</code> when an application is not launched yet.
+- <code>TypeError</code> when trees have not acceptable type.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [trees] | <code>[Trees](#Trees)</code> | <code>document.body</code> | roots of search trees. |
+
+**Example**  
+```js
+element.innerHTML = `...`;
+
+engine.vitalize(element);
+```
+<a name="create"></a>
+
+## create(builder, [onStart]) ⇒ <code>[Engine](#Engine)</code>
+Creates engine's instance with given `builder`.
+
+**Kind**: global function  
+**Returns**: <code>[Engine](#Engine)</code> - engine's instance.  
+**Throws**:
+
+- <code>TypeError</code> when `builder` is not a function.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| builder | <code>[Builder](#Builder)</code> | user defined builder of components. |
+| [onStart] | <code>[OnStart](#OnStart)</code> | callback which will be called on application launch. |
+
+<a name="CSSSelector"></a>
+
+## CSSSelector : <code>String</code>
+A valid CSS selector.
+
+**Kind**: global typedef  
+<a name="Trees"></a>
+
+## Trees : <code>Element</code> &#124; <code>NodeList</code> &#124; <code>Array.&lt;Element&gt;</code> &#124; <code>[CSSSelector](#CSSSelector)</code>
+One or many DOM elements for search.
+
+**Kind**: global typedef  
+<a name="Builder"></a>
+
+## Builder ⇒ <code>undefined</code>
+Creates component's instance with linked arguments for given `element`.
+
+**Kind**: global typedef  
+**Returns**: <code>undefined</code> - nothing.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| element | <code>Element</code> | an element for which a component's instance will be created. |
+| ...args | <code>any</code> | linked arguments list for builder. |
+
+<a name="OnStart"></a>
+
+## OnStart ⇒ <code>undefined</code>
+Callback which will be called on engine start.
+
+**Kind**: global typedef  
+**Returns**: <code>undefined</code> - nothing.  
+
 <!-- API: END -->
 
 # License
