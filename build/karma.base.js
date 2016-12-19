@@ -8,6 +8,10 @@ module.exports = {
 
   files: [
     {
+      pattern: '../spec/jasmine-adapter.js',
+      watched: process.env.CI !== 'true',
+    },
+    {
       pattern: '../src/**/*.js',
       watched: process.env.CI !== 'true',
       included: false,
@@ -19,6 +23,7 @@ module.exports = {
   ],
 
   preprocessors: {
+    '../spec/jasmine-adapter.js': ['rollup'],
     '../spec/**/*.spec.js': ['rollup'],
   },
 
@@ -26,6 +31,7 @@ module.exports = {
     format: 'iife',
     sourceMap: 'inline',
     plugins: [commonJS(), nodeResolve(), buble()],
+    cache: false,
   },
 
   plugins: [

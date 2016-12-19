@@ -1,85 +1,98 @@
-/* eslint no-unused-expressions: 0 */
+/* eslint no-unused-vars: "off" */
 
-import { querySelector, createApplication, createPlugin } from '../src';
-import Application from '../src/application';
-import Plugin from '../src/plugin';
-import internalQuerySelector from '../src/query-selector';
+import create from '../src';
 
-import { matchers } from './helpers';
-
-
-describe('querySelector', () => {
-  it('export internal implementration of `querySelector` function', () => {
-    expect(querySelector).toEqual(internalQuerySelector);
-  });
-});
 
 describe('create', () => {
-  beforeEach(() => {
-    window.jasmine.addMatchers(matchers);
-  });
+  describe('base behaviour', () => {
+    it("raise error when builder doesn't given", () => {
+      expect(() => {
+        create();
+      }).toThrowError(TypeError);
+    });
 
-  it('returns new application', () => {
-    const application = createApplication();
+    it('raise error when builder is not a function', () => {
+      [1, [], {}, 'string'].forEach((builder) => {
+        expect(() => {
+          create(builder);
+        }).toThrowError(TypeError);
+      });
+    });
 
-    expect(application).toBeInstanceOf(Application);
-  });
+    describe('done callback', () => {
+      if (readyStateIsMockable) {
+        let doneSpy;
 
-  it('returns new application with custom query selector', () => {
-    const customQuerySelector = () => { };
-    const options = {
-      querySelector: customQuerySelector,
-    };
-    const application = createApplication(options);
+        beforeEach(() => {
+          doneSpy = jasmine.createSpy('onStart');
+        });
 
-    expect(application.querySelector).toEqual(customQuerySelector);
-  });
+        describe('when `document.readyState` equals to `loading`', () => {
+          let backup;
 
-  it('returns new application with custom plugins list', () => {
-    const transformer = () => { };
-    const initializer = () => transformer;
-    const factory = createPlugin('my-plugin', initializer);
-    const plugin = factory();
-    const options = { plugins: [plugin] };
-    const application = createApplication(options);
+          beforeEach(() => {
+            backup = document.readyState;
+            document.readyState = 'loading';
+          });
 
-    expect(application.plugins.length).toEqual(1);
-    expect(application.plugins[0]).toEqual(plugin);
-  });
-});
+          afterEach(() => {
+            document.readyState = backup;
+          });
 
-describe('plugin', () => {
-  beforeEach(() => {
-    window.jasmine.addMatchers(matchers);
-  });
+          it("doesn't call `onStart` callback", (done) => {
+            const application = create(() => { }, doneSpy);
 
-  it('returns plugin factory', () => {
-    const name = 'my-plugin';
-    const transform = jasmine.createSpy('transform');
-    const initializer = (
-      jasmine.createSpy('initializer').and.callFake(() => transform)
-    );
-    const factory = createPlugin(name, initializer);
-    const plugin = factory();
+            setTimeout(() => {
+              expect(doneSpy).not.toHaveBeenCalled();
 
-    expect(plugin).toBeInstanceOf(Plugin);
-    expect(plugin.name).toEqual(name);
-    expect(initializer).toHaveBeenCalledTimes(1);
+              done();
+            }, 10);
+          });
 
-    plugin.transform();
+          describe('when `DOMContentLoaded` raised', () => {
+            it('calls `onStart` callback', (done) => {
+              const application = create(() => { }, doneSpy);
 
-    expect(transform).toHaveBeenCalledTimes(1);
-  });
+              setTimeout(() => {
+                expect(doneSpy).not.toHaveBeenCalled();
 
-  it('call plugin initializer with given arguments', () => {
-    const initializer = jasmine.createSpy('initializer').and.callFake(() => { });
-    const name = 'my-plugin';
-    const plugin = createPlugin(name, initializer);
+                const event = document.createEvent('Event');
+                event.initEvent('DOMContentLoaded', true, true);
+                window.document.dispatchEvent(event);
 
-    const args = [1, {}, []];
-    plugin(...args);
+                expect(doneSpy).toHaveBeenCalledTimes(1);
 
-    expect(initializer).toHaveBeenCalledTimes(1);
-    expect(initializer).toHaveBeenCalledWith(...args);
+                done();
+              }, 10);
+            });
+          });
+        });
+
+        ['interactive', 'complete'].forEach((state) => {
+          describe(`when \`document.readyState\` equals to \`${state}\``, () => {
+            let backup;
+
+            beforeEach(() => {
+              backup = document.readyState;
+              document.readyState = state;
+            });
+
+            afterEach(() => {
+              document.readyState = backup;
+            });
+
+            it('calls `onStart` callback', (done) => {
+              const application = create(() => { }, doneSpy);
+
+              setTimeout(() => {
+                expect(doneSpy).toHaveBeenCalledTimes(1);
+
+                done();
+              }, 10);
+            });
+          });
+        });
+      }
+    });
   });
 });

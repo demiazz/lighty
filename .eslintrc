@@ -28,6 +28,7 @@
     "afterAll": false,
     "it": false,
     "expect": false,
-    "spyOn": false
+    "spyOn": false,
+    "readyStateIsMockable": true,
   }
 }

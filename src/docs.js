@@ -1,145 +1,101 @@
+/* Types */
+
 /**
- * Optional function for component initialization.
+ * A valid CSS selector.
  *
- * @callback ComponentInitFn
- *
- * @this Component
- *
- * @return {Void}
- *
- * @since 0.2.0
+ * @typedef {String} CSSSelector
  */
 
 /**
- * Function which will transform components.
+ * One or many DOM elements for search.
  *
- * @callback TransformerFn
+ * @typedef {Element|NodeList|Array.<Element>|CSSSelector} Trees
+ */
+
+/* Callbacks */
+
+/**
+ * Creates component's instance with linked arguments for given `element`.
  *
- * @param {Component} component - component which will be transformed.
- * @param {external:Element} element - element which associated with the component.
+ * @callback Builder
  *
- * @return {Void}
+ * @param {Element} element - an element for which a component's instance will
+ * be created.
+ * @param {...any} args - linked arguments list for builder.
  *
- * @since 0.2.0
+ * @return {undefined} nothing.
  */
 
 /**
- * Selects all elements by selector inside given tree (includes tree self too).
+ * Callback which will be called on engine start.
  *
- * @callback QuerySelector
+ * @callback OnStart
  *
- * @param {Tree} tree - tree inside of which will be searched for elements.
- * @param {Selector} selector - valid CSS selector.
+ * @return {undefined} nothing.
+ */
+
+/* Public API */
+
+/**
+ * Creates engine's instance with given `builder`.
  *
- * @return {external:Element[]} elements selected by specified selector.
+ * @function create
  *
- * @since 0.4.0
+ * @param {Builder} builder - user defined builder of components.
+ * @param {OnStart} [onStart] - callback which will be called on application
+ * launch.
+ *
+ * @throws {TypeError} when `builder` is not a function.
+ *
+ * @return {Engine} engine's instance.
  */
 
 /**
- * Creates transformation function.
- *
- * @callback PluginInitializationFn
- *
- * @param {...*} args - arguments for plugin initialization.
- *
- * @return {TransformerFn} created transformation function.
- *
- * @since 0.2.0
+ * @class Engine
+ * @classdesc Application's engine. Controls application's lifecycle, register
+ * and vitalize components.
  */
 
 /**
- * Creates {@link TransformerFn} with specified name and
- * {@link PluginInitializationFn} from closure.
+ * Register component with given `selector` and builder's `args` list.
  *
- * @callback PluginFactoryFn
+ * Vitalize component if an application is already running.
  *
- * @param {...*} args - arguments for {@link PluginInitializationFn}.
+ * @method component
  *
- * @return {module:plugin~Plugin} created {@link module:plugin~Plugin} instance.
+ * @param {CSSSelector} selector - linked selector.
+ * @param {...*} args - linked builder's arguments list.
  *
- * @since 0.2.0
- */
-
-
- /**
-  * Component prototype which will be cloned for produce {@link Component}s.
-  *
-  * @typedef ComponentPrototype
-  * @type {Object}
-  *
-  * @property {ComponentInitFn} ?init - initialization method.
-  *
-  * @since 0.2.0
-  */
-
-/**
- * Component instance.
+ * @return {undefined} nothing.
  *
- * @typedef Component
- * @type {Object}
- *
- * @property {ComponentInitFn} ?init - initialization method.
- *
- * @since 0.2.0
+ * @memberof Engine
  */
 
 /**
- * Application options.
+ * Vitalize all registered components inside given `trees`.
  *
- * @typedef ApplicationOptions
- * @type {Object}
+ * Recommended use this method inside components. Components always created
+ * after application launch, so `vitalize` don't be called before start.
  *
- * @property {?QuerySelector} querySelector - custom query selector.
- * @property {?Array.<PluginFactoryFn | module:plugin~Plugin>} plugins - list
- * of plugins.
+ * If you update HTML inside some element, then use them as tree root for
+ * performance purposes.
  *
- * @since 0.4.0
- */
-
-/**
- * @typedef {String} Selector
+ * @example
  *
- * @since 0.2.0
- */
-
-/**
- * @typedef {(Selector|external:Element|Array.<external:Element>|external:jQuery)} Tree
+ * ```js
+ * element.innerHTML = `...`;
  *
- * @since 0.4.0
- */
-
-
-/**
- * The `Element.matches()` method returns true if the element would be
- * selected by the specified selector string; otherwise, returns false.
+ * engine.vitalize(element);
+ * ```
  *
- * @external MatchesFn
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/matches Mozilla Development Network}
+ * @method vitalize
  *
- * @since 0.4.0
- */
-
- /**
-  * The {@link external:Element} interface represents an object of a Document.
-  * This interface describes methods and properties common to all kinds of elements.
-  * Specific behaviors are described in interfaces which inherit from
-  * {@link external:Element} but add additional functionality. For example,
-  * the `HTMLElement` interface is the base interface for `HTML`
-  * elements, while the `SVGElement` interface is the basis
-  * for all SVG elements.
-  *
-  * @external Element
-  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Element Mozilla Development Network}
-  *
-  * @since 0.4.0
-  */
-
-/**
- * `jQuery` object.
+ * @param {Trees} [trees = document.body] - roots of search trees.
  *
- * @external jQuery
- * @see {@link http://api.jquery.com/jQuery/ jQuery API Documentation}
+ * @throws {Error} when an application is not launched yet.
+ * @throws {TypeError} when trees have not acceptable type.
  *
- * @since 0.4.0
+ * @return {undefined} nothing.
+ *
+ * @memberof Engine
  */
