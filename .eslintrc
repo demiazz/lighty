@@ -30,5 +30,6 @@
     "expect": false,
     "spyOn": false,
     "readyStateIsMockable": true,
-  }
+  },
+  "parser": "babel-eslint"
 }
