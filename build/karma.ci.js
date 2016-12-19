@@ -25,7 +25,7 @@ function getTunnel() {
 
 module.exports = function karma(config) {
   const sauceBrowsers = {
-    // Chrome (last 2 versions)
+    // Chrome (last 3 versions)
 
     sl_chrome_54: {
       base: 'SauceLabs',
@@ -41,7 +41,21 @@ module.exports = function karma(config) {
       platform: 'Windows 10',
     },
 
-    // Firefox (last 2 versions)
+    sl_chrome_52: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '52.0',
+      platform: 'Windows 10',
+    },
+
+    // Firefox (last 3 versions)
+
+    sl_firefox_50: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '50.0',
+      platform: 'Windows 10',
+    },
 
     sl_firefox_49: {
       base: 'SauceLabs',
@@ -96,7 +110,14 @@ module.exports = function karma(config) {
       platform: 'Windows 7',
     },
 
-    // Safari (last 2 versions)
+    // Safari (last 3 versions)
+
+    sl_safari_10: {
+      base: 'SauceLabs',
+      browserName: 'Safari',
+      version: '10.0',
+      platform: 'OS X 10.11',
+    },
 
     sl_safari_9: {
       base: 'SauceLabs',
@@ -112,12 +133,22 @@ module.exports = function karma(config) {
       platform: 'OS X 10.10',
     },
 
-    // iOS (last 2 major versions)
+    // iOS (last 3 major versions)
+
+    sl_ios_10: {
+      base: 'SauceLabs',
+      browserName: 'Safari',
+      appiumVersion: '1.6.3',
+      deviceName: 'iPhone Simulator',
+      deviceOrientation: 'portrait',
+      platformVersion: '10.0',
+      platformName: 'iOS',
+    },
 
     sl_ios_9: {
       base: 'SauceLabs',
       browserName: 'Safari',
-      appiumVersion: '1.5.3',
+      appiumVersion: '1.6.3',
       deviceName: 'iPhone Simulator',
       deviceOrientation: 'portrait',
       platformVersion: '9.3',
@@ -127,7 +158,7 @@ module.exports = function karma(config) {
     sl_ios_8: {
       base: 'SauceLabs',
       browserName: 'Safari',
-      appiumVersion: '1.5.3',
+      appiumVersion: '1.6.3',
       deviceName: 'iPhone Simulator',
       deviceOrientation: 'portrait',
       platformVersion: '8.4',
