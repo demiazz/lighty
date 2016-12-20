@@ -8,4 +8,4 @@ interface Engine {
   vitalize(trees?: Trees): void;
 }
 
-export default function create(builder: Builder, onStart?: OnStart): Engine;
+export default function createEngine(builder: Builder, onStart?: OnStart): Engine;

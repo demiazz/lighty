@@ -55,13 +55,13 @@ $ npm install --save lighty
 And use it as CommonJS module:
 
 ```js
-const lighty = require('lighty');
+const createEngine = require('lighty');
 ```
 
 Or as ES module:
 
 ```js
-import lighty from 'lighty';
+import createEngine from 'lighty';
 ```
 
 ## Browser
@@ -86,9 +86,9 @@ Let's write simple application:
 ```
 
 ```js
-import create from 'lighty';
+import createEngine from 'lighty';
 
-const engine = create((element, fn) => fn(element));
+const engine = createEngine((element, fn) => fn(element));
 
 engine.component('.awesome-component', element => {
   element.innerText = "It's awesome now.";

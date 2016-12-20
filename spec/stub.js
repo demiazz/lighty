@@ -1,4 +1,4 @@
-import create from '../src';
+import createEngine from '../src';
 
 
 class Component {
@@ -15,7 +15,7 @@ function builder(element, Template) {
 
 function createSpyAndApplication(done) {
   const builderSpy = jasmine.createSpy('builder').and.callFake(builder);
-  const application = create(builderSpy, done);
+  const application = createEngine(builderSpy, done);
 
   return [builderSpy, application];
 }

@@ -1,20 +1,20 @@
 /* eslint no-unused-vars: "off" */
 
-import create from '../src';
+import createEngine from '../src';
 
 
 describe('create', () => {
   describe('base behaviour', () => {
     it("raise error when builder doesn't given", () => {
       expect(() => {
-        create();
+        createEngine();
       }).toThrowError(TypeError);
     });
 
     it('raise error when builder is not a function', () => {
       [1, [], {}, 'string'].forEach((builder) => {
         expect(() => {
-          create(builder);
+          createEngine(builder);
         }).toThrowError(TypeError);
       });
     });
@@ -40,7 +40,7 @@ describe('create', () => {
           });
 
           it("doesn't call `onStart` callback", (done) => {
-            const application = create(() => { }, doneSpy);
+            const application = createEngine(() => { }, doneSpy);
 
             setTimeout(() => {
               expect(doneSpy).not.toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('create', () => {
 
           describe('when `DOMContentLoaded` raised', () => {
             it('calls `onStart` callback', (done) => {
-              const application = create(() => { }, doneSpy);
+              const application = createEngine(() => { }, doneSpy);
 
               setTimeout(() => {
                 expect(doneSpy).not.toHaveBeenCalled();
@@ -82,7 +82,7 @@ describe('create', () => {
             });
 
             it('calls `onStart` callback', (done) => {
-              const application = create(() => { }, doneSpy);
+              const application = createEngine(() => { }, doneSpy);
 
               setTimeout(() => {
                 expect(doneSpy).toHaveBeenCalledTimes(1);

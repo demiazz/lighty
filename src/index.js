@@ -1,9 +1,9 @@
 import Engine from './engine';
 
 
-function create(builder, onStart) {
+function createEngine(builder, onStart) {
   return new Engine(builder, onStart);
 }
 
 
-export default create;
+export default createEngine;

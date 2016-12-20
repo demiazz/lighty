@@ -39,7 +39,7 @@
 /**
  * Creates engine's instance with given `builder`.
  *
- * @function create
+ * @function createEngine
  *
  * @param {Builder} builder - user defined builder of components.
  * @param {OnStart} [onStart] - callback which will be called on application
