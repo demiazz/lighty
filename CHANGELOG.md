@@ -1,3 +1,17 @@
+## 0.8.0 (20 December 2016)
+
+* Add TypeScript annotations
+* Add FlowType annotations
+* Remove source maps for ES, CommonJS, and not minified UMD
+* Use named exports (`module.exports = ` now instead of
+  `module.exports['default'] = `)
+* Recommend use `createEngine` name instead of `create`
+
+## 0.7.0 (19 December 2016)
+
+* Not existing version. It has been created by mistake early then 0.6.0 by
+  mistake, and unpublished. NPM policy doesn't let publish this version anymore.
+
 ## 0.6.0 (19 December 2016)
 
 * Fully incompatible version
