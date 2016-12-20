@@ -18,7 +18,9 @@
   "main": "dist/lighty.js",
   "module": "dist/lighty.es.js",
   "jsnext:main": "dist/lighty.es.js",
+  "typings": "d.ts/lighty.d.ts",
   "files": [
+    "d.ts",
     "dist",
     "flow-typed",
     "LICENSE",
