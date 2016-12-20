@@ -33,6 +33,7 @@ function createBanner(short) {
 function createConfig(target) {
   const rollupOptions = {
     entry: 'src/index.js',
+    exports: 'named',
 
     plugins: [buble()],
   };
@@ -40,8 +41,7 @@ function createConfig(target) {
   const writeOptions = {
     moduleId: 'lighty',
     moduleName: 'lighty',
-    sourceMap: true,
-    exports: 'named',
+    sourceMap: false,
   };
 
   if (target === 'commonjs') {
@@ -74,6 +74,7 @@ function createConfig(target) {
     }));
 
     Object.assign(writeOptions, {
+      sourceMap: true,
       dest: 'dist/lighty.umd.min.js',
       banner: createBanner(true),
     });
