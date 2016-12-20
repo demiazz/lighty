@@ -152,4 +152,3 @@ function create(builder, onStart) {
 }
 
 export default create;
-//# sourceMappingURL=lighty.es.js.map

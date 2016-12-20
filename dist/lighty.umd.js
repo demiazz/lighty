@@ -169,4 +169,3 @@ exports['default'] = create;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=lighty.umd.js.map
