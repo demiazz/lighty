@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 function getMatchesFn() {
   var e = document.documentElement;
 
@@ -151,8 +149,8 @@ Engine.getUniqueId = function getUniqueId() {
   return result;
 };
 
-function create(builder, onStart) {
+function createEngine(builder, onStart) {
   return new Engine(builder, onStart);
 }
 
-exports['default'] = create;
+module.exports = createEngine;

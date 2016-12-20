@@ -173,7 +173,7 @@ and vitalize components.</p>
 ## Functions
 
 <dl>
-<dt><a href="#create">create(builder, [onStart])</a> ⇒ <code><a href="#Engine">Engine</a></code></dt>
+<dt><a href="#createEngine">createEngine(builder, [onStart])</a> ⇒ <code><a href="#Engine">Engine</a></code></dt>
 <dd><p>Creates engine&#39;s instance with given <code>builder</code>.</p>
 </dd>
 </dl>
@@ -251,9 +251,9 @@ element.innerHTML = `...`;
 
 engine.vitalize(element);
 ```
-<a name="create"></a>
+<a name="createEngine"></a>
 
-## create(builder, [onStart]) ⇒ <code>[Engine](#Engine)</code>
+## createEngine(builder, [onStart]) ⇒ <code>[Engine](#Engine)</code>
 Creates engine's instance with given `builder`.
 
 **Kind**: global function  

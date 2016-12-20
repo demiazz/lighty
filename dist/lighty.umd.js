@@ -1,15 +1,15 @@
 /*!
- * lighty v0.6.0
+ * lighty v0.8.0
  * https://github.com/demiazz/lighty
  *
  * Copyright Alexey Plutalov
  * Released under the MIT license
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define('lighty', ['exports'], factory) :
-  (factory((global.lighty = global.lighty || {})));
-}(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define('lighty', factory) :
+  (global.lighty = factory());
+}(this, (function () { 'use strict';
 
 function getMatchesFn() {
   var e = document.documentElement;
@@ -160,12 +160,10 @@ Engine.getUniqueId = function getUniqueId() {
   return result;
 };
 
-function create(builder, onStart) {
+function createEngine(builder, onStart) {
   return new Engine(builder, onStart);
 }
 
-exports['default'] = create;
-
-Object.defineProperty(exports, '__esModule', { value: true });
+return createEngine;
 
 })));
