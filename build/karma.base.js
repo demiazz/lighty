@@ -1,4 +1,4 @@
-const buble = require('rollup-plugin-buble');
+const babel = require('rollup-plugin-babel');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonJS = require('rollup-plugin-commonjs');
 
@@ -30,7 +30,10 @@ module.exports = {
   rollupPreprocessor: {
     format: 'iife',
     sourceMap: 'inline',
-    plugins: [commonJS(), nodeResolve(), buble()],
+    plugins: [commonJS(), nodeResolve(), babel({
+      presets: [['es2015', { modules: false }]],
+      plugins: ['transform-flow-strip-types', 'external-helpers'],
+    })],
     cache: false,
   },
 

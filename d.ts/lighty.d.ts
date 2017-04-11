@@ -1,11 +1,10 @@
-type Builder = (element: Element, ...args: any[]) => void;
-type OnStart = () => void;
-type CSSSelector = string;
-type Trees = Element | NodeList | Element[] | CSSSelector;
+type BuilderFn = (element: Element, ...args: any[]) => void;
+type OnStartFn = () => void;
+type Trees = Element | NodeListOf<any> | Array<any> | string;
 
 interface Engine {
-  component(selector: CSSSelector, ...args: any[]): void;
+  component(selector: string, ...args: any[]): void;
   vitalize(trees?: Trees): void;
 }
 
-export default function createEngine(builder: Builder, onStart?: OnStart): Engine;
+export default function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine;

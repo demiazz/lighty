@@ -16,7 +16,9 @@
       "imports": "always-multiline",
       "exports": "always-multiline",
       "functions": "never",
-    }]
+    }],
+    "prefer-spread": "off",
+    "prefer-rest-params": "off"
   },
   "globals": {
     "jasmine": false,

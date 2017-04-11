@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const rollup = require('rollup');
-const buble = require('rollup-plugin-buble');
+const babel = require('rollup-plugin-babel');
 const uglify = require('rollup-plugin-uglify');
 const saveLicense = require('uglify-save-license');
 
@@ -35,7 +35,12 @@ function createConfig(target) {
     entry: 'src/index.js',
     exports: 'named',
 
-    plugins: [buble()],
+    plugins: [
+      babel({
+        presets: [['es2015', { modules: false, loose: true }]],
+        plugins: ['transform-flow-strip-types'],
+      }),
+    ],
   };
 
   const writeOptions = {
