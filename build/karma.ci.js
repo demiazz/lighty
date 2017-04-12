@@ -199,10 +199,6 @@ module.exports = function karma(config) {
     singleRun: true,
   });
 
-  baseConfig.rollupPreprocessor.plugins.unshift(istanbul({
-    exclude: ['node_modules/**/*.js', 'spec/**/*.js'],
-  }));
-
   baseConfig.plugins.push(
     'karma-sauce-launcher',
     'karma-coverage',
