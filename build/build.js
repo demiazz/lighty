@@ -65,8 +65,6 @@ function formatSource(source) {
 }
 
 function saveSource(file, source) {
-  console.log(file);
-
   const outputPath = resolve(__dirname, `../lib/${file}`);
 
   writeFileSync(outputPath, source);
