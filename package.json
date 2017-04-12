@@ -15,13 +15,19 @@
     "name": "Alexey Plutalov",
     "email": "demiazz.py@gmail.com"
   },
-  "main": "dist/lighty.js",
-  "module": "dist/lighty.es.js",
-  "jsnext:main": "dist/lighty.es.js",
+  "main": "lib/lighty.js",
+  "module": "lib/lighty.es.js",
+  "jsnext:main": "lib/lighty.es.js",
   "typings": "d.ts/lighty.d.ts",
   "files": [
-    "d.ts",
-    "dist",
+    "d.ts/lighty.d.ts",
+    "lib/lighty.es.js",
+    "lib/lighty.es.js.flow",
+    "lib/lighty.js",
+    "lib/lighty.js.flow",
+    "lib/lighty.umd.js",
+    "lib/lighty.umd.min.js",
+    "lib/lighty.umd.min.js.map",
     "LICENSE",
     "README.md"
   ],
@@ -31,8 +37,8 @@
     "test": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.local.js --single-run",
     "test:watch": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.ci.js",
-    "build": "node build/rollup.js",
-    "version": "yarn run build && git add -A dist"
+    "build": "node build/build.js",
+    "version": "yarn run build && git add -A lib"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
