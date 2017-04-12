@@ -126,7 +126,9 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn) {
   /* ----- Components Instatiation ----- */
 
   function build(trees: Trees, component: Component): void {
-    const [id: number, selector: string, args: Array<mixed>] = component;
+    const id: number = component[0];
+    const selector: string = component[1];
+    const args: Array<mixed> = component[2];
 
     walk(trees, selector, (element) => {
       if (hasBinding(element, engineId, id)) {
