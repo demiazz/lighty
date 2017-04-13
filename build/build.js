@@ -59,14 +59,7 @@ function minifySource(source, file) {
 }
 
 function formatSource(source) {
-  return prettier.format(source, {
-    printWidth: 80,
-    tabWidth: 2,
-    singleQuote: true,
-    trailingComma: 'none',
-    bracketSpacing: true,
-    parser: 'flow',
-  });
+  return prettier.format(source);
 }
 
 function saveSource(file, source) {
