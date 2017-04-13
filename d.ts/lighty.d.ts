@@ -1,5 +1,5 @@
-type BuilderFn = (element: Element, ...args: any[]) => void;
-type OnStartFn = () => void;
+type BuilderFn = (element: Element, ...args: any[]) => any;
+type OnStartFn = () => any;
 type Trees = Element | NodeListOf<any> | Array<any> | string;
 
 interface Engine {
