@@ -1,5 +1,4 @@
 const babel = require('rollup-plugin-babel');
-const istanbul = require('rollup-plugin-istanbul');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonJS = require('rollup-plugin-commonjs');
 
@@ -32,13 +31,12 @@ module.exports = {
     format: 'iife',
     sourceMap: 'inline',
     plugins: [
-      babel({ plugins: ['transform-flow-strip-types'] }),
-      commonJS(),
-      nodeResolve(),
       babel({
         presets: [['es2015', { modules: false }]],
-        plugins: ['external-helpers'],
+        plugins: ['transform-flow-strip-types', 'external-helpers'],
       }),
+      commonJS(),
+      nodeResolve(),
     ],
     cache: false,
   },
