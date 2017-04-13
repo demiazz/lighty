@@ -187,10 +187,10 @@ and vitalize components.</p>
 <dt><a href="#Trees">Trees</a> : <code>Element</code> | <code>NodeList</code> | <code>Array.&lt;Element&gt;</code> | <code><a href="#CSSSelector">CSSSelector</a></code></dt>
 <dd><p>One or many DOM elements for search.</p>
 </dd>
-<dt><a href="#Builder">Builder</a> ⇒ <code>undefined</code></dt>
+<dt><a href="#BuilderFn">BuilderFn</a> ⇒ <code>any</code></dt>
 <dd><p>Creates component&#39;s instance with linked arguments for given <code>element</code>.</p>
 </dd>
-<dt><a href="#OnStart">OnStart</a> ⇒ <code>undefined</code></dt>
+<dt><a href="#OnStartFn">OnStartFn</a> ⇒ <code>any</code></dt>
 <dd><p>Callback which will be called on engine start.</p>
 </dd>
 </dl>
@@ -215,12 +215,12 @@ Register component with given `selector` and builder's `args` list.
 Vitalize component if an application is already running.
 
 **Kind**: static method of <code>[Engine](#Engine)</code>  
-**Returns**: <code>undefined</code> - nothing.  
+**Returns**: <code>undefined</code> - .  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | selector | <code>[CSSSelector](#CSSSelector)</code> | linked selector. |
-| ...args | <code>\*</code> | linked builder's arguments list. |
+| ...args | <code>any</code> | linked builder's arguments list. |
 
 <a name="Engine.vitalize"></a>
 
@@ -234,7 +234,7 @@ If you update HTML inside some element, then use them as tree root for
 performance purposes.
 
 **Kind**: static method of <code>[Engine](#Engine)</code>  
-**Returns**: <code>undefined</code> - nothing.  
+**Returns**: <code>undefined</code> - .  
 **Throws**:
 
 - <code>Error</code> when an application is not launched yet.
@@ -265,8 +265,8 @@ Creates engine's instance with given `builder`.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| builder | <code>[Builder](#Builder)</code> | user defined builder of components. |
-| [onStart] | <code>[OnStart](#OnStart)</code> | callback which will be called on application launch. |
+| builder | <code>[BuilderFn](#BuilderFn)</code> | user defined builder of components. |
+| [onStart] | <code>[OnStartFn](#OnStartFn)</code> | callback which will be called on application launch. |
 
 <a name="CSSSelector"></a>
 
@@ -276,30 +276,30 @@ A valid CSS selector.
 **Kind**: global typedef  
 <a name="Trees"></a>
 
-## Trees : <code>Element</code> &#124; <code>NodeList</code> &#124; <code>Array.&lt;Element&gt;</code> &#124; <code>[CSSSelector](#CSSSelector)</code>
+## Trees : <code>Element</code> \| <code>NodeList</code> \| <code>Array.&lt;Element&gt;</code> \| <code>[CSSSelector](#CSSSelector)</code>
 One or many DOM elements for search.
 
 **Kind**: global typedef  
-<a name="Builder"></a>
+<a name="BuilderFn"></a>
 
-## Builder ⇒ <code>undefined</code>
+## BuilderFn ⇒ <code>any</code>
 Creates component's instance with linked arguments for given `element`.
 
 **Kind**: global typedef  
-**Returns**: <code>undefined</code> - nothing.  
+**Returns**: <code>any</code> - .  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | element | <code>Element</code> | an element for which a component's instance will be created. |
 | ...args | <code>any</code> | linked arguments list for builder. |
 
-<a name="OnStart"></a>
+<a name="OnStartFn"></a>
 
-## OnStart ⇒ <code>undefined</code>
+## OnStartFn ⇒ <code>any</code>
 Callback which will be called on engine start.
 
 **Kind**: global typedef  
-**Returns**: <code>undefined</code> - nothing.  
+**Returns**: <code>any</code> - .  
 
 <!-- API: END -->
 

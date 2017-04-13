@@ -12,7 +12,7 @@ module.exports = {
       watched: process.env.CI !== 'true',
     },
     {
-      pattern: '../src/**/*.js',
+      pattern: '../src/index.js',
       watched: process.env.CI !== 'true',
       included: false,
     },
