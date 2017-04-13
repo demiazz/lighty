@@ -21,13 +21,6 @@
       "peerDependencies": false,
     }],
     "no-param-reassign": "off",
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "never",
-    }],
     "prefer-spread": "off",
     "prefer-rest-params": "off"
   },
