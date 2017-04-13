@@ -7,6 +7,10 @@ const prettier = require('prettier');
 const chalk = require('chalk');
 
 
+function log(message) {
+  console.log(chalk.green(message)); // eslint-disable-line
+}
+
 function readPackage() {
   const packagePath = resolve(__dirname, '../package.json');
 
@@ -29,11 +33,11 @@ function transformSource(source, stripTypes) {
 function readSource() {
   const sourcePath = resolve(__dirname, '../src/index.js');
 
-  console.log(chalk.green('Read source code...'));
+  log('Read source code...');
 
   const rawSource = readFileSync(sourcePath, { encoding: 'utf8' }).toString();
 
-  console.log(chalk.green('Transform source code...'));
+  log('Transform source code...');
 
   const source = transformSource(rawSource, true);
   const typedSource = transformSource(rawSource, false);
@@ -83,10 +87,6 @@ function useFullBanner(source) {
     ' */',
   ].join('\n');
 
-  if (source.startsWith('/* @flow */')) {
-
-  }
-
   return source.startsWith('/* @flow */')
     ? source.replace(/\/\* @flow \*\//, `/* @flow */\n\n${banner}`)
     : `${banner}\n\n${source}`;
@@ -130,16 +130,16 @@ function useUMD(source) {
     "  'use strict';",
   ].join('\n');
   const umdEnd = '});';
-  const code = source.replace(/export\ default/, 'return');
+  const code = source.replace(/export default/, 'return');
 
   return `${umdStart}\n\n${code}\n${umdEnd}`;
 }
 
 function buildESModule(source, useFlow) {
-  console.log(
+  log(
     useFlow
-      ? chalk.green('Generate ES Module with types...')
-      : chalk.green('Generate ES Module without types...')
+      ? 'Generate ES Module with types...'
+      : 'Generate ES Module without types...'
   );
 
   const file = useFlow ? 'lighty.es.js.flow' : 'lighty.es.js';
@@ -148,10 +148,10 @@ function buildESModule(source, useFlow) {
 }
 
 function buildCommonJSModule(source, useFlow) {
-  console.log(
+  log(
     useFlow
-      ? chalk.green('Generate CommonJS with types...')
-      : chalk.green('Generate CommonJS without types...')
+      ? 'Generate CommonJS with types...'
+      : 'Generate CommonJS without types...'
   );
 
   const file = useFlow ? 'lighty.js.flow' : 'lighty.js';
@@ -160,11 +160,7 @@ function buildCommonJSModule(source, useFlow) {
 }
 
 function buildUMDModule(source, isMinified) {
-  console.log(
-    isMinified
-      ? chalk.green('Generate UMD...')
-      : chalk.green('Generate minified UMD...')
-  );
+  log(isMinified ? 'Generate UMD...' : 'Generate minified UMD...');
 
   const file = isMinified ? 'lighty.umd.min.js' : 'lighty.umd.js';
 
