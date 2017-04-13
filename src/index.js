@@ -113,11 +113,16 @@ function onDOMContentLoaded(action: () => void) {
 
 /* ----- Engine Factory ----- */
 
-type BuilderFn = (element: Element, ...args: Array<mixed>) => void;
+type BuilderFn = (element: Element, ...args: Array<mixed>) => mixed;
 type OnStartFn = () => mixed;
 type Component = [number, string, Array<mixed>];
 
-function createEngine(builder: BuilderFn, onStart?: OnStartFn) {
+interface Engine {
+  component(selector: string, ...args: Array<mixed>): void;
+  vitalize(trees?: Trees): void;
+}
+
+function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine {
   const engineId: string = getEngineId();
   const components: Array<Component> = [];
 
@@ -153,7 +158,7 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn) {
 
   /* ----- Components Registration ----- */
 
-  function registerComponent(selector: string): void {
+  function register(selector: string): void {
     const id: number = components.length;
     const args: Array<mixed> = [].slice.call(arguments, 1);
     const component: Component = [id, selector, args];
@@ -183,7 +188,7 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn) {
 
   onDOMContentLoaded(start);
 
-  return { component: registerComponent, vitalize };
+  return { component: register, vitalize };
 }
 
 
