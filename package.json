@@ -15,19 +15,20 @@
     "name": "Alexey Plutalov",
     "email": "demiazz.py@gmail.com"
   },
-  "main": "lib/lighty.js",
-  "module": "lib/lighty.es.js",
-  "jsnext:main": "lib/lighty.es.js",
+  "main": "index.js",
+  "module": "index.es.js",
+  "jsnext:main": "index.es.js",
   "typings": "d.ts/lighty.d.ts",
   "files": [
     "d.ts/lighty.d.ts",
-    "lib/lighty.es.js",
-    "lib/lighty.es.js.flow",
-    "lib/lighty.js",
-    "lib/lighty.js.flow",
-    "lib/lighty.umd.js",
-    "lib/lighty.umd.min.js",
-    "lib/lighty.umd.min.js.map",
+    "dist/lighty.umd.js",
+    "dist/lighty.umd.min.js",
+    "dist/lighty.umd.min.js.map",
+    "index.es.js",
+    "index.es.js.flow",
+    "index.js",
+    "index.js.flow",
+    "CHANGELOG.md",
     "LICENSE",
     "README.md"
   ],
@@ -40,7 +41,7 @@
     "test:ci": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.ci.js",
     "build": "node build/build.js",
     "docs": "node build/docs.js",
-    "version": "yarn run build && git add -A dist && yarn run docs && git add -A README.md"
+    "version": "yarn run build && yarn run docs && git add -A README.md"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -67,6 +68,7 @@
     "karma-rollup-plugin": "^0.2.4",
     "karma-sauce-launcher": "^1.1.0",
     "karma-spec-reporter": "0.0.26",
+    "mkdirp": "^0.5.1",
     "phantomjs-prebuilt": "^2.1.13",
     "prettier": "^0.22.0",
     "rollup": "^0.37.0",

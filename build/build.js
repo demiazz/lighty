@@ -1,5 +1,6 @@
 const { readFileSync, writeFileSync } = require('fs');
-const { resolve } = require('path');
+const { resolve, dirname } = require('path');
+const { sync: makeDirectory } = require('mkdirp');
 const { transform } = require('babel-core');
 const { minify } = require('uglify-js');
 const saveLicense = require('uglify-save-license');
@@ -69,7 +70,9 @@ function formatSource(source) {
 }
 
 function saveSource(file, source) {
-  const outputPath = resolve(__dirname, `../lib/${file}`);
+  const outputPath = resolve(__dirname, `../${file}`);
+
+  makeDirectory(dirname(outputPath));
 
   writeFileSync(outputPath, source);
 }
@@ -142,7 +145,7 @@ function buildESModule(source, useFlow) {
       : 'Generate ES Module without types...'
   );
 
-  const file = useFlow ? 'lighty.es.js.flow' : 'lighty.es.js';
+  const file = useFlow ? 'index.es.js.flow' : 'index.es.js';
 
   saveSource(file, formatSource(useFullBanner(source)));
 }
@@ -154,7 +157,7 @@ function buildCommonJSModule(source, useFlow) {
       : 'Generate CommonJS without types...'
   );
 
-  const file = useFlow ? 'lighty.js.flow' : 'lighty.js';
+  const file = useFlow ? 'index.js.flow' : 'index.js';
 
   saveSource(file, formatSource(useFullBanner(useCommonJS(source))));
 }
@@ -162,7 +165,7 @@ function buildCommonJSModule(source, useFlow) {
 function buildUMDModule(source, isMinified) {
   log(isMinified ? 'Generate UMD...' : 'Generate minified UMD...');
 
-  const file = isMinified ? 'lighty.umd.min.js' : 'lighty.umd.js';
+  const file = `dist/${isMinified ? 'lighty.umd.min.js' : 'lighty.umd.js'}`;
 
   if (isMinified) {
     const { code, map } = minifySource(useShortBanner(useUMD(source)), file);
