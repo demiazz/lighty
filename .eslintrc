@@ -1,15 +1,26 @@
 {
-  "extends": "eslint-config-airbnb",
+  "extends": [
+    "eslint-config-airbnb-base",
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/flowtype"
+  ],
+  "plugins": [
+    "flowtype",
+    "prettier"
+  ],
   "env": {
-    "browser": true
+    "browser": true,
+    "jasmine": true
   },
   "rules": {
+    "prettier/prettier": "error",
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": true,
       "optionalDependencies": false,
       "peerDependencies": false,
     }],
-    "no-param-reassign": 0,
+    "no-param-reassign": "off",
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",
@@ -21,16 +32,6 @@
     "prefer-rest-params": "off"
   },
   "globals": {
-    "jasmine": false,
-    "describe": false,
-    "context": false,
-    "beforeEach": false,
-    "afterEach": false,
-    "beforeAll": false,
-    "afterAll": false,
-    "it": false,
-    "expect": false,
-    "spyOn": false,
     "readyStateIsMockable": true,
   },
   "parser": "babel-eslint"

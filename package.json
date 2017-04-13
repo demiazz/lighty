@@ -33,16 +33,27 @@
     "README.md"
   ],
   "scripts": {
-    "lint": "$(yarn bin)/eslint build src spec",
     "check": "$(yarn bin)/flow --show-all-errors src",
-    "pretest": "yarn run lint && yarn run check",
+    "pretest": "yarn run check",
     "test": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.local.js --single-run",
     "test:watch": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.local.js",
     "test:ci": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.ci.js",
     "build": "node build/build.js",
     "docs": "node build/docs.js",
-    "version": "yarn run build && yarn run docs && git add -A README.md"
+    "version": "yarn run build && yarn run docs && git add -A README.md",
+    "lint-staged": "$(yarn bin)/lint-staged"
   },
+  "lint-staged": {
+    "{build,spec,src}/**/*.js": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
+  },
+  "pre-commit": [
+    "test",
+    "lint-staged"
+  ],
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.1.1",
@@ -53,10 +64,11 @@
     "chalk": "^1.1.3",
     "cross-env": "^3.1.3",
     "eslint": "^3.10.2",
-    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-config-prettier": "^1.6.0",
+    "eslint-plugin-flowtype": "^2.30.4",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.7.1",
+    "eslint-plugin-prettier": "^2.0.1",
     "flow-bin": "^0.43.1",
     "jasmine-core": "^2.5.2",
     "jsdoc-to-markdown": "^3.0.0",
@@ -68,8 +80,10 @@
     "karma-rollup-plugin": "^0.2.4",
     "karma-sauce-launcher": "^1.1.0",
     "karma-spec-reporter": "0.0.26",
+    "lint-staged": "^3.4.0",
     "mkdirp": "^0.5.1",
     "phantomjs-prebuilt": "^2.1.13",
+    "pre-commit": "^1.2.2",
     "prettier": "^0.22.0",
     "rollup": "^0.37.0",
     "rollup-plugin-babel": "^2.7.1",
