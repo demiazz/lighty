@@ -17,16 +17,14 @@ type MatchesAPI =
   & { oMatchesSelector: MatchesFn };
 
 function getMatchesFn(): MatchesFn {
-  const e = ((doc.createElement('div'): any): MatchesAPI);
+  const e = ((doc.createElement("div"): any): MatchesAPI);
 
-  return (
-    e.matches ||
+  return e.matches ||
     e.matchesSelector ||
     e.msMatchesSelector ||
     e.mozMatchesSelector ||
     e.webkitMatchesSelector ||
-    e.oMatchesSelector
-  );
+    e.oMatchesSelector;
 }
 
 const matchesFn: MatchesFn = getMatchesFn();
@@ -57,13 +55,13 @@ function walk(trees: Trees, selector: string, callback: WalkFn): void {
     roots = filterElements(toArray(trees));
   } else if (Array.isArray(trees)) {
     roots = filterElements(trees);
-  } else if (typeof trees === 'string') {
+  } else if (typeof trees === "string") {
     roots = toArray(doc.querySelectorAll(trees));
   } else {
-    throw new TypeError('Unsupported type of tree root');
+    throw new TypeError("Unsupported type of tree root");
   }
 
-  roots.forEach((root) => {
+  roots.forEach(root => {
     if (matches(root, selector)) {
       callback(root);
     }
@@ -103,8 +101,8 @@ function bind(element: Bindable, key: string, id: number): void {
 /* ----- DOM Ready Helper ----- */
 
 function onDOMContentLoaded(action: () => void) {
-  if (doc.readyState === 'loading') {
-    doc.addEventListener('DOMContentLoaded', action);
+  if (doc.readyState === "loading") {
+    doc.addEventListener("DOMContentLoaded", action);
   } else {
     // See https://connect.microsoft.com/IE/feedback/details/792880/document-readystat
     setTimeout(action, 1);
@@ -118,8 +116,8 @@ type OnStartFn = () => mixed;
 type Component = [number, string, Array<mixed>];
 
 interface Engine {
-  component(selector: string, ...args: Array<mixed>): void;
-  vitalize(trees?: Trees): void;
+  component(selector: string, ...args: Array<mixed>): void,
+  vitalize(trees?: Trees): void
 }
 
 function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine {
@@ -135,7 +133,7 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine {
     const selector: string = component[1];
     const args: Array<mixed> = component[2];
 
-    walk(trees, selector, (element) => {
+    walk(trees, selector, element => {
       if (hasBinding(element, engineId, id)) {
         return;
       }
@@ -148,7 +146,7 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine {
 
   function vitalize(trees?: Trees): void {
     if (!isRunning) {
-      throw Error('Document is not ready yet.');
+      throw Error("Document is not ready yet.");
     }
 
     const roots = trees || body;
@@ -183,13 +181,12 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine {
   }
 
   if (!(builder instanceof Function)) {
-    throw new TypeError('Builder must be a function');
+    throw new TypeError("Builder must be a function");
   }
 
   onDOMContentLoaded(start);
 
   return { component: register, vitalize };
 }
-
 
 export default createEngine;

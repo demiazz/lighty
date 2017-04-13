@@ -1,14 +1,18 @@
-import { Component, createSpyAndApplication, rootClass, elementClass } from '../stub';
-import { fixture, clear } from '../fixture';
+import {
+  Component,
+  createSpyAndApplication,
+  rootClass,
+  elementClass
+} from "../stub";
+import { fixture, clear } from "../fixture";
 
-
-describe('create', () => {
-  describe('.vitalize', () => {
-    describe('when given NodeList', () => {
+describe("create", () => {
+  describe(".vitalize", () => {
+    describe("when given NodeList", () => {
       let builderSpy;
       let application;
 
-      beforeEach((done) => {
+      beforeEach(done => {
         [builderSpy, application] = createSpyAndApplication(() => {
           application.component(`.${elementClass}`, Component);
 
@@ -19,14 +23,16 @@ describe('create', () => {
       afterEach(clear);
 
       it("doesn't creates components if no matched elements", () => {
-        fixture(`
+        fixture(
+          `
           <div class="${rootClass}">
             <div class="not-${elementClass}"></div>
           </div>
           <svg class="${rootClass}">
             <g class="not-${elementClass}"></div>
           </svg>
-        `);
+        `
+        );
 
         const roots = document.querySelectorAll(`.${rootClass}`);
 
@@ -36,15 +42,16 @@ describe('create', () => {
       });
 
       it("doesn't creates components if given node list is empty", () => {
-        const roots = document.createElement('div').childNodes;
+        const roots = document.createElement("div").childNodes;
 
         application.vitalize(roots);
 
         expect(builderSpy).not.toHaveBeenCalled();
       });
 
-      it('creates component instances for all matched elements inside tree', () => {
-        fixture(`
+      it("creates component instances for all matched elements inside tree", () => {
+        fixture(
+          `
           <div class="${rootClass}">
             <div class="${elementClass}"></div>
           </div>
@@ -53,7 +60,8 @@ describe('create', () => {
           </svg>
           <div class="${elementClass}"></div>
           <svg class="${elementClass}"></svg>
-        `);
+        `
+        );
 
         const roots = document.querySelectorAll(`.${rootClass}`);
 
@@ -65,16 +73,18 @@ describe('create', () => {
 
         expect(builderSpy).toHaveBeenCalledTimes(elements.length);
 
-        elements.forEach((element) => {
+        elements.forEach(element => {
           expect(builderSpy).toHaveBeenCalledWith(element, Component);
         });
       });
 
-      it('creates component instances for root elements if matched by selector', () => {
-        fixture(`
+      it("creates component instances for root elements if matched by selector", () => {
+        fixture(
+          `
           <div class="${rootClass} ${elementClass}"></div>
           <svg class="${rootClass} ${elementClass}"></svg>
-        `);
+        `
+        );
 
         const roots = document.querySelectorAll(`.${rootClass}`);
 
@@ -86,13 +96,14 @@ describe('create', () => {
 
         expect(builderSpy).toHaveBeenCalledTimes(elements.length);
 
-        elements.forEach((element) => {
+        elements.forEach(element => {
           expect(builderSpy).toHaveBeenCalledWith(element, Component);
         });
       });
 
-      it('creates component instances only for Element items', () => {
-        fixture(`
+      it("creates component instances only for Element items", () => {
+        fixture(
+          `
           <div class="${rootClass}">
             text node
             <div>
@@ -100,7 +111,8 @@ describe('create', () => {
             </div>
             <!-- comment node -->
           </div>
-        `);
+        `
+        );
 
         const roots = document.querySelector(`.${rootClass}`).childNodes;
 
@@ -112,7 +124,7 @@ describe('create', () => {
 
         expect(builderSpy).toHaveBeenCalledTimes(elements.length);
 
-        elements.forEach((element) => {
+        elements.forEach(element => {
           expect(builderSpy).toHaveBeenCalledWith(element, Component);
         });
       });

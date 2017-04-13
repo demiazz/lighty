@@ -1,19 +1,20 @@
-import { Component, createSpyAndApplication, elementClass } from '../stub';
-import { fixture, clear } from '../fixture';
+import { Component, createSpyAndApplication, elementClass } from "../stub";
+import { fixture, clear } from "../fixture";
 
-
-describe('create', () => {
-  describe('.vitalize', () => {
+describe("create", () => {
+  describe(".vitalize", () => {
     afterEach(clear);
 
-    describe('cache', () => {
-      it('creates component instances only once for each element', (done) => {
+    describe("cache", () => {
+      it("creates component instances only once for each element", done => {
         const [builderSpy, application] = createSpyAndApplication(() => {
           application.component(`.${elementClass}`, Component);
 
-          fixture(`
+          fixture(
+            `
             <div class="${elementClass}"></div>
-          `);
+          `
+          );
 
           expect(builderSpy).not.toHaveBeenCalled();
 
@@ -29,7 +30,7 @@ describe('create', () => {
         });
       });
 
-      it("don't use single cache for all applications", (done) => {
+      it("don't use single cache for all applications", done => {
         let firstBuilderSpy;
         let firstApplication;
         let secondBuilderSpy;
@@ -41,9 +42,11 @@ describe('create', () => {
           count += 1;
 
           if (count === 2) {
-            fixture(`
+            fixture(
+              `
               <div class="${elementClass}"></div>
-            `);
+            `
+            );
 
             firstApplication.component(`.${elementClass}`, Component);
             secondApplication.component(`.${elementClass}`, Component);

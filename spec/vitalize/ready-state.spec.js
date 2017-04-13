@@ -1,16 +1,15 @@
-import { createSpyAndApplication } from '../stub';
-
+import { createSpyAndApplication } from "../stub";
 
 if (readyStateIsMockable) {
-  describe('create', () => {
-    describe('.vitalize', () => {
-      describe('when `document.readyState` equals to `loading`', () => {
+  describe("create", () => {
+    describe(".vitalize", () => {
+      describe("when `document.readyState` equals to `loading`", () => {
         let backup;
         let application;
 
         beforeEach(() => {
           backup = document.readyState;
-          document.readyState = 'loading';
+          document.readyState = "loading";
 
           application = createSpyAndApplication()[1];
         });
@@ -19,20 +18,20 @@ if (readyStateIsMockable) {
           document.readyState = backup;
         });
 
-        it('raises error', () => {
+        it("raises error", () => {
           expect(() => {
             application.vitalize();
           }).toThrowError(Error);
         });
 
-        describe('when `DOMContentLoaded` raised', () => {
-          it('creates component instances for early registered components', () => {
+        describe("when `DOMContentLoaded` raised", () => {
+          it("creates component instances for early registered components", () => {
             expect(() => {
               application.vitalize();
             }).toThrowError(Error);
 
-            const event = document.createEvent('Event');
-            event.initEvent('DOMContentLoaded', true, true);
+            const event = document.createEvent("Event");
+            event.initEvent("DOMContentLoaded", true, true);
             window.document.dispatchEvent(event);
 
             expect(() => {
@@ -42,12 +41,12 @@ if (readyStateIsMockable) {
         });
       });
 
-      ['interactive', 'complete'].forEach((state) => {
+      ["interactive", "complete"].forEach(state => {
         describe(`when \`document.readyState\` equals to \`${state}\``, () => {
           let backup;
           let application;
 
-          beforeEach((done) => {
+          beforeEach(done => {
             backup = document.readyState;
             document.readyState = state;
 

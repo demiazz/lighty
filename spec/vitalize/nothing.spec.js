@@ -1,14 +1,13 @@
-import { Component, createSpyAndApplication, elementClass } from '../stub';
-import { fixture, clear } from '../fixture';
+import { Component, createSpyAndApplication, elementClass } from "../stub";
+import { fixture, clear } from "../fixture";
 
-
-describe('create', () => {
-  describe('.vitalize', () => {
-    describe('when given nothing', () => {
+describe("create", () => {
+  describe(".vitalize", () => {
+    describe("when given nothing", () => {
       let builderSpy;
       let application;
 
-      beforeEach((done) => {
+      beforeEach(done => {
         [builderSpy, application] = createSpyAndApplication(() => {
           application.component(`.${elementClass}`, Component);
 
@@ -19,21 +18,25 @@ describe('create', () => {
       afterEach(clear);
 
       it("doesn't creates components if no matched elements", () => {
-        fixture(`
+        fixture(
+          `
           <div class="not-${elementClass}"></div>
           <svg class="not-${elementClass}"></svg>
-        `);
+        `
+        );
 
         application.vitalize();
 
         expect(builderSpy).not.toHaveBeenCalled();
       });
 
-      it('creates component instances for all matched elements inside document', () => {
-        fixture(`
+      it("creates component instances for all matched elements inside document", () => {
+        fixture(
+          `
           <div class="${elementClass}"></div>
           <svg class="${elementClass}"></svg>
-        `);
+        `
+        );
 
         application.vitalize();
 
@@ -43,22 +46,22 @@ describe('create', () => {
 
         expect(builderSpy).toHaveBeenCalledTimes(elements.length);
 
-        elements.forEach((element) => {
+        elements.forEach(element => {
           expect(builderSpy).toHaveBeenCalledWith(element, Component);
         });
       });
 
-      it('creates component instances for root elements if matched by selector', () => {
+      it("creates component instances for root elements if matched by selector", () => {
         const element = document.body;
 
-        element.setAttribute('class', elementClass);
+        element.setAttribute("class", elementClass);
 
         application.vitalize();
 
         expect(builderSpy).toHaveBeenCalledTimes(1);
         expect(builderSpy).toHaveBeenCalledWith(element, Component);
 
-        element.setAttribute('class', '');
+        element.setAttribute("class", "");
       });
     });
   });

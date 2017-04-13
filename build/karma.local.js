@@ -1,12 +1,11 @@
-const baseConfig = require('./karma.base');
-
+const baseConfig = require("./karma.base");
 
 module.exports = function karma(config) {
   Object.assign(baseConfig, {
-    browsers: ['PhantomJS'],
+    browsers: ["PhantomJS"]
   });
 
-  baseConfig.plugins.push('karma-phantomjs-launcher');
+  baseConfig.plugins.push("karma-phantomjs-launcher");
 
   config.set(baseConfig);
 };

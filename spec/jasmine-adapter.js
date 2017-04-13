@@ -1,16 +1,16 @@
 /* eslint no-underscore-dangle: "off" */
 
 try {
-  Object.defineProperty(document, 'readyState', {
+  Object.defineProperty(document, "readyState", {
     value: document.readyState,
-    writable: true,
+    writable: true
   });
 
-  document.addEventListener('readystatechange', () => {
-    if (document.readyState === 'loading') {
-      document.readyState = 'interactive';
-    } else if (document.readyState === 'interactive') {
-      document.readyState = 'complete';
+  document.addEventListener("readystatechange", () => {
+    if (document.readyState === "loading") {
+      document.readyState = "interactive";
+    } else if (document.readyState === "interactive") {
+      document.readyState = "complete";
     }
   });
 
@@ -31,4 +31,4 @@ window.__karma__.start = (function jasmineAdapter(originalStartJasmine) {
       originalStartJasmine(...args);
     };
   };
-}(window.__karma__.start));
+})(window.__karma__.start);

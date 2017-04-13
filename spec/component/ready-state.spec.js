@@ -1,22 +1,24 @@
 import {
-  elementClass, rootClass, createSpyAndApplication, Component,
-} from '../stub';
-import { fixture, clear } from '../fixture';
-
+  elementClass,
+  rootClass,
+  createSpyAndApplication,
+  Component
+} from "../stub";
+import { fixture, clear } from "../fixture";
 
 if (readyStateIsMockable) {
-  describe('create', () => {
+  describe("create", () => {
     afterEach(clear);
 
-    describe('.component', () => {
-      describe('when `document.readyState` equals to `loading`', () => {
+    describe(".component", () => {
+      describe("when `document.readyState` equals to `loading`", () => {
         let backup;
         let builderSpy;
         let application;
 
         beforeEach(() => {
           backup = document.readyState;
-          document.readyState = 'loading';
+          document.readyState = "loading";
 
           [builderSpy, application] = createSpyAndApplication();
         });
@@ -26,38 +28,42 @@ if (readyStateIsMockable) {
         });
 
         it("doesn't created component instances", () => {
-          fixture(`
+          fixture(
+            `
             <div class="${elementClass}"></div>
-          `);
+          `
+          );
 
           application.component(`.${elementClass}`, Component);
 
           expect(builderSpy).not.toHaveBeenCalled();
         });
 
-        describe('when `DOMContentLoaded` raised', () => {
-          it('creates component instances for early registered components', () => {
-            const fooClass = 'foo';
-            const barClass = 'bar';
+        describe("when `DOMContentLoaded` raised", () => {
+          it("creates component instances for early registered components", () => {
+            const fooClass = "foo";
+            const barClass = "bar";
 
-            class Foo { }
-            class Bar { }
+            class Foo {}
+            class Bar {}
 
-            fixture(`
+            fixture(
+              `
               <div class="${rootClass}">
                 <div class="${fooClass}"></div>
                 <div class="${barClass}"></div>
                 <div class="${fooClass} ${barClass}"></div>
               </div>
-            `);
+            `
+            );
 
             application.component(`.${fooClass}`, Foo);
             application.component(`.${barClass}`, Bar);
 
             expect(builderSpy).not.toHaveBeenCalled();
 
-            const event = document.createEvent('Event');
-            event.initEvent('DOMContentLoaded', true, true);
+            const event = document.createEvent("Event");
+            event.initEvent("DOMContentLoaded", true, true);
             window.document.dispatchEvent(event);
 
             const fooElements = [].slice.call(
@@ -70,23 +76,23 @@ if (readyStateIsMockable) {
             expect(builderSpy).toHaveBeenCalledTimes(
               fooElements.length + barElements.length
             );
-            fooElements.forEach((element) => {
+            fooElements.forEach(element => {
               expect(builderSpy).toHaveBeenCalledWith(element, Foo);
             });
-            barElements.forEach((element) => {
+            barElements.forEach(element => {
               expect(builderSpy).toHaveBeenCalledWith(element, Bar);
             });
           });
         });
       });
 
-      ['interactive', 'complete'].forEach((state) => {
+      ["interactive", "complete"].forEach(state => {
         describe(`when \`document.readyState\` equals to \`${state}\``, () => {
           let backup;
           let builderSpy;
           let application;
 
-          beforeEach((done) => {
+          beforeEach(done => {
             backup = document.readyState;
             document.readyState = state;
 
@@ -97,10 +103,12 @@ if (readyStateIsMockable) {
             document.readyState = backup;
           });
 
-          it('creates component instances immediately', () => {
-            fixture(`
+          it("creates component instances immediately", () => {
+            fixture(
+              `
               <div class="${elementClass}"></div>
-            `);
+            `
+            );
 
             const matched = [].slice.call(
               document.querySelectorAll(`.${elementClass}`)
@@ -110,7 +118,7 @@ if (readyStateIsMockable) {
 
             expect(builderSpy).toHaveBeenCalledTimes(matched.length);
 
-            matched.forEach((element) => {
+            matched.forEach(element => {
               expect(builderSpy).toHaveBeenCalledWith(element, Component);
             });
           });
