@@ -25,30 +25,65 @@ function getTunnel() {
 
 module.exports = function karma(config) {
   const sauceBrowsers = {
-    // Chrome (last 3 versions)
+    // Chrome (last 3 versions and 3 old versions)
 
-    sl_chrome_54: {
+    sl_chrome_57: {
       base: 'SauceLabs',
       browserName: 'chrome',
-      version: '54.0',
+      version: '57.0',
       platform: 'Windows 10',
     },
 
-    sl_chrome_53: {
+    sl_chrome_56: {
       base: 'SauceLabs',
       browserName: 'chrome',
-      version: '53.0',
+      version: '56.0',
       platform: 'Windows 10',
     },
 
-    sl_chrome_52: {
+    sl_chrome_55: {
       base: 'SauceLabs',
       browserName: 'chrome',
+      version: '55.0',
+      platform: 'Windows 10',
+    },
+
+    sl_chrome_51: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '51.0',
+      platform: 'Windows 10',
+    },
+
+    sl_chrome_40: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '40.0',
+      platform: 'Windows 10',
+    },
+
+    sl_chrome_30: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '30.0',
+      platform: 'Windows 10',
+    },
+
+    // Firefox (last 3 versions and 3 old versions)
+
+    sl_firefox_52: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
       version: '52.0',
       platform: 'Windows 10',
     },
 
-    // Firefox (last 3 versions)
+    sl_firefox_51: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '51.0',
+      platform: 'Windows 10',
+    },
 
     sl_firefox_50: {
       base: 'SauceLabs',
@@ -57,17 +92,24 @@ module.exports = function karma(config) {
       platform: 'Windows 10',
     },
 
-    sl_firefox_49: {
+    sl_firefox_40: {
       base: 'SauceLabs',
       browserName: 'firefox',
-      version: '49.0',
+      version: '40.0',
       platform: 'Windows 10',
     },
 
-    sl_firefox_48: {
+    sl_firefox_33: {
       base: 'SauceLabs',
       browserName: 'firefox',
-      version: '48.0',
+      version: '33.0',
+      platform: 'Windows 10',
+    },
+
+    sl_firefox_20: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '20.0',
       platform: 'Windows 10',
     },
 
@@ -110,13 +152,13 @@ module.exports = function karma(config) {
       platform: 'Windows 7',
     },
 
-    // Safari (last 3 versions)
+    // Safari (last 6 versions)
 
     sl_safari_10: {
       base: 'SauceLabs',
       browserName: 'Safari',
       version: '10.0',
-      platform: 'OS X 10.11',
+      platform: 'OS X 10.12',
     },
 
     sl_safari_9: {
@@ -133,22 +175,36 @@ module.exports = function karma(config) {
       platform: 'OS X 10.10',
     },
 
+    sl_safari_7: {
+      base: 'SauceLabs',
+      browserName: 'Safari',
+      version: '7.0',
+      platform: 'OS X 10.9',
+    },
+
+    sl_safari_6: {
+      base: 'SauceLabs',
+      browserName: 'Safari',
+      version: '6.0',
+      platform: 'OS X 10.8',
+    },
+
     // iOS (last 3 major versions)
 
     sl_ios_10: {
       base: 'SauceLabs',
       browserName: 'Safari',
-      appiumVersion: '1.6.3',
+      appiumVersion: '1.6.4',
       deviceName: 'iPhone Simulator',
       deviceOrientation: 'portrait',
-      platformVersion: '10.0',
+      platformVersion: '10.2',
       platformName: 'iOS',
     },
 
     sl_ios_9: {
       base: 'SauceLabs',
       browserName: 'Safari',
-      appiumVersion: '1.6.3',
+      appiumVersion: '1.6.4',
       deviceName: 'iPhone Simulator',
       deviceOrientation: 'portrait',
       platformVersion: '9.3',
@@ -158,7 +214,7 @@ module.exports = function karma(config) {
     sl_ios_8: {
       base: 'SauceLabs',
       browserName: 'Safari',
-      appiumVersion: '1.6.3',
+      appiumVersion: '1.6.4',
       deviceName: 'iPhone Simulator',
       deviceOrientation: 'portrait',
       platformVersion: '8.4',
