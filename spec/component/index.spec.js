@@ -1,5 +1,4 @@
 import { Component, createSpyAndApplication, elementClass } from "../stub";
-import { fixture, clear } from "../fixture";
 
 describe("create", () => {
   describe(".component", () => {
@@ -11,10 +10,10 @@ describe("create", () => {
         [builderSpy, application] = createSpyAndApplication(done);
       });
 
-      afterEach(clear);
+      afterEach(clearFixtures);
 
       it("creates component instances for matched elements", () => {
-        fixture(
+        useFixture(
           `
           <div class="${elementClass}"></div>
           <div>
@@ -54,7 +53,7 @@ describe("create", () => {
       });
 
       it("takes variables arguments list", () => {
-        fixture(
+        useFixture(
           `
           <div class="${elementClass} ${elementClass}-0"></div>
           <div class="${elementClass} ${elementClass}-1"></div>
@@ -101,7 +100,7 @@ describe("create", () => {
       });
 
       it("register component for future using with `vitalize`", () => {
-        fixture(
+        useFixture(
           `
           <div class="${elementClass}"></div>
         `
@@ -109,7 +108,7 @@ describe("create", () => {
 
         application.component(`.${elementClass}`, Component);
 
-        fixture(
+        useFixture(
           `
           <div class="${elementClass}"></div>
         `

@@ -1,5 +1,4 @@
 import { Component, createSpyAndApplication, elementClass } from "../stub";
-import { fixture, clear } from "../fixture";
 
 describe("create", () => {
   describe(".vitalize", () => {
@@ -15,10 +14,10 @@ describe("create", () => {
         });
       });
 
-      afterEach(clear);
+      afterEach(clearFixtures);
 
       it("doesn't creates components if no matched elements", () => {
-        fixture(
+        useFixture(
           `
           <div class="not-${elementClass}"></div>
           <svg class="not-${elementClass}"></svg>
@@ -31,7 +30,7 @@ describe("create", () => {
       });
 
       it("creates component instances for all matched elements inside document", () => {
-        fixture(
+        useFixture(
           `
           <div class="${elementClass}"></div>
           <svg class="${elementClass}"></svg>

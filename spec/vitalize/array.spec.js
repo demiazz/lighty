@@ -4,7 +4,6 @@ import {
   rootClass,
   elementClass
 } from "../stub";
-import { fixture, clear } from "../fixture";
 
 describe("create", () => {
   describe(".vitalize", () => {
@@ -20,10 +19,10 @@ describe("create", () => {
         });
       });
 
-      afterEach(clear);
+      afterEach(clearFixtures);
 
       it("doesn't creates components if no matched elements", () => {
-        fixture(
+        useFixture(
           `
           <div class="${rootClass}">
             <div class="not-${elementClass}"></div>
@@ -50,7 +49,7 @@ describe("create", () => {
       });
 
       it("creates component instances for all matched elements inside tree", () => {
-        fixture(
+        useFixture(
           `
           <div class="${rootClass}">
             <div class="${elementClass}"></div>
@@ -79,7 +78,7 @@ describe("create", () => {
       });
 
       it("creates component instances for root elements if matched by selector", () => {
-        fixture(
+        useFixture(
           `
           <div class="${rootClass} ${elementClass}"></div>
           <svg class="${rootClass} ${elementClass}"></svg>
@@ -102,7 +101,7 @@ describe("create", () => {
       });
 
       it("creates component instances only for Element items", () => {
-        fixture(
+        useFixture(
           `
           <div class="${rootClass}">
             text node

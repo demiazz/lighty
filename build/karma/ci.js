@@ -1,7 +1,7 @@
 const path = require("path");
 const istanbul = require("rollup-plugin-istanbul");
 
-const baseConfig = require("./karma.base");
+const baseConfig = require("./base");
 
 function getBuild() {
   let id = `LIGHTY - TRAVIS #${process.env.TRAVIS_BUILD_NUMBER}`;
@@ -222,7 +222,7 @@ module.exports = function karma(config) {
 
   Object.assign(baseConfig, {
     sauceLabs: {
-      testName: "lighty",
+      testName: "homey",
       build: getBuild(),
       tunnelIdentifier: getTunnel(),
       recordVideo: false,

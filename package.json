@@ -15,19 +15,15 @@
     "name": "Alexey Plutalov",
     "email": "demiazz.py@gmail.com"
   },
-  "main": "index.js",
-  "module": "index.es.js",
-  "jsnext:main": "index.es.js",
-  "typings": "d.ts/lighty.d.ts",
+  "main": "lib/index.js",
+  "typings": "d.ts/homey.d.ts",
   "files": [
     "d.ts/lighty.d.ts",
     "dist/lighty.umd.js",
     "dist/lighty.umd.min.js",
     "dist/lighty.umd.min.js.map",
-    "index.es.js",
-    "index.es.js.flow",
-    "index.js",
-    "index.js.flow",
+    "lib/*.js",
+    "lib/*.js.flow",
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
@@ -35,10 +31,10 @@
   "scripts": {
     "check": "$(yarn bin)/flow --show-all-errors src",
     "pretest": "yarn run check",
-    "test": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.local.js --single-run",
-    "test:watch": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.local.js",
-    "test:ci": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma.ci.js",
-    "build": "node build/build.js",
+    "test": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma/local.js --single-run",
+    "test:watch": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma/local.js",
+    "test:ci": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma/ci.js",
+    "build": "node build/bundle/index.js",
     "docs": "node build/docs.js",
     "version": "yarn run build && yarn run docs && git add -A README.md",
     "lint-staged": "$(yarn bin)/lint-staged"

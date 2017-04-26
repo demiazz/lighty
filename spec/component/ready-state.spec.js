@@ -4,11 +4,10 @@ import {
   createSpyAndApplication,
   Component
 } from "../stub";
-import { fixture, clear } from "../fixture";
 
 if (readyStateIsMockable) {
   describe("create", () => {
-    afterEach(clear);
+    afterEach(clearFixtures);
 
     describe(".component", () => {
       describe("when `document.readyState` equals to `loading`", () => {
@@ -28,7 +27,7 @@ if (readyStateIsMockable) {
         });
 
         it("doesn't created component instances", () => {
-          fixture(
+          useFixture(
             `
             <div class="${elementClass}"></div>
           `
@@ -47,7 +46,7 @@ if (readyStateIsMockable) {
             class Foo {}
             class Bar {}
 
-            fixture(
+            useFixture(
               `
               <div class="${rootClass}">
                 <div class="${fooClass}"></div>
@@ -104,7 +103,7 @@ if (readyStateIsMockable) {
           });
 
           it("creates component instances immediately", () => {
-            fixture(
+            useFixture(
               `
               <div class="${elementClass}"></div>
             `

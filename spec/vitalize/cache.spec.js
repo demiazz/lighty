@@ -1,16 +1,15 @@
 import { Component, createSpyAndApplication, elementClass } from "../stub";
-import { fixture, clear } from "../fixture";
 
 describe("create", () => {
   describe(".vitalize", () => {
-    afterEach(clear);
+    afterEach(clearFixtures);
 
     describe("cache", () => {
       it("creates component instances only once for each element", done => {
         const [builderSpy, application] = createSpyAndApplication(() => {
           application.component(`.${elementClass}`, Component);
 
-          fixture(
+          useFixture(
             `
             <div class="${elementClass}"></div>
           `
@@ -42,7 +41,7 @@ describe("create", () => {
           count += 1;
 
           if (count === 2) {
-            fixture(
+            useFixture(
               `
               <div class="${elementClass}"></div>
             `

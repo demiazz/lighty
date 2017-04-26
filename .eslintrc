@@ -26,6 +26,8 @@
   },
   "globals": {
     "readyStateIsMockable": true,
+    "useFixture": false,
+    "clearFixtures": false
   },
   "parser": "babel-eslint"
 }

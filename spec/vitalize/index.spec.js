@@ -4,7 +4,6 @@ import {
   rootClass,
   elementClass
 } from "../stub";
-import { fixture, clear } from "../fixture";
 
 describe("create", () => {
   describe(".vitalize", () => {
@@ -19,7 +18,7 @@ describe("create", () => {
       });
     });
 
-    afterEach(clear);
+    afterEach(clearFixtures);
 
     describe("base behaviour", () => {
       it("creates instances of all registered components", () => {
@@ -29,7 +28,7 @@ describe("create", () => {
         class Foo {}
         class Bar {}
 
-        fixture(
+        useFixture(
           `
           <div class="${rootClass}">
             <div class="${fooClass}"></div>
@@ -61,7 +60,7 @@ describe("create", () => {
       });
 
       it("correct processes recursive roots", () => {
-        fixture(
+        useFixture(
           `
           <div class="${rootClass}">
             <div class="${rootClass} ${elementClass}">
