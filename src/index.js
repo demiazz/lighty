@@ -8,23 +8,23 @@ const body: Element = ((doc.body: any): Element);
 /* ----- Matches Helper ----- */
 
 type MatchesFn = (selector: string) => boolean;
-type MatchesAPI =
-  & { matches: MatchesFn }
-  & { matchesSelector: MatchesFn }
-  & { msMatchesSelector: MatchesFn }
-  & { mozMatchesSelector: MatchesFn }
-  & { webkitMatchesSelector: MatchesFn }
-  & { oMatchesSelector: MatchesFn };
+type MatchesAPI = { matches: MatchesFn } & { matchesSelector: MatchesFn } & {
+    msMatchesSelector: MatchesFn
+  } & { mozMatchesSelector: MatchesFn } & {
+    webkitMatchesSelector: MatchesFn
+  } & { oMatchesSelector: MatchesFn };
 
 function getMatchesFn(): MatchesFn {
   const e = ((doc.createElement("div"): any): MatchesAPI);
 
-  return e.matches ||
+  return (
+    e.matches ||
     e.matchesSelector ||
     e.msMatchesSelector ||
     e.mozMatchesSelector ||
     e.webkitMatchesSelector ||
-    e.oMatchesSelector;
+    e.oMatchesSelector
+  );
 }
 
 const matchesFn: MatchesFn = getMatchesFn();
@@ -156,9 +156,8 @@ function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine {
 
   /* ----- Components Registration ----- */
 
-  function register(selector: string): void {
+  function register(selector: string, ...args: Array<mixed>): void {
     const id: number = components.length;
-    const args: Array<mixed> = [].slice.call(arguments, 1);
     const component: Component = [id, selector, args];
 
     components.push(component);
