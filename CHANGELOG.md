@@ -1,3 +1,10 @@
+## 0.9.0 (27 April 2017)
+
+* Migrate from Buble to Babel
+* Use Flow for type annotations inside source code
+* Rewrite build, and change packed package scheme
+* Upgrade code quality tools configuration
+
 ## 0.8.0 (20 December 2016)
 
 * Add TypeScript annotations
