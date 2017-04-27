@@ -72,7 +72,7 @@ Additionally, we provide full and minified UMD versions. Bundles included to
 to your HTML:
 
 ```html
-<script src="lighty.umd.min.js"></script>
+<script src="lighty.min.js"></script>
 ```
 
 # Example
