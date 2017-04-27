@@ -214,12 +214,12 @@ Register component with given `selector` and builder's `args` list.
 
 Vitalize component if an application is already running.
 
-**Kind**: static method of <code>[Engine](#Engine)</code>  
+**Kind**: static method of [<code>Engine</code>](#Engine)  
 **Returns**: <code>undefined</code> - .  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| selector | <code>[CSSSelector](#CSSSelector)</code> | linked selector. |
+| selector | [<code>CSSSelector</code>](#CSSSelector) | linked selector. |
 | ...args | <code>any</code> | linked builder's arguments list. |
 
 <a name="Engine.vitalize"></a>
@@ -233,7 +233,7 @@ after application launch, so `vitalize` don't be called before start.
 If you update HTML inside some element, then use them as tree root for
 performance purposes.
 
-**Kind**: static method of <code>[Engine](#Engine)</code>  
+**Kind**: static method of [<code>Engine</code>](#Engine)  
 **Returns**: <code>undefined</code> - .  
 **Throws**:
 
@@ -243,7 +243,7 @@ performance purposes.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [trees] | <code>[Trees](#Trees)</code> | <code>document.body</code> | roots of search trees. |
+| [trees] | [<code>Trees</code>](#Trees) | <code>document.body</code> | roots of search trees. |
 
 **Example**  
 ```js
@@ -253,11 +253,11 @@ engine.vitalize(element);
 ```
 <a name="createEngine"></a>
 
-## createEngine(builder, [onStart]) ⇒ <code>[Engine](#Engine)</code>
+## createEngine(builder, [onStart]) ⇒ [<code>Engine</code>](#Engine)
 Creates engine's instance with given `builder`.
 
 **Kind**: global function  
-**Returns**: <code>[Engine](#Engine)</code> - engine's instance.  
+**Returns**: [<code>Engine</code>](#Engine) - engine's instance.  
 **Throws**:
 
 - <code>TypeError</code> when `builder` is not a function.
@@ -265,8 +265,8 @@ Creates engine's instance with given `builder`.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| builder | <code>[BuilderFn](#BuilderFn)</code> | user defined builder of components. |
-| [onStart] | <code>[OnStartFn](#OnStartFn)</code> | callback which will be called on application launch. |
+| builder | [<code>BuilderFn</code>](#BuilderFn) | user defined builder of components. |
+| [onStart] | [<code>OnStartFn</code>](#OnStartFn) | callback which will be called on application launch. |
 
 <a name="CSSSelector"></a>
 
@@ -276,7 +276,7 @@ A valid CSS selector.
 **Kind**: global typedef  
 <a name="Trees"></a>
 
-## Trees : <code>Element</code> \| <code>NodeList</code> \| <code>Array.&lt;Element&gt;</code> \| <code>[CSSSelector](#CSSSelector)</code>
+## Trees : <code>Element</code> \| <code>NodeList</code> \| <code>Array.&lt;Element&gt;</code> \| [<code>CSSSelector</code>](#CSSSelector)
 One or many DOM elements for search.
 
 **Kind**: global typedef  
