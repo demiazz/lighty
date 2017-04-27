@@ -10,7 +10,7 @@ function build() {
 
   Object.keys(sources).forEach(file => {
     const dest = `lib/${file}`;
-    const code = transform(sources[file], { flow: false, modules: "commonjs" });
+    const code = transform(sources[file], "commonjs");
     const prettified = prettify(code).replace(/\/\* @flow \*\/\n/, "");
     const bannered = `${banner.base}${prettified}`;
 

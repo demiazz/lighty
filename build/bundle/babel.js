@@ -1,19 +1,16 @@
 const babel = require("babel-core");
 
-function getOptions(options) {
-  const modules = options.modules ? options.modules : false;
-  const flow = options.flow ? "syntax-flow" : "transform-flow-strip-types";
-
+function getOptions(modules = false) {
   const babelOptions = {
     presets: [["es2015", { modules }]],
-    plugins: [flow]
+    plugins: ["transform-flow-strip-types"]
   };
 
   return babelOptions;
 }
 
-function transform(source, options) {
-  const babelOptions = getOptions(options);
+function transform(source, modules = false) {
+  const babelOptions = getOptions(modules);
 
   return babel.transform(source, babelOptions).code;
 }

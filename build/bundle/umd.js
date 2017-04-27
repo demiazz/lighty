@@ -12,7 +12,7 @@ function build(minified = false) {
   const rollupOptions = {
     entry: "src/index.js",
     exports: "named",
-    plugins: [babel(getOptions({ flow: false })), commonJS()]
+    plugins: [babel(getOptions()), commonJS()]
   };
 
   const writeOptions = {
