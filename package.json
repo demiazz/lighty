@@ -19,9 +19,9 @@
   "typings": "d.ts/homey.d.ts",
   "files": [
     "d.ts/lighty.d.ts",
-    "dist/lighty.umd.js",
-    "dist/lighty.umd.min.js",
-    "dist/lighty.umd.min.js.map",
+    "dist/lighty.js",
+    "dist/lighty.min.js",
+    "dist/lighty.min.js.map",
     "lib/*.js",
     "lib/*.js.flow",
     "CHANGELOG.md",
