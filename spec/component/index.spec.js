@@ -100,19 +100,11 @@ describe("create", () => {
       });
 
       it("register component for future using with `vitalize`", () => {
-        useFixture(
-          `
-          <div class="${elementClass}"></div>
-        `
-        );
+        useFixture(`<div class="${elementClass}"></div>`);
 
         application.component(`.${elementClass}`, Component);
 
-        useFixture(
-          `
-          <div class="${elementClass}"></div>
-        `
-        );
+        useFixture(`<div class="${elementClass}"></div>`);
 
         application.vitalize();
 
