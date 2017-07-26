@@ -25,31 +25,31 @@ module.exports = function karma(config) {
   const sauceBrowsers = {
     // Chrome (last 3 versions and 3 old versions)
 
+    sl_chrome_59: {
+      base: "SauceLabs",
+      browserName: "chrome",
+      version: "59.0",
+      platform: "Windows 10"
+    },
+
+    sl_chrome_58: {
+      base: "SauceLabs",
+      browserName: "chrome",
+      version: "58.0",
+      platform: "Windows 10"
+    },
+
     sl_chrome_57: {
       base: "SauceLabs",
       browserName: "chrome",
-      version: "57.0",
+      version: "75.0",
       platform: "Windows 10"
     },
 
-    sl_chrome_56: {
+    sl_chrome_50: {
       base: "SauceLabs",
       browserName: "chrome",
-      version: "56.0",
-      platform: "Windows 10"
-    },
-
-    sl_chrome_55: {
-      base: "SauceLabs",
-      browserName: "chrome",
-      version: "55.0",
-      platform: "Windows 10"
-    },
-
-    sl_chrome_51: {
-      base: "SauceLabs",
-      browserName: "chrome",
-      version: "51.0",
+      version: "50.0",
       platform: "Windows 10"
     },
 
@@ -69,24 +69,24 @@ module.exports = function karma(config) {
 
     // Firefox (last 3 versions and 3 old versions)
 
+    sl_firefox_54: {
+      base: "SauceLabs",
+      browserName: "firefox",
+      version: "54.0",
+      platform: "Windows 10"
+    },
+
+    sl_firefox_53: {
+      base: "SauceLabs",
+      browserName: "firefox",
+      version: "53.0",
+      platform: "Windows 10"
+    },
+
     sl_firefox_52: {
       base: "SauceLabs",
       browserName: "firefox",
       version: "52.0",
-      platform: "Windows 10"
-    },
-
-    sl_firefox_51: {
-      base: "SauceLabs",
-      browserName: "firefox",
-      version: "51.0",
-      platform: "Windows 10"
-    },
-
-    sl_firefox_50: {
-      base: "SauceLabs",
-      browserName: "firefox",
-      version: "50.0",
       platform: "Windows 10"
     },
 
@@ -97,10 +97,10 @@ module.exports = function karma(config) {
       platform: "Windows 10"
     },
 
-    sl_firefox_33: {
+    sl_firefox_30: {
       base: "SauceLabs",
       browserName: "firefox",
-      version: "33.0",
+      version: "30.0",
       platform: "Windows 10"
     },
 
@@ -112,6 +112,13 @@ module.exports = function karma(config) {
     },
 
     // Edge
+
+    sl_edge_15: {
+      base: "SauceLabs",
+      browserName: "MicrosoftEdge",
+      version: "15.15063",
+      platform: "Windows 10"
+    },
 
     sl_edge_14: {
       base: "SauceLabs",
