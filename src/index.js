@@ -8,11 +8,18 @@ const body: Element = ((doc.body: any): Element);
 /* ----- Matches Helper ----- */
 
 type MatchesFn = (selector: string) => boolean;
-type MatchesAPI = { matches: MatchesFn } & { matchesSelector: MatchesFn } & {
-    msMatchesSelector: MatchesFn
-  } & { mozMatchesSelector: MatchesFn } & {
-    webkitMatchesSelector: MatchesFn
-  } & { oMatchesSelector: MatchesFn };
+type StandardMatchesAPI = { matches: MatchesFn };
+type LegacyMatchesAPI = { matchesSelector: MatchesFn };
+type MSMatchesAPI = { msMatchesSelector: MatchesFn };
+type GeckoMatchesAPI = { geckoMatchesSelector: MatchesFn };
+type WebkitMatchesAPI = { webkitMatchesSelector: MatchesFn };
+type OperaMatchesAPI = { oMatchesSelector: MatchesFn };
+type MatchesAPI = StandardMatchesAPI &
+  LegacyMatchesAPI &
+  MSMatchesAPI &
+  GeckoMatchesAPI &
+  WebkitMatchesAPI &
+  OperaMatchesAPI;
 
 function getMatchesFn(): MatchesFn {
   const e = ((doc.createElement("div"): any): MatchesAPI);
