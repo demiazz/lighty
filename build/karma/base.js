@@ -40,7 +40,8 @@ module.exports = {
 
   rollupPreprocessor: {
     format: "iife",
-    sourceMap: true,
+    moduleName: "lighty",
+    sourceMap: "inline",
     plugins: [
       babel({
         presets: [["es2015", { modules: false }]],
@@ -54,7 +55,7 @@ module.exports = {
 
   plugins: [
     "karma-jasmine",
-    "karma-rollup-plugin",
+    "karma-rollup-preprocessor",
     "karma-sourcemap-loader",
     "karma-spec-reporter"
   ],

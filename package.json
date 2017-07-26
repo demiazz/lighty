@@ -72,7 +72,7 @@
     "karma-coveralls": "^1.1.2",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.2",
-    "karma-rollup-plugin": "^0.2.4",
+    "karma-rollup-preprocessor": "^4.0.1",
     "karma-sauce-launcher": "^1.1.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.31",
