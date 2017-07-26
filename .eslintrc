@@ -1,33 +1,13 @@
 {
-  "extends": [
-    "eslint-config-airbnb-base",
-    "plugin:flowtype/recommended",
-    "prettier",
-    "prettier/flowtype"
-  ],
-  "plugins": [
-    "flowtype",
-    "prettier"
-  ],
-  "env": {
-    "browser": true,
-    "jasmine": true
-  },
-  "rules": {
-    "prettier/prettier": "error",
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": true,
-      "optionalDependencies": false,
-      "peerDependencies": false,
-    }],
-    "no-param-reassign": "off",
-    "prefer-spread": "off",
-    "prefer-rest-params": "off"
-  },
-  "globals": {
-    "readyStateIsMockable": true,
-    "useFixture": false,
-    "clearFixtures": false
-  },
-  "parser": "babel-eslint"
+  "extends": ["./node_modules/@demiazz/brandon/lib/eslint-config.js"],
+  "overrides": [
+    {
+      "files": ["spec/**/*.js"],
+      "globals": {
+        "useFixture": false,
+        "clearFixtures": false,
+        "readyStateIsMockable": false
+      }
+    }
+  ]
 }

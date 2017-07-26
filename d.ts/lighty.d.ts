@@ -7,4 +7,7 @@ interface Engine {
   vitalize(trees?: Trees): void;
 }
 
-export default function createEngine(builder: BuilderFn, onStart?: OnStartFn): Engine;
+export default function createEngine(
+  builder: BuilderFn,
+  onStart?: OnStartFn
+): Engine;

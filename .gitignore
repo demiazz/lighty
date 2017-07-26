@@ -2,4 +2,5 @@
 /coverage
 /dist
 /lib
+/lib-es
 /node_modules

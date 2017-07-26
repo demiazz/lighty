@@ -11,7 +11,7 @@ if (readyStateIsMockable) {
           backup = document.readyState;
           document.readyState = "loading";
 
-          application = createSpyAndApplication()[1];
+          [, application] = createSpyAndApplication();
         });
 
         afterEach(() => {
@@ -50,7 +50,7 @@ if (readyStateIsMockable) {
             backup = document.readyState;
             document.readyState = state;
 
-            application = createSpyAndApplication(done)[1];
+            [, application] = createSpyAndApplication(done);
           });
 
           afterEach(() => {

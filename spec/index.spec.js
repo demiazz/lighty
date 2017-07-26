@@ -41,34 +41,28 @@ describe("create", () => {
           it("doesn't call `onStart` callback", done => {
             const application = createEngine(() => {}, doneSpy);
 
-            setTimeout(
-              () => {
-                expect(doneSpy).not.toHaveBeenCalled();
+            setTimeout(() => {
+              expect(doneSpy).not.toHaveBeenCalled();
 
-                done();
-              },
-              10
-            );
+              done();
+            }, 10);
           });
 
           describe("when `DOMContentLoaded` raised", () => {
             it("calls `onStart` callback", done => {
               const application = createEngine(() => {}, doneSpy);
 
-              setTimeout(
-                () => {
-                  expect(doneSpy).not.toHaveBeenCalled();
+              setTimeout(() => {
+                expect(doneSpy).not.toHaveBeenCalled();
 
-                  const event = document.createEvent("Event");
-                  event.initEvent("DOMContentLoaded", true, true);
-                  window.document.dispatchEvent(event);
+                const event = document.createEvent("Event");
+                event.initEvent("DOMContentLoaded", true, true);
+                window.document.dispatchEvent(event);
 
-                  expect(doneSpy).toHaveBeenCalledTimes(1);
+                expect(doneSpy).toHaveBeenCalledTimes(1);
 
-                  done();
-                },
-                10
-              );
+                done();
+              }, 10);
             });
           });
         });
@@ -89,14 +83,11 @@ describe("create", () => {
             it("calls `onStart` callback", done => {
               const application = createEngine(() => {}, doneSpy);
 
-              setTimeout(
-                () => {
-                  expect(doneSpy).toHaveBeenCalledTimes(1);
+              setTimeout(() => {
+                expect(doneSpy).toHaveBeenCalledTimes(1);
 
-                  done();
-                },
-                10
-              );
+                done();
+              }, 10);
             });
           });
         });
