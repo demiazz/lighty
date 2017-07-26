@@ -42,7 +42,7 @@ module.exports = function karma(config) {
     sl_chrome_57: {
       base: "SauceLabs",
       browserName: "chrome",
-      version: "75.0",
+      version: "57.0",
       platform: "Windows 10"
     },
 
