@@ -35,7 +35,9 @@
     "test:watch": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma/local.js",
     "test:ci": "cross-env NODE_ENV=test $(yarn bin)/karma start build/karma/ci.js",
     "build": "node build/bundle/index.js",
-    "docs": "node build/docs.js",
+    "docs": "yarn run docs:api & yarn run docs:toc",
+    "docs:api": "node build/docs.js",
+    "docs:toc": "$(yarn bin)/doctoc --github --title '**Table of Contents**' README.md",
     "version": "yarn run build && yarn run docs && git add -A README.md",
     "lint-staged": "$(yarn bin)/lint-staged"
   },
@@ -58,6 +60,7 @@
     "babel-preset-es2015": "^6.24.1",
     "chalk": "^2.0.1",
     "cross-env": "^5.0.1",
+    "doctoc": "^1.3.0",
     "documentation": "^4.0.0-rc.1",
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",

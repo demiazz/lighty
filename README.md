@@ -40,7 +40,27 @@
   Sponsored by <a href="http://evilmartians.com">Evil Martians</a>.
 </div>
 
-<br />
+<hr />
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Installation](#installation)
+  - [npm](#npm)
+  - [Browser](#browser)
+- [Example](#example)
+- [Philosophy](#philosophy)
+- [Concepts](#concepts)
+  - [Engine](#engine)
+  - [Application launch](#application-launch)
+  - [Component registration](#component-registration)
+  - [Component vitalize](#component-vitalize)
+  - [Builder](#builder)
+- [API](#api)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Installation
 
