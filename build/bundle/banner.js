@@ -1,6 +1,11 @@
 const pkg = require("./package");
 
-const short = `/*! ${[`${pkg.name} v${pkg.version}`, `${pkg.homepage}`, `(c) ${pkg.author.name}`, `${pkg.license} license`].join(" | ")} */`;
+const short = `/*! ${[
+  `${pkg.name} v${pkg.version}`,
+  `${pkg.homepage}`,
+  `(c) ${pkg.author.name}`,
+  `${pkg.license} license`
+].join(" | ")} */`;
 
 const base = [
   "/*!",
