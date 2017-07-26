@@ -115,7 +115,7 @@ engine.component('.awesome-component', element => {
 });
 
 console.log(document.querySelector('.awesome-component').innerText);
-# => "It's awesome now."
+// => "It's awesome now."
 ```
 
 # Philosophy
@@ -141,7 +141,7 @@ using the component model. Also, the objectives are:
 Core of any `lighty` application which launches an application, register and
 vitalize components.
 
-See also [Engine](#Engine).
+See also [Engine](#engine).
 
 ## Application launch
 
@@ -157,7 +157,7 @@ Component registration is a linking of a valid CSS selector with arguments list.
 Selector will be used for select elements in DOM. Arguments list will be applied
 to a builder.
 
-See also [component](#Engine.component).
+See also [Engine.component](#component).
 
 ## Component vitalize
 
@@ -169,14 +169,14 @@ Vitalize is a process from two steps:
 Only one component's instance will be created for each element at application's
 lifecycle.
 
-See also [vitalize](#Engine.vitalize).
+See also [Engine.vitalize](#vitalize).
 
 ## Builder
 
 User function which creates component's instance and binds then with DOM
 element.
 
-See also [Builder](#Builder).
+See also [BuilderFn](#builderfn).
 
 # API
 
