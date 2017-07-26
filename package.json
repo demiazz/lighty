@@ -22,8 +22,8 @@
     "dist/lighty.js",
     "dist/lighty.min.js",
     "dist/lighty.min.js.map",
-    "lib/*.js",
-    "lib/*.js.flow",
+    "lib/index.js",
+    "lib/index.js.flow",
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
