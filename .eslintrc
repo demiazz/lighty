@@ -1,13 +1,7 @@
 {
   "extends": ["./node_modules/@demiazz/brandon/lib/eslint-config.js"],
-  "overrides": [
-    {
-      "files": ["spec/**/*.js"],
-      "globals": {
-        "useFixture": false,
-        "clearFixtures": false,
-        "readyStateIsMockable": false
-      }
-    }
-  ]
+
+  "rules": {
+    "no-console": ["off"]
+  }
 }

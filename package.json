@@ -22,19 +22,16 @@
     "d.ts/*.ts",
     "dist/*.js",
     "dist/*.map",
+    "flow-typed/*.js",
     "lib/*.js",
-    "lib/*.js.flow",
     "lib-es/*.mjs",
-    "lib-es/*.mjs.flow",
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
-    "check-types": "$(yarn bin)/brandon check-types",
-    "pretest": "yarn run check-types",
     "test": "$(yarn bin)/brandon test",
-    "test:watch": "$(yarn bin)/brandon test --watch",
+    "test:watch": "$(yarn bin)/brandon test -- --watch",
     "test:ci": "$(yarn bin)/brandon test-ci",
     "build": "$(yarn bin)/brandon build",
     "docs": "$(yarn bin)/brandon documentation",
@@ -44,6 +41,11 @@
   "lint-staged": {
     "d.ts/*.ts": [
       "prettier --write"
+    ],
+    "flow-typed/*.js": [
+      "prettier --write",
+      "eslint",
+      "git add"
     ],
     "{spec,src}/**/*.js": [
       "prettier --write",
@@ -64,6 +66,6 @@
     "last 3 iOS major versions"
   ],
   "devDependencies": {
-    "@demiazz/brandon": "1.0.9"
+    "@demiazz/brandon": "2.0.0"
   }
 }
