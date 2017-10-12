@@ -66,6 +66,6 @@
     "last 3 iOS major versions"
   ],
   "devDependencies": {
-    "@demiazz/brandon": "2.0.0"
+    "@demiazz/brandon": "2.1.1"
   }
 }
