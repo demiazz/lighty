@@ -265,7 +265,7 @@ describe("Application", () => {
     it("calls factory with original context", done => {
       const context = { life: 42 };
       const withoutContext = function withoutContext() {
-        expect(this).toBeNull();
+        expect([null, window]).toContain(this);
       };
       const withContext = function withContext() {
         expect(this).toBe(context);

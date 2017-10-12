@@ -52,7 +52,7 @@ describe("Application", () => {
       it("calls listener with original context", () => {
         const context = { life: 42 };
         const withoutContext = function withoutContext() {
-          expect(this).toBeNull();
+          expect([null, window]).toContain(this);
         };
         const withContext = function withContext() {
           expect(this).toBe(context);
