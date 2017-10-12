@@ -46,7 +46,7 @@ describe("Application", () => {
           <svg class="not-component"></svg>
         `);
 
-        const roots = [...queryAll("root")];
+        const roots = [].slice.call(queryAll("root"));
         const matchedElements = queryAll("inside");
 
         application.vitalize(roots);
@@ -72,7 +72,7 @@ describe("Application", () => {
           </div>
         `);
 
-        const roots = [...queryAll("root")];
+        const roots = [].slice.call(queryAll("root"));
         const matchedElements = queryAll("component");
 
         application.vitalize(roots);
@@ -99,7 +99,7 @@ describe("Application", () => {
           </div>
         `);
 
-        const roots = [...query("root").childNodes];
+        const roots = [].slice.call(query("root").childNodes);
         const matchedElements = queryAll("component");
 
         application.vitalize(roots);
