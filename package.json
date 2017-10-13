@@ -16,7 +16,7 @@
     "email": "demiazz.py@gmail.com"
   },
   "main": "lib/index.js",
-  "module": "lib-es/index.mjs",
+  "module": "lib-es/index.js",
   "typings": "d.ts/lighty.d.ts",
   "files": [
     "d.ts/*.ts",
@@ -24,7 +24,7 @@
     "dist/*.map",
     "flow-typed/*.js",
     "lib/*.js",
-    "lib-es/*.mjs",
+    "lib-es/*.js",
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
@@ -66,6 +66,6 @@
     "last 3 iOS major versions"
   ],
   "devDependencies": {
-    "@demiazz/brandon": "2.1.2"
+    "@demiazz/brandon": "2.2.0"
   }
 }

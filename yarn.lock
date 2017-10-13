@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@demiazz/brandon@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@demiazz/brandon/-/brandon-2.1.2.tgz#5af70c46c126f0855563ac10d786199667111b5b"
+"@demiazz/brandon@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@demiazz/brandon/-/brandon-2.2.0.tgz#9322efd31bcb81a0ff07902112ecf74d83e50569"
   dependencies:
     babel-core "6.26.0"
     babel-eslint "8.0.1"
