@@ -49,7 +49,7 @@
 - [Installation](#installation)
   - [npm](#npm)
   - [Browser](#browser)
-- [Example](#example)
+- [Usage](#usage)
 - [Philosophy](#philosophy)
 - [Concepts](#concepts)
   - [Engine](#engine)
@@ -75,14 +75,17 @@ $ npm install --save lighty
 And use it as CommonJS module:
 
 ```js
-const createEngine = require('lighty');
+const createApplication = require('lighty');
 ```
 
 Or as ES module:
 
 ```js
-import createEngine from 'lighty';
+import createApplicaion from 'lighty';
 ```
+
+Package provides CommonJS and ES6 module styles through `main` and `module` fields in `package.json`. It useful if
+your build system supports this (for example Webpack 3 and Rollup successfully support both fields).
 
 ## Browser
 
@@ -95,7 +98,7 @@ to your HTML:
 <script src="lighty.min.js"></script>
 ```
 
-# Example
+# Usage
 
 Let's write simple application:
 
@@ -105,18 +108,47 @@ Let's write simple application:
 </div>
 ```
 
+Import `lighty` first:
+
 ```js
-import createEngine from 'lighty';
+import createApplication from 'lighty';
+```
 
-const engine = createEngine((element, fn) => fn(element));
+Then create simple component factory:
 
-engine.component('.awesome-component', element => {
+```js
+function factory(element, component) {
+  constructor(element);
+}
+```
+
+And create application instance:
+
+```js
+const application = createApplication(factory);
+```
+
+Ok. Let's create our first component:
+
+```js
+application.component('.awesome-component', element => {
   element.innerText = "It's awesome now.";
 });
-
-console.log(document.querySelector('.awesome-component').innerText);
-// => "It's awesome now."
 ```
+
+And check result:
+
+```js
+console.log(document.querySelector('.awesome-component').innerText);
+```
+
+We should see next output:
+
+```
+It's awesome now.
+```
+
+Yeah! Now you can use component oriented structure in your project.
 
 # Philosophy
 
