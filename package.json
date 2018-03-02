@@ -15,8 +15,8 @@
     "name": "Alexey Plutalov",
     "email": "demiazz.py@gmail.com"
   },
-  "main": "lib/index.js",
-  "module": "lib-es/index.js",
+  "main": "lib/lighty.js",
+  "module": "lib-es/lighty.js",
   "typings": "d.ts/lighty.d.ts",
   "files": [
     "d.ts/*.ts",
