@@ -1,5 +1,8 @@
+/* eslint class-methods-use-this: "off" */
+
 import create from "lighty";
 
+import { clearFixtures, useFixture } from "helpers/fixtures";
 import {
   readyStateIsMockable,
   dispatchDOMContentLoaded
@@ -19,6 +22,8 @@ if (readyStateIsMockable) {
 
         afterEach(() => {
           document.readyState = originalReadyState;
+
+          clearFixtures();
         });
 
         it("remembers event listener, but not calls it", () => {
@@ -108,6 +113,73 @@ if (readyStateIsMockable) {
             });
 
             dispatchDOMContentLoaded();
+          });
+
+          it("calls all listeners after vitalize", done => {
+            const application = create((element, Component) => {
+              const instance = new Component(element);
+
+              application.onStart(instance.applicationDidStart.bind(instance));
+            });
+
+            const fooConstructorSpy = createSpy("foo's constructor");
+            const fooStartSpy = createSpy("foo's start listener");
+
+            application.component(
+              ".foo",
+              class Foo {
+                constructor() {
+                  fooConstructorSpy();
+                }
+
+                applicationDidStart() {
+                  fooStartSpy();
+                }
+              }
+            );
+
+            const barConstructorSpy = createSpy("bar's constructor");
+            const barStartSpy = createSpy("bar's start listener");
+
+            application.component(
+              ".bar",
+              class Foo {
+                constructor() {
+                  barConstructorSpy();
+                }
+
+                applicationDidStart() {
+                  barStartSpy();
+                }
+              }
+            );
+
+            useFixture(`
+              <div class="foo"></div>
+              <div class="bar"></div>
+            `);
+
+            expect(fooConstructorSpy).not.toHaveBeenCalled();
+            expect(fooStartSpy).not.toHaveBeenCalled();
+            expect(barConstructorSpy).not.toHaveBeenCalled();
+            expect(barStartSpy).not.toHaveBeenCalled();
+
+            dispatchDOMContentLoaded();
+
+            application.onStart(() => {
+              expect(fooConstructorSpy).toHaveBeenCalledTimes(1);
+              expect(fooStartSpy).toHaveBeenCalledTimes(1);
+              expect(barConstructorSpy).toHaveBeenCalledTimes(1);
+              expect(barStartSpy).toHaveBeenCalledTimes(1);
+
+              expect(fooConstructorSpy).toHaveBeenCalledBefore(fooStartSpy);
+              expect(fooConstructorSpy).toHaveBeenCalledBefore(barStartSpy);
+
+              expect(barConstructorSpy).toHaveBeenCalledBefore(fooStartSpy);
+              expect(barConstructorSpy).toHaveBeenCalledBefore(barStartSpy);
+
+              done();
+            });
           });
         });
       });

@@ -14,6 +14,7 @@ export default function create(factory) {
   const startListeners = [];
   const errors = [];
 
+  let isReady = false;
   let isRunning = false;
 
   function build(component, trees) {
@@ -33,9 +34,11 @@ export default function create(factory) {
   }
 
   function start() {
-    isRunning = true;
+    isReady = true;
 
     application.vitalize();
+
+    isRunning = true;
 
     while (startListeners.length) {
       try {
@@ -53,7 +56,7 @@ export default function create(factory) {
 
     components.push(metadata);
 
-    if (isRunning) {
+    if (isReady) {
       build(metadata);
 
       sendErrors(errorListeners, errors);
@@ -63,7 +66,7 @@ export default function create(factory) {
   };
 
   application.vitalize = function vitalize(trees) {
-    if (!isRunning) {
+    if (!isReady) {
       throw new Error("application is not running yet");
     }
 
